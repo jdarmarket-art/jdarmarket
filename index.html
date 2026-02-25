@@ -2,13 +2,14 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>جدار | بازارچه تخصصی گردشگری، زیارت و پزشکی</title>
-    <!-- فونت وزیر از CDN -->
+    <!-- فونت وزیر -->
     <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
     <!-- فونت awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* استایل‌های فایل ۹ (زیبا و مدرن) */
         * {
             margin: 0;
             padding: 0;
@@ -17,311 +18,477 @@
 
         body {
             font-family: 'Vazir', 'Tahoma', sans-serif;
-            background: linear-gradient(145deg, #0c0c1a 0%, #1e1e30 100%);
+            background: #0b0b12;
             color: #fff;
-            line-height: 1.7;
             min-height: 100vh;
+            overflow-x: hidden;
+            direction: rtl;
+        }
+
+        /* پس‌زمینه گرادیان */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(115, 70, 250, 0.15) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 70%, rgba(255, 80, 150, 0.1) 0%, transparent 70%),
+                        #0b0b12;
+            z-index: -2;
+        }
+
+        /* کانتینر اصلی */
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px 16px 90px;
+            position: relative;
+            z-index: 10;
         }
 
         /* هدر شیشه‌ای ثابت */
         .header {
-            background: rgba(10, 10, 20, 0.75);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 0.7rem 2rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
             position: sticky;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6);
+            z-index: 100;
+            background: rgba(10, 10, 18, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 50px;
+            padding: 10px 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
         }
 
         .logo {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #c7b9ff, #fbc1d9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 1.5px;
-            text-shadow: 0 2px 5px rgba(167, 139, 250, 0.3);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .nav-links a, .lang-btn {
-            color: #fff;
-            text-decoration: none;
-            padding: 0.5rem 1.2rem;
-            border-radius: 3rem;
-            transition: all 0.25s ease;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            cursor: pointer;
-            font-size: 1rem;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .nav-links a:hover, .lang-btn:hover {
-            background: rgba(167, 139, 250, 0.2);
-            border-color: #a78bfa;
-            color: #e2d9ff;
-            transform: translateY(-2px);
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(145deg, #8b5cf6, #c084fc);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+            box-shadow: 0 8px 18px rgba(139, 92, 246, 0.4);
         }
 
-        .lang-btn i {
-            font-size: 1.1rem;
+        .logo-text {
+            font-weight: 800;
+            font-size: 24px;
+            background: linear-gradient(135deg, #fff, #d8b4fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
         }
 
-        /* هامبورگر برای موبایل */
-        .hamburger {
-            display: none;
-            flex-direction: column;
+        .header-left {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            font-size: 20px;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.04);
-            padding: 8px 14px;
-            border-radius: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.2s;
         }
 
-        .hamburger span {
-            width: 26px;
-            height: 3px;
-            background: #fff;
-            margin: 3px 0;
-            transition: 0.3s;
-        }
-
-        /* منوی موبایل */
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 80px;
-            left: 1rem;
-            right: 1rem;
-            background: rgba(18, 18, 28, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 2rem;
-            padding: 1rem;
-            z-index: 999;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -10px black;
-        }
-
-        .mobile-menu a, .mobile-menu button {
+        .icon-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
             color: #fff;
-            padding: 0.9rem 1.2rem;
-            text-decoration: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            background: none;
-            border: none;
-            text-align: right;
-            font-size: 1rem;
-            cursor: pointer;
-            width: 100%;
+            border-color: #8b5cf6;
+        }
+
+        /* کارت کیف پول (دکوری) */
+        .wallet-card {
+            background: rgba(20, 20, 30, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 40px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 20px 35px -15px rgba(0,0,0,0.6);
+        }
+
+        .wallet-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wallet-info h4 {
+            font-size: 14px;
+            color: #aaa;
+            font-weight: 500;
+        }
+
+        .wallet-info .amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .wallet-info small {
+            font-size: 14px;
+            color: #8b5cf6;
+        }
+
+        .wallet-points {
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 40px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fbbf24;
+        }
+
+        .wallet-points i {
+            font-size: 22px;
+        }
+
+        .wallet-points .points-num {
+            font-weight: 700;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        /* کارت اطلاعیه (دکوری) */
+        .notice-card {
+            background: rgba(30, 30, 40, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 40px;
+            padding: 16px 20px;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
             gap: 12px;
-            border-radius: 1rem;
         }
 
-        .mobile-menu a:last-child, .mobile-menu button:last-child {
-            border-bottom: none;
-        }
-
-        .mobile-menu a:hover, .mobile-menu button:hover {
-            background: rgba(167, 139, 250, 0.2);
-        }
-
-        /* دکمه شناور واتساپ */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 25px;
-            left: 25px;
-            background: #25d366;
-            color: white;
-            width: 65px;
-            height: 65px;
+        .notice-icon {
+            width: 44px;
+            height: 44px;
+            background: #f59e0b;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 35px;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-            transition: all 0.3s ease;
-            z-index: 999;
-            border: 2px solid rgba(255,255,255,0.2);
+            font-size: 24px;
+            color: white;
+            flex-shrink: 0;
         }
 
-        .whatsapp-float:hover {
-            transform: scale(1.15);
-            background: #20b859;
-            box-shadow: 0 15px 35px rgba(37, 211, 102, 0.6);
+        .notice-text {
+            flex: 1;
+            color: #fcd34d;
+            font-size: 14px;
+            line-height: 1.6;
         }
 
-        /* محتوای اصلی */
-        .container {
-            max-width: 1400px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-
-        /* بخش جستجو و دسته‌بندی */
-        .search-section {
-            background: rgba(20, 20, 35, 0.4);
-            border-radius: 3rem;
-            padding: 2rem;
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            margin-bottom: 2.5rem;
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
-        }
-
-        .search-box {
+        .notice-edit {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #f59e0b;
+            font-size: 18px;
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+
+        .notice-edit:hover {
+            background: #f59e0b;
+            color: white;
+        }
+
+        /* گرید اقدامات سریع */
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .action-item {
+            background: rgba(25, 25, 35, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 32px;
+            padding: 16px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.25s;
+            color: #fff;
+        }
+
+        .action-item:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #8b5cf6;
+            transform: translateY(-5px);
+        }
+
+        .action-item i {
+            font-size: 28px;
+            color: #c4b5fd;
+        }
+
+        .action-item span {
+            font-size: 11px;
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        /* باکس جستجو */
+        .search-box {
+            background: rgba(20, 20, 30, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 60px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .search-box i {
+            color: #aaa;
+            font-size: 20px;
+            margin-left: 12px;
         }
 
         .search-box input {
             flex: 1;
-            padding: 1rem 1.8rem;
-            border-radius: 3rem;
+            background: transparent;
             border: none;
-            background: rgba(0, 0, 0, 0.4);
-            color: #fff;
-            font-size: 1.1rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: 0.3s;
-        }
-
-        .search-box input:focus {
+            color: white;
+            font-size: 16px;
             outline: none;
-            border-color: #a78bfa;
-            background: rgba(0, 0, 0, 0.6);
         }
 
         .search-box input::placeholder {
-            color: #aaa;
+            color: rgba(255,255,255,0.3);
         }
 
         .search-box button {
-            padding: 1rem 2.5rem;
-            border-radius: 3rem;
+            background: #8b5cf6;
             border: none;
-            background: linear-gradient(135deg, #a78bfa, #7c3aed);
+            border-radius: 40px;
+            padding: 8px 22px;
             color: white;
-            font-weight: bold;
+            font-weight: 500;
             cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            font-size: 1.1rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.2s;
+            font-size: 14px;
         }
 
         .search-box button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(167, 139, 250, 0.4);
+            background: #7c3aed;
         }
 
-        .categories, .subcategories {
+        .section-title {
             display: flex;
-            gap: 0.8rem;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .section-title h3 {
+            font-weight: 600;
+            font-size: 18px;
+            color: #fff;
+        }
+
+        .section-title a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .section-title a:hover {
+            color: #a58aff;
+        }
+
+        /* دسته‌بندی‌ها */
+        .categories {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+            scrollbar-width: none;
+        }
+
+        .categories::-webkit-scrollbar {
+            display: none;
         }
 
         .category-chip {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 0.7rem 1.8rem;
-            border-radius: 3rem;
-            cursor: pointer;
-            transition: 0.2s;
+            background: rgba(30, 30, 40, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            padding: 10px 22px;
+            white-space: nowrap;
             color: #ddd;
-            font-weight: 400;
-            backdrop-filter: blur(5px);
+            font-weight: 500;
+            transition: 0.2s;
+            cursor: pointer;
+            font-size: 14px;
         }
 
-        .category-chip:hover, .category-chip.active {
-            background: #a78bfa;
+        .category-chip.active, .category-chip:hover {
+            background: #8b5cf6;
+            border-color: #8b5cf6;
             color: white;
-            border-color: #a78bfa;
-            box-shadow: 0 5px 15px rgba(167, 139, 250, 0.4);
         }
 
-        .subcategories {
-            margin-top: 1.2rem;
-        }
-
-        /* کارت آگهی‌ها */
+        /* گرید آگهی‌ها دو ستونه */
         .ads-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
         }
 
         .ad-card {
-            background: rgba(20, 20, 35, 0.6);
+            background: rgba(20, 20, 28, 0.7);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 2.5rem;
+            border-radius: 28px;
             overflow: hidden;
-            transition: 0.3s;
             cursor: pointer;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: 0.25s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .ad-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 30px 40px -10px rgba(167, 139, 250, 0.4);
-            border-color: #a78bfa;
+            transform: translateY(-6px);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 20px 30px -15px #8b5cf6;
         }
 
         .ad-card-image {
             width: 100%;
-            height: 210px;
+            aspect-ratio: 1 / 1;
+            background: #1a1a24;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ad-card-image img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.5s;
+        }
+
+        .ad-card:hover .ad-card-image img {
+            transform: scale(1.05);
+        }
+
+        .ad-card-image .watermark {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            color: white;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            z-index: 2;
         }
 
         .ad-card-content {
-            padding: 1.5rem;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .ad-card-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.6rem;
+            font-weight: 600;
+            font-size: 15px;
             color: #fff;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.5;
+            min-height: 45px;
         }
 
         .ad-card-price {
-            color: #f0c0a0;
             font-weight: 700;
-            margin-bottom: 0.7rem;
-            font-size: 1.2rem;
-            background: rgba(0,0,0,0.2);
-            display: inline-block;
-            padding: 0.2rem 1rem;
-            border-radius: 2rem;
+            font-size: 16px;
+            color: #8b5cf6;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .ad-card-meta {
             display: flex;
-            justify-content: space-between;
-            color: #bbb;
-            font-size: 0.95rem;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: #aaa;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .ad-card-meta i {
+            font-size: 12px;
+            color: #a58aff;
+        }
+
+        .special-badge {
+            background: #f59e0b;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
         }
 
         /* مودال جزئیات آگهی */
@@ -329,289 +496,237 @@
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(20px);
-            z-index: 2000;
-            padding: 2rem;
+            z-index: 1000;
             overflow-y: auto;
-            align-items: center;
-            justify-content: center;
+            padding: 0;
         }
 
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: block; }
 
         .modal-content {
-            max-width: 950px;
-            width: 100%;
-            background: rgba(20, 20, 35, 0.9);
-            backdrop-filter: blur(30px);
-            border-radius: 3rem;
-            padding: 2.5rem;
-            position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 40px 70px -10px black;
-            animation: modalFadeIn 0.3s;
-        }
-
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 1.5rem;
-            left: 1.8rem;
-            background: rgba(255,255,255,0.1);
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(15, 15, 20, 0.9);
+            backdrop-filter: blur(20px);
             border: none;
-            color: white;
-            font-size: 2.5rem;
-            cursor: pointer;
+            border-radius: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .modal-back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #8b5cf6;
+            border: none;
+            border-radius: 50%;
             width: 50px;
             height: 50px;
-            border-radius: 50%;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.3s;
-            border: 1px solid rgba(255,255,255,0.1);
-            line-height: 1;
+            transition: 0.2s;
+            z-index: 1001;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
-        .close-modal:hover {
-            background: rgba(255,80,80,0.3);
-            transform: rotate(90deg);
-            color: #ff8a8a;
-        }
+        .modal-back:hover { transform: scale(1.1); }
 
-        .modal-detail {
-            margin-top: 1rem;
-        }
-
-        .modal-title {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff, #d8b4fe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1.5rem;
-            padding-left: 2rem;
+        .modal-content-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 20px 100px 20px;
         }
 
         .modal-images {
             display: flex;
             gap: 1rem;
             overflow-x: auto;
-            padding: 1rem 0;
-            margin: 1.5rem 0;
-            scrollbar-width: thin;
-            scrollbar-color: #a78bfa #2a2a3e;
-        }
-
-        .modal-images::-webkit-scrollbar {
-            height: 6px;
-        }
-        .modal-images::-webkit-scrollbar-track {
-            background: #2a2a3e;
-            border-radius: 10px;
-        }
-        .modal-images::-webkit-scrollbar-thumb {
-            background: #a78bfa;
-            border-radius: 10px;
+            margin: 1rem 0;
         }
 
         .modal-images img {
-            height: 220px;
-            border-radius: 2rem;
-            object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.1);
-            transition: 0.3s;
-            cursor: pointer;
-        }
-        .modal-images img:hover {
-            transform: scale(1.02);
-            border-color: #a78bfa;
+            height: 200px;
+            border-radius: 1rem;
         }
 
-        .modal-info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1.2rem;
-            background: rgba(0,0,0,0.2);
-            border-radius: 2rem;
-            padding: 1.8rem;
-            margin: 1.5rem 0;
-            border: 1px solid rgba(255,255,255,0.05);
+        .modal-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #fff;
         }
 
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #ddd;
-        }
-        .info-item i {
-            width: 30px;
-            color: #a78bfa;
-            font-size: 1.3rem;
-        }
-        .info-item span {
-            font-weight: 500;
-        }
-        .info-item a {
-            color: #a78bfa;
-            text-decoration: none;
-            border-bottom: 1px dashed #a78bfa;
-        }
-        .info-item a:hover {
-            color: #d8b4fe;
+        .modal-price {
+            font-size: 20px;
+            font-weight: 600;
+            color: #8b5cf6;
+            margin: 10px 0;
         }
 
         .modal-description {
-            background: rgba(0,0,0,0.2);
-            border-radius: 2rem;
-            padding: 1.5rem;
-            border: 1px solid rgba(255,255,255,0.05);
-            margin: 1.5rem 0;
-            line-height: 1.9;
+            background: rgba(255,255,255,0.03);
+            border-radius: 30px;
+            padding: 16px;
+            margin: 15px 0;
+            color: #ddd;
         }
 
-        .modal-actions {
+        .modal-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 16px 20px;
+            background: rgba(15, 15, 20, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
+            gap: 15px;
+            justify-content: center;
+            z-index: 1000;
         }
-        .modal-actions .btn {
+
+        .modal-footer button {
             flex: 1;
-            padding: 1rem;
-            border-radius: 3rem;
-            border: none;
-            font-weight: 600;
-            font-size: 1.1rem;
+            padding: 14px 12px;
+            border-radius: 40px;
+            font-weight: bold;
             cursor: pointer;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            transition: 0.3s;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            gap: 8px;
+            transition: 0.2s;
+            font-size: 16px;
+            border: none;
+        }
+
+        .chat-btn {
+            background: #8b5cf6;
             color: white;
         }
-        .modal-actions .btn:hover {
-            background: #a78bfa;
-            border-color: #a78bfa;
+
+        .chat-btn:hover {
+            opacity: 0.9;
             transform: translateY(-3px);
         }
-        .btn-whatsapp {
-            background: #25d366 !important;
-            border-color: #25d366 !important;
+
+        .contact-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #8b5cf6 !important;
+            color: #fff;
         }
-        .btn-whatsapp:hover {
-            background: #20b859 !important;
+
+        .contact-btn:hover {
+            background: #8b5cf6;
+            color: white;
         }
 
         /* فرم ثبت آگهی */
         .form-container {
-            background: rgba(20, 20, 35, 0.6);
-            border-radius: 3rem;
-            padding: 2.5rem;
+            background: rgba(20, 20, 28, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: 24px;
             border: 1px solid rgba(255,255,255,0.05);
-            backdrop-filter: blur(12px);
         }
 
         .form-group {
-            margin-bottom: 1.8rem;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.6rem;
-            color: #b7a9ff;
+            margin-bottom: 8px;
+            color: #aaa;
             font-weight: 500;
-            font-size: 1.1rem;
         }
 
         .form-group input, .form-group textarea, .form-group select {
             width: 100%;
-            padding: 1rem 1.5rem;
-            border-radius: 3rem;
+            padding: 12px 20px;
+            border-radius: 40px;
             border: 1px solid rgba(255,255,255,0.1);
             background: rgba(0,0,0,0.3);
             color: white;
-            font-size: 1rem;
-            transition: 0.3s;
-        }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-            outline: none;
-            border-color: #a78bfa;
-            background: rgba(0,0,0,0.5);
+            font-size: 14px;
         }
 
         .image-preview {
             display: flex;
-            gap: 0.8rem;
+            gap: 8px;
             flex-wrap: wrap;
-            margin-top: 1rem;
+            margin-top: 10px;
         }
+
         .image-preview img {
-            width: 90px;
-            height: 90px;
-            border-radius: 1.5rem;
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
             object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.1);
         }
 
         .btn {
-            background: linear-gradient(135deg, #a78bfa, #7c3aed);
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
             border: none;
             color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 3rem;
+            padding: 14px 24px;
+            border-radius: 40px;
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
             display: inline-flex;
             align-items: center;
-            gap: 0.8rem;
-            font-size: 1.1rem;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
         }
+
         .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(167, 139, 250, 0.4);
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
         }
 
         /* پنل مدیریت */
         .admin-panel {
-            background: rgba(0,0,0,0.3);
-            border-radius: 3rem;
-            padding: 2.5rem;
-            margin-top: 2rem;
-            backdrop-filter: blur(12px);
+            background: rgba(20, 20, 28, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
         .admin-tabs {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 10px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
         .admin-tab {
             background: transparent;
-            border: 1px solid #a78bfa;
-            color: #a78bfa;
-            padding: 0.7rem 2rem;
-            border-radius: 3rem;
+            border: 1px solid #8b5cf6;
+            color: #8b5cf6;
+            padding: 8px 18px;
+            border-radius: 40px;
             cursor: pointer;
             font-weight: 500;
-            transition: 0.3s;
+            transition: 0.2s;
         }
-        .admin-tab.active {
-            background: #a78bfa;
+
+        .admin-tab.active, .admin-tab:hover {
+            background: #8b5cf6;
             color: white;
         }
 
@@ -619,150 +734,219 @@
             width: 100%;
             border-collapse: collapse;
             background: rgba(0,0,0,0.2);
-            border-radius: 2rem;
+            border-radius: 30px;
             overflow: hidden;
         }
+
         .admin-table th, .admin-table td {
-            padding: 1rem;
+            padding: 12px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             text-align: right;
         }
+
         .admin-table th {
-            background: rgba(167, 139, 250, 0.2);
+            background: rgba(139, 92, 246, 0.2);
             color: #d8b4fe;
         }
+
         .admin-table button {
             background: rgba(255,255,255,0.1);
             border: 1px solid rgba(255,255,255,0.2);
             color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 2rem;
+            padding: 4px 12px;
+            border-radius: 40px;
             cursor: pointer;
             margin: 0 3px;
         }
+
         .admin-table button:hover {
-            background: #a78bfa;
+            background: #8b5cf6;
         }
 
-        /* responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            .hamburger {
-                display: flex;
-            }
-            .container {
-                padding: 0 1rem;
-            }
-            .modal-content {
-                padding: 1.8rem;
-            }
-            .modal-title {
-                font-size: 1.6rem;
-            }
-            .modal-images img {
-                height: 150px;
-            }
-            .whatsapp-float {
-                width: 55px;
-                height: 55px;
-                font-size: 30px;
-                bottom: 15px;
-                left: 15px;
-            }
+        /* نوار پایین */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(15, 15, 20, 0.8);
+            backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            z-index: 100;
         }
 
-        /* انیمیشن صفحات */
-        .page {
-            animation: pageFade 0.4s;
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #aaa;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 12px;
         }
-        @keyframes pageFade {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .nav-item.active {
+            color: #a58aff;
         }
+
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 2px;
+        }
+
+        /* دکمه شناور واتساپ (اختیاری) */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            background: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+            transition: 0.3s;
+            z-index: 99;
+            border: 2px solid rgba(255,255,255,0.2);
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background: #20b859;
+        }
+
+        .page { display: none; }
+        .page.active { display: block; }
     </style>
 </head>
 <body>
-    <!-- هدر ثابت -->
+    <!-- هدر -->
     <div class="header">
-        <div class="logo">J-DAR</div>
-        <div class="nav-links">
-            <a href="#" id="home-link"><i class="fas fa-home"></i> <span data-i18n="home">خانه</span></a>
-            <a href="#" id="submit-link"><i class="fas fa-plus-circle"></i> <span data-i18n="post_ad">ثبت آگهی</span></a>
-            <button class="lang-btn" id="lang-fa"><i class="fas fa-globe"></i> FA</button>
-            <button class="lang-btn" id="lang-ar">AR</button>
-            <button class="lang-btn" id="lang-en">EN</button>
-            <button class="lang-btn" id="admin-toggle"><i class="fas fa-cog"></i></button>
+        <div class="logo">
+            <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+            <span class="logo-text">J-DAR</span>
         </div>
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="header-left">
+            <button class="icon-btn" id="lang-fa" title="فارسی"><i class="fas fa-globe"></i></button>
+            <button class="icon-btn" id="lang-ar" title="العربية">AR</button>
+            <button class="icon-btn" id="lang-en" title="English">EN</button>
+            <button class="icon-btn" id="admin-toggle" title="مدیریت"><i class="fas fa-cog"></i></button>
         </div>
     </div>
 
-    <!-- منوی موبایل -->
-    <div class="mobile-menu" id="mobile-menu">
-        <a href="#" id="mobile-home"><i class="fas fa-home"></i> خانه</a>
-        <a href="#" id="mobile-submit"><i class="fas fa-plus-circle"></i> ثبت آگهی</a>
-        <button id="mobile-lang-fa"><i class="fas fa-globe"></i> فارسی</button>
-        <button id="mobile-lang-ar"><i class="fas fa-globe"></i> العربية</button>
-        <button id="mobile-lang-en"><i class="fas fa-globe"></i> English</button>
-        <button id="mobile-admin"><i class="fas fa-cog"></i> مدیریت</button>
-    </div>
-
-    <!-- دکمه شناور واتساپ -->
-    <a href="https://wa.me/989332356547" class="whatsapp-float" target="_blank" title="چت در واتساپ">
+    <!-- دکمه شناور واتساپ (اختیاری) -->
+    <a href="https://wa.me/989332356547" class="whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <!-- محتوای اصلی -->
     <div class="container">
-        <!-- صفحه اصلی -->
-        <div id="home-page" class="page">
-            <div class="search-section">
-                <div class="search-box">
-                    <input type="text" id="search-input" placeholder="جستجو در آگهی‌ها...">
-                    <button id="search-btn"><i class="fas fa-search"></i> <span data-i18n="search">جستجو</span></button>
+        <!-- کیف پول (دکوری) -->
+        <div class="wallet-card">
+            <div class="wallet-row">
+                <div class="wallet-info">
+                    <h4>💰 موجودی کیف پول</h4>
+                    <div class="amount"><span id="walletBalance">۰</span> <small>تومان</small></div>
                 </div>
-                <div class="categories" id="main-categories"></div>
-                <div class="subcategories" id="sub-categories"></div>
+                <div class="wallet-points">
+                    <i class="fas fa-star"></i>
+                    <span class="points-num" id="userPoints">۰</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- کارت اطلاعیه (دکوری) -->
+        <div class="notice-card">
+            <div class="notice-icon"><i class="fas fa-bullhorn"></i></div>
+            <div class="notice-text" id="noticeText">تنها حمایت شما از این پلتفرم، معرفی آن به دوستان و آشنایانتان است. با تشکر از همراهی شما.</div>
+            <div class="notice-edit" id="noticeEditBtn" style="display: none;"><i class="fas fa-pencil-alt"></i></div>
+        </div>
+
+        <!-- گرید اقدامات سریع -->
+        <div class="action-grid">
+            <div class="action-item" id="submit-link">
+                <i class="fas fa-plus-circle"></i>
+                <span>ثبت آگهی</span>
+            </div>
+            <div class="action-item" id="vipPlaceholder">
+                <i class="fas fa-crown"></i>
+                <span>ویژه</span>
+            </div>
+            <div class="action-item" id="chargePlaceholder">
+                <i class="fas fa-wallet"></i>
+                <span>شارژ</span>
+            </div>
+            <div class="action-item" id="convertPlaceholder">
+                <i class="fas fa-gift"></i>
+                <span>تبدیل</span>
+            </div>
+        </div>
+
+        <!-- صفحه اصلی (خانه) -->
+        <div id="home-page" class="page active">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="جستجو در آگهی‌ها...">
+                <button id="search-btn">جستجو</button>
+            </div>
+
+            <div class="section-title">
+                <h3>دسته‌بندی‌ها</h3>
+                <a href="#" id="all-categories-link">همه</a>
+            </div>
+            <div class="categories" id="main-categories"></div>
+            <div class="categories" id="sub-categories"></div>
+
+            <div class="section-title">
+                <h3>آگهی‌ها</h3>
+                <a href="#" id="more-ads-link">بیشتر</a>
             </div>
             <div class="ads-grid" id="ads-list"></div>
         </div>
 
         <!-- صفحه ثبت آگهی -->
-        <div id="submit-page" class="page" style="display: none;">
+        <div id="submit-page" class="page">
             <div class="form-container">
-                <h2 style="margin-bottom: 2rem;"><i class="fas fa-plus-circle" style="color: #a78bfa;"></i> <span data-i18n="post_ad">ثبت آگهی جدید</span></h2>
+                <h2 style="margin-bottom: 20px;"><i class="fas fa-plus-circle" style="color: #8b5cf6;"></i> ثبت آگهی جدید</h2>
                 <form id="ad-form">
                     <div class="form-group">
-                        <label data-i18n="enter_title">عنوان آگهی</label>
+                        <label>عنوان آگهی</label>
                         <input type="text" id="title" required>
                     </div>
                     <div class="form-group">
-                        <label data-i18n="enter_description">توضیحات</label>
+                        <label>توضیحات</label>
                         <textarea id="description" rows="4" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label data-i18n="select_category">دسته اصلی</label>
+                        <label>دسته اصلی</label>
                         <select id="main-category" required>
                             <option value="">انتخاب کنید</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label data-i18n="select_subcategory">زیرمجموعه (اختیاری)</label>
+                        <label>زیرمجموعه (اختیاری)</label>
                         <select id="sub-category">
                             <option value="">بدون زیرمجموعه</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label data-i18n="enter_price">قیمت (اختیاری)</label>
+                        <label>قیمت (اختیاری)</label>
                         <input type="text" id="price" placeholder="مثلاً ۵۰۰,۰۰۰ تومان">
                     </div>
                     <div class="form-group">
-                        <label data-i18n="select_currency">واحد پول</label>
+                        <label>واحد پول</label>
                         <select id="currency">
                             <option value="تومان">تومان</option>
                             <option value="دلار">دلار</option>
@@ -770,63 +954,64 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label data-i18n="enter_phone">شماره تماس</label>
+                        <label>شماره تماس</label>
                         <input type="tel" id="phone" required>
                     </div>
                     <div class="form-group">
                         <label>واتساپ (اختیاری)</label>
-                        <input type="text" id="whatsapp" placeholder="شماره واتساپ">
+                        <input type="text" id="whatsapp">
                     </div>
                     <div class="form-group">
-                        <label data-i18n="enter_photos">تصاویر (حداکثر ۵)</label>
+                        <label>تصاویر (حداکثر ۵)</label>
                         <input type="file" id="image-input" accept="image/*" multiple>
                         <div class="image-preview" id="image-preview"></div>
                     </div>
-                    <button type="submit" class="btn"><i class="fas fa-save"></i> <span data-i18n="save">ثبت آگهی</span></button>
+                    <button type="submit" class="btn"><i class="fas fa-save"></i> ثبت آگهی</button>
                 </form>
             </div>
         </div>
 
         <!-- پنل مدیریت -->
-        <div id="admin-panel" class="admin-panel" style="display: none;">
-            <h2 style="margin-bottom: 2rem;"><i class="fas fa-cog" style="color: #a78bfa;"></i> <span data-i18n="admin">پنل مدیریت</span></h2>
-            <div id="admin-login-section">
-                <div class="form-group">
-                    <label>توکن ادمین</label>
-                    <input type="password" id="admin-token" placeholder="توکن خود را وارد کنید">
+        <div id="admin-panel" class="page">
+            <div class="admin-panel">
+                <h2 style="margin-bottom: 20px;"><i class="fas fa-cog" style="color: #8b5cf6;"></i> پنل مدیریت</h2>
+                <div id="admin-login-section">
+                    <div class="form-group">
+                        <label>توکن ادمین</label>
+                        <input type="password" id="admin-token" placeholder="توکن خود را وارد کنید">
+                    </div>
+                    <button class="btn" id="admin-login"><i class="fas fa-sign-in-alt"></i> ورود</button>
                 </div>
-                <button class="btn" id="admin-login"><i class="fas fa-sign-in-alt"></i> ورود</button>
-            </div>
-            <div id="admin-content" style="display: none;">
-                <div class="admin-tabs">
-                    <button class="admin-tab active" data-tab="pending"><span data-i18n="pending_ads">در انتظار</span></button>
-                    <button class="admin-tab" data-tab="prices"><span data-i18n="price_settings">قیمت‌ها</span></button>
-                    <button class="admin-tab" data-tab="feedback"><span data-i18n="feedback">بازخوردها</span></button>
-                    <button class="admin-tab" data-tab="stats"><span data-i18n="statistics">آمار</span></button>
-                </div>
-                <div class="admin-tab-content" id="admin-pending">
-                    <table class="admin-table" id="pending-table">
-                        <thead><tr><th>شناسه</th><th>عنوان</th><th>شماره</th><th>عملیات</th></tr></thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-                <div class="admin-tab-content" id="admin-prices" style="display: none;">
-                    <!-- inputs قیمت -->
-                    <div class="form-group"><label>قیمت آگهی ویژه ۱ روزه</label><input type="number" id="price_special1"></div>
-                    <div class="form-group"><label>قیمت آگهی ویژه ۳ روزه</label><input type="number" id="price_special3"></div>
-                    <div class="form-group"><label>قیمت VIP 1 ماهه</label><input type="number" id="price_vip1"></div>
-                    <div class="form-group"><label>قیمت VIP 3 ماهه</label><input type="number" id="price_vip3"></div>
-                    <div class="form-group"><label>قیمت VIP 6 ماهه</label><input type="number" id="price_vip6"></div>
-                    <button class="btn" id="save-prices">ذخیره</button>
-                </div>
-                <div class="admin-tab-content" id="admin-feedback" style="display: none;">
-                    <table class="admin-table" id="feedback-table">
-                        <thead><tr><th>نام</th><th>شماره</th><th>پیام</th><th>تاریخ</th></tr></thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-                <div class="admin-tab-content" id="admin-stats" style="display: none;">
-                    <div id="stats-content" style="background: rgba(0,0,0,0.2); border-radius: 2rem; padding: 2rem;"></div>
+                <div id="admin-content" style="display: none;">
+                    <div class="admin-tabs">
+                        <button class="admin-tab active" data-tab="pending">در انتظار</button>
+                        <button class="admin-tab" data-tab="prices">قیمت‌ها</button>
+                        <button class="admin-tab" data-tab="feedback">بازخوردها</button>
+                        <button class="admin-tab" data-tab="stats">آمار</button>
+                    </div>
+                    <div class="admin-tab-content" id="admin-pending">
+                        <table class="admin-table" id="pending-table">
+                            <thead><tr><th>شناسه</th><th>عنوان</th><th>شماره</th><th>عملیات</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="admin-tab-content" id="admin-prices" style="display: none;">
+                        <div class="form-group"><label>قیمت ویژه ۱ روزه</label><input type="number" id="price_special1"></div>
+                        <div class="form-group"><label>قیمت ویژه ۳ روزه</label><input type="number" id="price_special3"></div>
+                        <div class="form-group"><label>قیمت VIP 1 ماهه</label><input type="number" id="price_vip1"></div>
+                        <div class="form-group"><label>قیمت VIP 3 ماهه</label><input type="number" id="price_vip3"></div>
+                        <div class="form-group"><label>قیمت VIP 6 ماهه</label><input type="number" id="price_vip6"></div>
+                        <button class="btn" id="save-prices">ذخیره</button>
+                    </div>
+                    <div class="admin-tab-content" id="admin-feedback" style="display: none;">
+                        <table class="admin-table" id="feedback-table">
+                            <thead><tr><th>نام</th><th>شماره</th><th>پیام</th><th>تاریخ</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="admin-tab-content" id="admin-stats" style="display: none;">
+                        <div id="stats-content"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -834,15 +1019,22 @@
         <!-- مودال جزئیات آگهی -->
         <div class="modal" id="ad-modal">
             <div class="modal-content">
-                <button class="close-modal" id="close-modal">&times;</button>
-                <div id="modal-detail" class="modal-detail"></div>
+                <button class="modal-back" id="close-modal"><i class="fas fa-arrow-right"></i></button>
+                <div class="modal-content-scroll" id="modal-detail"></div>
             </div>
         </div>
     </div>
 
+    <!-- نوار پایین -->
+    <div class="bottom-nav">
+        <div class="nav-item active" data-page="home"><i class="fas fa-home"></i><span>خانه</span></div>
+        <div class="nav-item" data-page="submit"><i class="fas fa-plus-circle"></i><span>ثبت</span></div>
+        <div class="nav-item" data-page="admin"><i class="fas fa-cog"></i><span>مدیریت</span></div>
+    </div>
+
     <script>
         // ==================== تنظیمات ====================
-        const API_URL = 'https://j-dar-market.j-dar-market.workers.dev';
+        const API_URL = 'https://jdar-platform.your-subdomain.workers.dev'; // آدرس Worker خود را اینجا قرار دهید
         let currentLang = localStorage.getItem('lang') || 'fa';
         let categories = [];
         let currentMainCat = null;
@@ -853,12 +1045,81 @@
 
         // ترجمه‌ها
         const translations = {
-            fa: { home:'خانه', post_ad:'ثبت آگهی', admin:'مدیریت', search:'جستجو', enter_title:'عنوان آگهی', enter_description:'توضیحات', select_category:'دسته اصلی', select_subcategory:'زیرمجموعه (اختیاری)', enter_price:'قیمت (اختیاری)', select_currency:'واحد پول', enter_phone:'شماره تماس', enter_photos:'تصاویر (حداکثر ۵)', save:'ثبت آگهی', pending_ads:'در انتظار', price_settings:'قیمت‌ها', feedback:'بازخوردها', statistics:'آمار', no_ads:'آگهی‌ای یافت نشد', approve:'تأیید', reject:'رد', view:'مشاهده' },
-            ar: { home:'الرئيسية', post_ad:'إعلان', admin:'الإدارة', search:'بحث', enter_title:'العنوان', enter_description:'الوصف', select_category:'الفئة الرئيسية', select_subcategory:'الفئة الفرعية', enter_price:'السعر', select_currency:'العملة', enter_phone:'رقم الهاتف', enter_photos:'الصور', save:'حفظ', pending_ads:'قيد الانتظار', price_settings:'الأسعار', feedback:'الآراء', statistics:'الإحصائيات', no_ads:'لا توجد إعلانات', approve:'موافقة', reject:'رفض', view:'عرض' },
-            en: { home:'Home', post_ad:'Post Ad', admin:'Admin', search:'Search', enter_title:'Title', enter_description:'Description', select_category:'Main Category', select_subcategory:'Subcategory', enter_price:'Price', select_currency:'Currency', enter_phone:'Phone', enter_photos:'Photos (max 5)', save:'Submit', pending_ads:'Pending', price_settings:'Prices', feedback:'Feedback', statistics:'Stats', no_ads:'No ads found', approve:'Approve', reject:'Reject', view:'View' }
+            fa: {
+                home: 'خانه',
+                post_ad: 'ثبت آگهی',
+                admin: 'مدیریت',
+                search: 'جستجو',
+                enter_title: 'عنوان آگهی',
+                enter_description: 'توضیحات',
+                select_category: 'دسته اصلی',
+                select_subcategory: 'زیرمجموعه (اختیاری)',
+                enter_price: 'قیمت (اختیاری)',
+                select_currency: 'واحد پول',
+                enter_phone: 'شماره تماس',
+                enter_photos: 'تصاویر (حداکثر ۵)',
+                save: 'ثبت آگهی',
+                pending_ads: 'در انتظار',
+                price_settings: 'قیمت‌ها',
+                feedback: 'بازخوردها',
+                statistics: 'آمار',
+                no_ads: 'آگهی‌ای یافت نشد',
+                approve: 'تأیید',
+                reject: 'رد',
+                view: 'مشاهده',
+            },
+            ar: {
+                home: 'الرئيسية',
+                post_ad: 'إعلان',
+                admin: 'الإدارة',
+                search: 'بحث',
+                enter_title: 'العنوان',
+                enter_description: 'الوصف',
+                select_category: 'الفئة الرئيسية',
+                select_subcategory: 'الفئة الفرعية',
+                enter_price: 'السعر',
+                select_currency: 'العملة',
+                enter_phone: 'رقم الهاتف',
+                enter_photos: 'الصور',
+                save: 'حفظ',
+                pending_ads: 'قيد الانتظار',
+                price_settings: 'الأسعار',
+                feedback: 'الآراء',
+                statistics: 'الإحصائيات',
+                no_ads: 'لا توجد إعلانات',
+                approve: 'موافقة',
+                reject: 'رفض',
+                view: 'عرض',
+            },
+            en: {
+                home: 'Home',
+                post_ad: 'Post Ad',
+                admin: 'Admin',
+                search: 'Search',
+                enter_title: 'Title',
+                enter_description: 'Description',
+                select_category: 'Main Category',
+                select_subcategory: 'Subcategory',
+                enter_price: 'Price',
+                select_currency: 'Currency',
+                enter_phone: 'Phone',
+                enter_photos: 'Photos (max 5)',
+                save: 'Submit',
+                pending_ads: 'Pending',
+                price_settings: 'Prices',
+                feedback: 'Feedback',
+                statistics: 'Stats',
+                no_ads: 'No ads found',
+                approve: 'Approve',
+                reject: 'Reject',
+                view: 'View'
+            }
         };
 
-        function t(key) { return translations[currentLang]?.[key] || key; }
+        function t(key) {
+            return translations[currentLang]?.[key] || key;
+        }
+
         function updateUILang() {
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
@@ -878,7 +1139,9 @@
             return await res.json();
         }
 
-        function showMessage(msg, type = 'success') { alert(msg); }
+        function showMessage(msg, type = 'success') {
+            alert(msg);
+        }
 
         // ==================== بارگذاری دسته‌بندی‌ها ====================
         async function loadCategories() {
@@ -888,12 +1151,16 @@
                     categories = data.categories;
                     renderMainCategories();
                 }
-            } catch (e) { console.error(e); }
+            } catch (e) {
+                console.error(e);
+            }
         }
 
         function renderMainCategories() {
             const mains = categories.filter(c => !c.parent_id);
-            let html = mains.map(c => `<span class="category-chip ${currentMainCat === c.id ? 'active' : ''}" data-id="${c.id}">${c.name_fa}</span>`).join('');
+            let html = mains.map(c => 
+                `<span class="category-chip ${currentMainCat === c.id ? 'active' : ''}" data-id="${c.id}">${c.name_fa}</span>`
+            ).join('');
             document.getElementById('main-categories').innerHTML = html;
             document.querySelectorAll('#main-categories .category-chip').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -909,10 +1176,15 @@
         }
 
         function renderSubCategories() {
-            if (!currentMainCat) { document.getElementById('sub-categories').innerHTML = ''; return; }
+            if (!currentMainCat) {
+                document.getElementById('sub-categories').innerHTML = '';
+                return;
+            }
             const subs = categories.filter(c => c.parent_id === currentMainCat);
             let html = `<span class="category-chip ${currentSubCat === null ? 'active' : ''}" data-id="all">همه</span>`;
-            html += subs.map(c => `<span class="category-chip ${currentSubCat === c.id ? 'active' : ''}" data-id="${c.id}">${c.name_fa}</span>`).join('');
+            html += subs.map(c => 
+                `<span class="category-chip ${currentSubCat === c.id ? 'active' : ''}" data-id="${c.id}">${c.name_fa}</span>`
+            ).join('');
             document.getElementById('sub-categories').innerHTML = html;
             document.querySelectorAll('#sub-categories .category-chip').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -937,7 +1209,9 @@
                     allAds = data.ads;
                     renderAds(allAds);
                 }
-            } catch (e) { console.error(e); }
+            } catch (e) {
+                console.error(e);
+            }
         }
 
         function renderAds(ads) {
@@ -949,10 +1223,13 @@
             container.innerHTML = ads.map(ad => {
                 let images = [];
                 try { images = JSON.parse(ad.images || '[]'); } catch { images = []; }
-                const imgUrl = images.length ? `${API_URL}/image/${images[0]}` : 'https://via.placeholder.com/400x250?text=J-DAR';
+                const imgUrl = images.length ? `${API_URL}/image/${images[0]}` : 'https://via.placeholder.com/400x400?text=J-DAR';
                 return `
                     <div class="ad-card" data-id="${ad.id}">
-                        <img src="${imgUrl}" class="ad-card-image" onerror="this.src='https://via.placeholder.com/400x250?text=J-DAR'">
+                        <div class="ad-card-image">
+                            <img src="${imgUrl}" onerror="this.src='https://via.placeholder.com/400x400?text=J-DAR'">
+                            <div class="watermark">J-DAR</div>
+                        </div>
                         <div class="ad-card-content">
                             <div class="ad-card-title">${ad.title}</div>
                             <div class="ad-card-price">💰 ${ad.price || 'توافقی'} ${ad.currency || ''}</div>
@@ -964,12 +1241,12 @@
                     </div>
                 `;
             }).join('');
-            document.querySelectorAll('.ad-card').forEach(card => {
+            document.querySelectorAll('#ads-list .ad-card').forEach(card => {
                 card.addEventListener('click', () => showAdDetail(card.dataset.id));
             });
         }
 
-        // ==================== نمایش جزئیات آگهی (بهبود یافته) ====================
+        // ==================== نمایش جزئیات آگهی ====================
         async function showAdDetail(id) {
             try {
                 const data = await fetchAPI(`/api/ads/${id}`);
@@ -977,37 +1254,31 @@
                     const ad = data.ad;
                     let images = [];
                     try { images = JSON.parse(ad.images || '[]'); } catch { images = []; }
-                    const imagesHtml = images.map(img => `<img src="${API_URL}/image/${img}" alt="ad image" onclick="window.open(this.src)">`).join('');
+                    const imagesHtml = images.map(img => `<img src="${API_URL}/image/${img}" alt="">`).join('');
                     const date = new Date(ad.created_at * 1000).toLocaleDateString('fa-IR');
-                    const whatsappNumber = ad.whatsapp ? ad.whatsapp.replace(/\D/g,'') : ad.phone.replace(/\D/g,'');
-                    const modalHtml = `
+                    document.getElementById('modal-detail').innerHTML = `
                         <h2 class="modal-title">${ad.title}</h2>
                         <div class="modal-images">${imagesHtml || '<p style="color:#aaa;">بدون تصویر</p>'}</div>
-                        <div class="modal-info-grid">
-                            <div class="info-item"><i class="fas fa-tag"></i> <span>${ad.price || 'توافقی'} ${ad.currency || ''}</span></div>
-                            <div class="info-item"><i class="fas fa-phone-alt"></i> <a href="tel:${ad.phone}">${ad.phone}</a></div>
-                            ${ad.whatsapp ? `<div class="info-item"><i class="fab fa-whatsapp"></i> <a href="https://wa.me/${ad.whatsapp.replace(/\D/g,'')}" target="_blank">${ad.whatsapp}</a></div>` : ''}
-                            <div class="info-item"><i class="fas fa-calendar-alt"></i> <span>${date}</span></div>
-                            <div class="info-item"><i class="fas fa-eye"></i> <span>${ad.views || 0} بازدید</span></div>
-                            <div class="info-item"><i class="fas fa-folder"></i> <span>${ad.category_name || ''}</span></div>
-                        </div>
-                        <div class="modal-description">
-                            <strong>📄 توضیحات:</strong><br> ${ad.description}
-                        </div>
-                        <div class="modal-actions">
-                            <a href="tel:${ad.phone}" class="btn"><i class="fas fa-phone"></i> تماس</a>
-                            <a href="https://wa.me/${whatsappNumber}" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> واتساپ</a>
-                            <button class="btn" onclick="document.getElementById('ad-modal').classList.remove('active')"><i class="fas fa-times"></i> بستن</button>
+                        <div class="modal-price">💰 ${ad.price || 'توافقی'} ${ad.currency || ''}</div>
+                        <div class="modal-description"><strong>توضیحات:</strong><br>${ad.description}</div>
+                        <p><strong>شماره:</strong> ${ad.phone}</p>
+                        ${ad.whatsapp ? `<p><strong>واتساپ:</strong> ${ad.whatsapp}</p>` : ''}
+                        <p><strong>تاریخ:</strong> ${date}</p>
+                        <p><strong>بازدید:</strong> ${ad.views || 0}</p>
+                        <div class="modal-footer" style="position: static; margin-top: 20px;">
+                            <button class="contact-btn" onclick="window.location.href='tel:${ad.phone}'"><i class="fas fa-phone-alt"></i> تماس</button>
+                            ${ad.whatsapp ? `<button class="chat-btn" onclick="window.open('https://wa.me/${ad.whatsapp.replace(/\D/g,'')}')"><i class="fab fa-whatsapp"></i> واتساپ</button>` : ''}
                         </div>
                     `;
-                    document.getElementById('modal-detail').innerHTML = modalHtml;
                     document.getElementById('ad-modal').classList.add('active');
-                    fetchAPI(`/api/view/${id}`, { method: 'POST' }); // افزایش بازدید
+                    fetchAPI(`/api/view/${id}`, { method: 'POST' });
                 }
-            } catch (e) { console.error(e); }
+            } catch (e) {
+                console.error(e);
+            }
         }
 
-        // ثبت آگهی
+        // ==================== ثبت آگهی ====================
         document.getElementById('ad-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const title = document.getElementById('title').value;
@@ -1019,6 +1290,7 @@
             const phone = document.getElementById('phone').value;
             const whatsapp = document.getElementById('whatsapp').value;
             const images = uploadedFileIds;
+
             const data = { title, description, category_id, subcategory_id, price, currency, phone, whatsapp, images };
             try {
                 const res = await fetchAPI('/api/ads', { method:'POST', body: JSON.stringify(data) });
@@ -1027,7 +1299,7 @@
                     document.getElementById('ad-form').reset();
                     uploadedFileIds = [];
                     document.getElementById('image-preview').innerHTML = '';
-                    document.getElementById('home-link').click();
+                    showPage('home');
                 } else showMessage('خطا: ' + res.error, 'error');
             } catch { showMessage('خطا در ارتباط', 'error'); }
         });
@@ -1051,7 +1323,7 @@
             }
         });
 
-        // پنل مدیریت
+        // ==================== پنل مدیریت ====================
         document.getElementById('admin-login').addEventListener('click', async () => {
             const token = document.getElementById('admin-token').value;
             if (token) {
@@ -1074,9 +1346,9 @@
             if (data.success) {
                 document.querySelector('#pending-table tbody').innerHTML = data.ads.map(ad => `
                     <tr><td>${ad.id}</td><td>${ad.title}</td><td>${ad.phone}</td>
-                    <td><button onclick="approveAd(${ad.id})">✅ ${t('approve')}</button>
-                        <button onclick="rejectAd(${ad.id})">❌ ${t('reject')}</button>
-                        <button onclick="showAdDetail(${ad.id})">👁 ${t('view')}</button></td></tr>`).join('');
+                    <td><button onclick="approveAd(${ad.id})">✅ تایید</button>
+                        <button onclick="rejectAd(${ad.id})">❌ رد</button>
+                        <button onclick="showAdDetail(${ad.id})">👁 مشاهده</button></td></tr>`).join('');
             }
         }
         window.approveAd = async (id) => { await authFetch(`/api/admin/approve/${id}`, { method:'POST' }); loadPending(); };
@@ -1113,7 +1385,7 @@
             const data = await authFetch('/api/admin/stats');
             if (data.success) {
                 document.getElementById('stats-content').innerHTML = `
-                    <p>کل آگهی‌ها: ${data.totalAds}</p><p>تأیید شده: ${data.approvedAds}</p><p>در انتظار: ${data.pendingAds}</p>
+                    <p>کل آگهی‌ها: ${data.totalAds}</p><p>تایید شده: ${data.approvedAds}</p><p>در انتظار: ${data.pendingAds}</p>
                     <p>ویژه: ${data.specialAds}</p><p>بازدید کل: ${data.totalViews}</p><p>بازدید امروز: ${data.todayViews}</p><p>بازخوردها: ${data.feedbackCount}</p>`;
             }
         }
@@ -1128,63 +1400,58 @@
             });
         });
 
-        // ناوبری
-        document.getElementById('home-link').addEventListener('click', (e) => {
-            e.preventDefault();
-            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-            document.getElementById('home-page').style.display = 'block';
-            loadAds();
+        // ==================== ناوبری ====================
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId + '-page').classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.page === pageId);
+            });
+        }
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const page = item.dataset.page;
+                if (page === 'home') showPage('home');
+                else if (page === 'submit') showPage('submit');
+                else if (page === 'admin') showPage('admin');
+            });
         });
-        document.getElementById('submit-link').addEventListener('click', (e) => {
-            e.preventDefault();
-            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-            document.getElementById('submit-page').style.display = 'block';
+
+        document.getElementById('home-link').addEventListener('click', (e) => { e.preventDefault(); showPage('home'); });
+        document.getElementById('submit-link').addEventListener('click', (e) => { e.preventDefault(); showPage('submit'); });
+        document.getElementById('admin-toggle').addEventListener('click', (e) => { e.preventDefault(); showPage('admin'); });
+
+        document.getElementById('search-btn').addEventListener('click', loadAds);
+        document.getElementById('search-input').addEventListener('keyup', (e) => { if (e.key === 'Enter') loadAds(); });
+
+        // تغییر زبان
+        function setLang(lang) {
+            currentLang = lang; localStorage.setItem('lang', lang);
+            updateUILang(); loadAds();
+        }
+        document.getElementById('lang-fa').addEventListener('click', () => setLang('fa'));
+        document.getElementById('lang-ar').addEventListener('click', () => setLang('ar'));
+        document.getElementById('lang-en').addEventListener('click', () => setLang('en'));
+
+        // بستن مودال
+        document.getElementById('close-modal').addEventListener('click', () => {
+            document.getElementById('ad-modal').classList.remove('active');
+        });
+
+        // پر کردن dropdown دسته‌ها در صفحه ثبت
+        function populateCategoryDropdowns() {
             const mainSelect = document.getElementById('main-category');
             mainSelect.innerHTML = '<option value="">انتخاب کنید</option>' + 
                 categories.filter(c => !c.parent_id).map(c => `<option value="${c.id}">${c.name_fa}</option>`).join('');
-            mainSelect.onchange = function() {
+            mainSelect.addEventListener('change', function() {
                 const id = parseInt(this.value);
                 const subSelect = document.getElementById('sub-category');
                 if (!id) { subSelect.innerHTML = '<option value="">بدون زیرمجموعه</option>'; return; }
                 const subs = categories.filter(c => c.parent_id === id);
                 subSelect.innerHTML = '<option value="">بدون زیرمجموعه</option>' + subs.map(c => `<option value="${c.id}">${c.name_fa}</option>`).join('');
-            };
-        });
-        document.getElementById('admin-toggle').addEventListener('click', (e) => {
-            e.preventDefault();
-            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-            document.getElementById('admin-panel').style.display = 'block';
-            if (adminToken) {
-                document.getElementById('admin-login-section').style.display = 'none';
-                document.getElementById('admin-content').style.display = 'block';
-                loadAdminData();
-            } else {
-                document.getElementById('admin-login-section').style.display = 'block';
-                document.getElementById('admin-content').style.display = 'none';
-            }
-        });
-        document.getElementById('search-btn').addEventListener('click', loadAds);
-        document.getElementById('search-input').addEventListener('keyup', (e) => { if (e.key === 'Enter') loadAds(); });
-
-        // منوی موبایل
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobile-menu');
-        hamburger.addEventListener('click', () => mobileMenu.classList.toggle('active'));
-        document.getElementById('mobile-home').addEventListener('click', (e) => { e.preventDefault(); mobileMenu.classList.remove('active'); document.getElementById('home-link').click(); });
-        document.getElementById('mobile-submit').addEventListener('click', (e) => { e.preventDefault(); mobileMenu.classList.remove('active'); document.getElementById('submit-link').click(); });
-        document.getElementById('mobile-admin').addEventListener('click', () => { mobileMenu.classList.remove('active'); document.getElementById('admin-toggle').click(); });
-
-        // تغییر زبان
-        function setLang(lang) { currentLang = lang; localStorage.setItem('lang', lang); updateUILang(); loadAds(); }
-        document.getElementById('lang-fa').addEventListener('click', () => setLang('fa'));
-        document.getElementById('lang-ar').addEventListener('click', () => setLang('ar'));
-        document.getElementById('lang-en').addEventListener('click', () => setLang('en'));
-        document.getElementById('mobile-lang-fa').addEventListener('click', () => { setLang('fa'); mobileMenu.classList.remove('active'); });
-        document.getElementById('mobile-lang-ar').addEventListener('click', () => { setLang('ar'); mobileMenu.classList.remove('active'); });
-        document.getElementById('mobile-lang-en').addEventListener('click', () => { setLang('en'); mobileMenu.classList.remove('active'); });
-
-        // بستن مودال
-        document.getElementById('close-modal').addEventListener('click', () => document.getElementById('ad-modal').classList.remove('active'));
+            });
+        }
 
         // شروع
         loadCategories();
@@ -1195,6 +1462,11 @@
             document.getElementById('admin-content').style.display = 'block';
             loadAdminData();
         }
+        populateCategoryDropdowns();
+
+        // اضافه کردن مقادیر ساختگی برای کیف پول (دکوری)
+        document.getElementById('walletBalance').innerText = '۱,۲۵۰,۰۰۰';
+        document.getElementById('userPoints').innerText = '۳۲۰';
     </script>
 </body>
     </html>
