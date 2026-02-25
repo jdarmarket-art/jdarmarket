@@ -8,8 +8,6 @@
     <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
     <!-- فونت‌آیکون -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- مانیفست PWA (ساختگی) -->
-    <link rel="manifest" href="#">
     <style>
         * {
             margin: 0;
@@ -42,6 +40,8 @@
             right: 0;
             z-index: 1000;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            max-width: 480px;
+            margin: 0 auto;
         }
 
         .logo {
@@ -89,6 +89,8 @@
             left: 0;
             right: 0;
             z-index: 1000;
+            max-width: 480px;
+            margin: 0 auto;
         }
 
         .nav-item {
@@ -112,13 +114,17 @@
             color: #a78bfa;
         }
 
-        /* محتوای اصلی (با فاصله از هدر و فوتر) */
+        /* محتوای اصلی */
         .main-content {
             flex: 1;
             margin-top: 70px;
             margin-bottom: 80px;
             overflow-y: auto;
             padding: 1rem;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
         }
 
         /* صفحات */
@@ -214,7 +220,7 @@
         /* کارت آگهی‌ها */
         .ads-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 1rem;
         }
 
@@ -236,30 +242,38 @@
 
         .ad-card-image {
             width: 100%;
-            height: 180px;
+            height: 140px;
             object-fit: cover;
+            background: #1a1a2e;
         }
 
         .ad-card-content {
-            padding: 1rem;
+            padding: 0.8rem;
         }
 
         .ad-card-title {
             font-weight: 600;
-            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.5;
         }
 
         .ad-card-price {
             color: #a78bfa;
             font-weight: 700;
-            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
         }
 
         .ad-card-meta {
             display: flex;
             justify-content: space-between;
             color: #aaa;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
 
         .favorite-btn {
@@ -277,6 +291,7 @@
             cursor: pointer;
             color: #fff;
             border: 1px solid rgba(255,255,255,0.2);
+            z-index: 2;
         }
 
         .favorite-btn.active {
@@ -302,12 +317,13 @@
         }
 
         .modal-content {
-            max-width: 600px;
+            max-width: 450px;
             background: #1e1e2f;
             border-radius: 2rem;
             padding: 1.5rem;
             position: relative;
             width: 100%;
+            margin: auto;
         }
 
         .close-modal {
@@ -326,11 +342,13 @@
             gap: 0.5rem;
             overflow-x: auto;
             margin: 1rem 0;
+            padding-bottom: 0.5rem;
         }
 
         .modal-images img {
             height: 150px;
             border-radius: 1rem;
+            object-fit: cover;
         }
 
         /* فرم ثبت آگهی */
@@ -358,6 +376,7 @@
             border: 1px solid rgba(255,255,255,0.1);
             background: rgba(0,0,0,0.3);
             color: white;
+            font-family: 'Vazir', sans-serif;
         }
 
         .image-preview {
@@ -408,6 +427,7 @@
             padding: 0.4rem 1rem;
             border-radius: 2rem;
             cursor: pointer;
+            font-size: 0.8rem;
         }
 
         .admin-tab.active {
@@ -418,13 +438,23 @@
         .admin-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .admin-table th, .admin-table td {
             padding: 0.5rem;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             text-align: right;
+        }
+
+        .admin-table button {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 0.7rem;
         }
 
         /* پروفایل */
@@ -477,9 +507,9 @@
     <header class="header">
         <div class="logo">جدار</div>
         <div class="lang-buttons">
-            <button class="lang-btn" id="lang-fa">FA</button>
-            <button class="lang-btn" id="lang-ar">AR</button>
-            <button class="lang-btn" id="lang-en">EN</button>
+            <button class="lang-btn" id="lang-fa" data-i18n="lang_fa">FA</button>
+            <button class="lang-btn" id="lang-ar" data-i18n="lang_ar">AR</button>
+            <button class="lang-btn" id="lang-en" data-i18n="lang_en">EN</button>
         </div>
     </header>
 
@@ -489,7 +519,7 @@
         <div id="home-page" class="page active">
             <div class="search-section">
                 <div class="search-box">
-                    <input type="text" id="search-input" placeholder="جستجو در آگهی‌ها...">
+                    <input type="text" id="search-input" data-i18n-placeholder="search_placeholder" placeholder="جستجو در آگهی‌ها...">
                     <button id="search-btn"><i class="fas fa-search"></i> <span data-i18n="search">جستجو</span></button>
                 </div>
                 <div class="categories" id="main-categories"></div>
@@ -514,25 +544,25 @@
                     <div class="form-group">
                         <label data-i18n="select_category">دسته اصلی</label>
                         <select id="main-category" required>
-                            <option value="">انتخاب کنید</option>
+                            <option value="" data-i18n="select_option">انتخاب کنید</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label data-i18n="select_subcategory">زیرمجموعه (اختیاری)</label>
                         <select id="sub-category">
-                            <option value="">بدون زیرمجموعه</option>
+                            <option value="" data-i18n="no_subcategory">بدون زیرمجموعه</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label data-i18n="enter_price">قیمت (اختیاری)</label>
-                        <input type="text" id="price" placeholder="مثلاً ۵۰۰,۰۰۰ تومان">
+                        <input type="text" id="price" data-i18n-placeholder="price_placeholder" placeholder="مثلاً ۵۰۰,۰۰۰ تومان">
                     </div>
                     <div class="form-group">
                         <label data-i18n="select_currency">واحد پول</label>
                         <select id="currency">
-                            <option value="تومان">تومان</option>
-                            <option value="دلار">دلار</option>
-                            <option value="دینار">دینار</option>
+                            <option value="تومان" data-i18n="toman">تومان</option>
+                            <option value="دلار" data-i18n="dollar">دلار</option>
+                            <option value="دینار" data-i18n="dinar">دینار</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -540,7 +570,7 @@
                         <input type="tel" id="phone" required>
                     </div>
                     <div class="form-group">
-                        <label>واتساپ (اختیاری)</label>
+                        <label data-i18n="whatsapp">واتساپ (اختیاری)</label>
                         <input type="text" id="whatsapp">
                     </div>
                     <div class="form-group">
@@ -575,20 +605,24 @@
                     <span data-i18n="ads_count">تعداد آگهی‌ها</span>
                     <span id="profile-ads-count">0</span>
                 </div>
+                <div class="profile-field">
+                    <span data-i18n="member_since">عضو از</span>
+                    <span id="profile-member-since">---</span>
+                </div>
                 <button class="btn" id="admin-toggle" style="margin-top:1rem;"><i class="fas fa-cog"></i> <span data-i18n="admin">مدیریت</span></button>
             </div>
         </div>
 
-        <!-- صفحه پنل مدیریت (مخفی) -->
+        <!-- صفحه پنل مدیریت -->
         <div id="admin-page" class="page">
             <div class="admin-panel">
                 <h2 style="margin-bottom:1rem;"><i class="fas fa-cog"></i> <span data-i18n="admin">پنل مدیریت</span></h2>
                 <div id="admin-login-section">
                     <div class="form-group">
-                        <label>توکن ادمین</label>
-                        <input type="password" id="admin-token" placeholder="توکن خود را وارد کنید">
+                        <label data-i18n="admin_token">توکن ادمین</label>
+                        <input type="password" id="admin-token" data-i18n-placeholder="enter_token" placeholder="توکن خود را وارد کنید">
                     </div>
-                    <button class="btn" id="admin-login"><i class="fas fa-sign-in-alt"></i> ورود</button>
+                    <button class="btn" id="admin-login"><i class="fas fa-sign-in-alt"></i> <span data-i18n="login">ورود</span></button>
                 </div>
                 <div id="admin-content" style="display: none;">
                     <div class="admin-tabs">
@@ -596,29 +630,36 @@
                         <button class="admin-tab" data-tab="prices"><span data-i18n="price_settings">قیمت‌ها</span></button>
                         <button class="admin-tab" data-tab="feedback"><span data-i18n="feedback">بازخوردها</span></button>
                         <button class="admin-tab" data-tab="stats"><span data-i18n="statistics">آمار</span></button>
+                        <button class="admin-tab" data-tab="users"><span data-i18n="users">کاربران</span></button>
                     </div>
                     <div class="admin-tab-content" id="admin-pending">
                         <table class="admin-table" id="pending-table">
-                            <thead><tr><th>شناسه</th><th>عنوان</th><th>شماره</th><th>عملیات</th></tr></thead>
+                            <thead><tr><th data-i18n="id">شناسه</th><th data-i18n="title">عنوان</th><th data-i18n="phone">شماره</th><th data-i18n="actions">عملیات</th></tr></thead>
                             <tbody></tbody>
                         </table>
                     </div>
                     <div class="admin-tab-content" id="admin-prices" style="display: none;">
-                        <div class="form-group"><label>قیمت ویژه ۱ روزه</label><input type="number" id="price_special1"></div>
-                        <div class="form-group"><label>قیمت ویژه ۳ روزه</label><input type="number" id="price_special3"></div>
-                        <div class="form-group"><label>قیمت VIP 1 ماهه</label><input type="number" id="price_vip1"></div>
-                        <div class="form-group"><label>قیمت VIP 3 ماهه</label><input type="number" id="price_vip3"></div>
-                        <div class="form-group"><label>قیمت VIP 6 ماهه</label><input type="number" id="price_vip6"></div>
-                        <button class="btn" id="save-prices">ذخیره</button>
+                        <div class="form-group"><label data-i18n="price_special1">قیمت ویژه ۱ روزه</label><input type="number" id="price_special1"></div>
+                        <div class="form-group"><label data-i18n="price_special3">قیمت ویژه ۳ روزه</label><input type="number" id="price_special3"></div>
+                        <div class="form-group"><label data-i18n="price_vip1">قیمت VIP 1 ماهه</label><input type="number" id="price_vip1"></div>
+                        <div class="form-group"><label data-i18n="price_vip3">قیمت VIP 3 ماهه</label><input type="number" id="price_vip3"></div>
+                        <div class="form-group"><label data-i18n="price_vip6">قیمت VIP 6 ماهه</label><input type="number" id="price_vip6"></div>
+                        <button class="btn" id="save-prices"><span data-i18n="save">ذخیره</span></button>
                     </div>
                     <div class="admin-tab-content" id="admin-feedback" style="display: none;">
                         <table class="admin-table" id="feedback-table">
-                            <thead><tr><th>نام</th><th>شماره</th><th>پیام</th><th>تاریخ</th></tr></thead>
+                            <thead><tr><th data-i18n="name">نام</th><th data-i18n="phone">شماره</th><th data-i18n="message">پیام</th><th data-i18n="date">تاریخ</th></tr></thead>
                             <tbody></tbody>
                         </table>
                     </div>
                     <div class="admin-tab-content" id="admin-stats" style="display: none;">
-                        <div id="stats-content"></div>
+                        <div id="stats-content" style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:1rem;"></div>
+                    </div>
+                    <div class="admin-tab-content" id="admin-users" style="display: none;">
+                        <table class="admin-table" id="users-table">
+                            <thead><tr><th data-i18n="id">شناسه</th><th data-i18n="username">نام کاربری</th><th data-i18n="phone">شماره</th><th data-i18n="ads_count">تعداد آگهی</th><th data-i18n="actions">عملیات</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -656,10 +697,12 @@
         // ترجمه‌ها (کامل)
         const translations = {
             fa: {
+                lang_fa: 'FA', lang_ar: 'AR', lang_en: 'EN',
                 home: 'خانه',
                 post_ad: 'ثبت آگهی',
                 admin: 'مدیریت',
                 search: 'جستجو',
+                search_placeholder: 'جستجو در آگهی‌ها...',
                 enter_title: 'عنوان آگهی',
                 enter_description: 'توضیحات',
                 select_category: 'دسته اصلی',
@@ -683,12 +726,51 @@
                 phone: 'شماره تماس',
                 ads_count: 'تعداد آگهی‌ها',
                 no_favorites: 'هیچ آگهی به علاقه‌مندی‌ها اضافه نشده است.',
+                toman: 'تومان',
+                dollar: 'دلار',
+                dinar: 'دینار',
+                whatsapp: 'واتساپ (اختیاری)',
+                select_option: 'انتخاب کنید',
+                no_subcategory: 'بدون زیرمجموعه',
+                price_placeholder: 'مثلاً ۵۰۰,۰۰۰ تومان',
+                admin_token: 'توکن ادمین',
+                enter_token: 'توکن خود را وارد کنید',
+                login: 'ورود',
+                id: 'شناسه',
+                title: 'عنوان',
+                actions: 'عملیات',
+                name: 'نام',
+                message: 'پیام',
+                date: 'تاریخ',
+                users: 'کاربران',
+                member_since: 'عضو از',
+                price_special1: 'قیمت ویژه ۱ روزه',
+                price_special3: 'قیمت ویژه ۳ روزه',
+                price_vip1: 'قیمت VIP 1 ماهه',
+                price_vip3: 'قیمت VIP 3 ماهه',
+                price_vip6: 'قیمت VIP 6 ماهه',
+                total_ads: 'کل آگهی‌ها',
+                approved_ads: 'تأیید شده',
+                pending_ads_count: 'در انتظار',
+                special_ads: 'ویژه',
+                total_views: 'بازدید کل',
+                today_views: 'بازدید امروز',
+                feedback_count: 'تعداد بازخوردها',
+                block: 'مسدود',
+                unblock: 'رفع مسدود',
+                confirm_delete: 'آیا از حذف اطمینان دارید؟',
+                image_upload_error: 'خطا در آپلود تصویر',
+                max_images: 'حداکثر ۵ تصویر مجاز است',
+                ad_submitted: 'آگهی شما ثبت شد و پس از تأیید نمایش داده می‌شود.',
+                error_connection: 'خطا در ارتباط با سرور',
             },
             ar: {
+                lang_fa: 'FA', lang_ar: 'AR', lang_en: 'EN',
                 home: 'الرئيسية',
                 post_ad: 'إعلان',
                 admin: 'الإدارة',
                 search: 'بحث',
+                search_placeholder: 'ابحث في الإعلانات...',
                 enter_title: 'العنوان',
                 enter_description: 'الوصف',
                 select_category: 'الفئة الرئيسية',
@@ -712,12 +794,51 @@
                 phone: 'رقم الهاتف',
                 ads_count: 'عدد الإعلانات',
                 no_favorites: 'لم تتم إضافة أي إعلان إلى المفضلة بعد.',
+                toman: 'تومان',
+                dollar: 'دولار',
+                dinar: 'دينار',
+                whatsapp: 'واتساب',
+                select_option: 'اختر',
+                no_subcategory: 'بدون فئة فرعية',
+                price_placeholder: 'مثال: ٥٠٠,٠٠٠ تومان',
+                admin_token: 'رمز المسؤول',
+                enter_token: 'أدخل رمزك',
+                login: 'دخول',
+                id: 'رقم',
+                title: 'العنوان',
+                actions: 'إجراءات',
+                name: 'الاسم',
+                message: 'الرسالة',
+                date: 'التاريخ',
+                users: 'المستخدمين',
+                member_since: 'عضو منذ',
+                price_special1: 'سعر خاص ليوم واحد',
+                price_special3: 'سعر خاص لثلاثة أيام',
+                price_vip1: 'سعر VIP لشهر',
+                price_vip3: 'سعر VIP لثلاثة أشهر',
+                price_vip6: 'سعر VIP لستة أشهر',
+                total_ads: 'إجمالي الإعلانات',
+                approved_ads: 'تمت الموافقة',
+                pending_ads_count: 'قيد الانتظار',
+                special_ads: 'خاصة',
+                total_views: 'إجمالي المشاهدات',
+                today_views: 'مشاهدات اليوم',
+                feedback_count: 'عدد الآراء',
+                block: 'حظر',
+                unblock: 'إلغاء الحظر',
+                confirm_delete: 'هل أنت متأكد من الحذف؟',
+                image_upload_error: 'خطأ في تحميل الصورة',
+                max_images: 'الحد الأقصى 5 صور',
+                ad_submitted: 'تم إرسال إعلانك وسيتم عرضه بعد الموافقة.',
+                error_connection: 'خطأ في الاتصال بالخادم',
             },
             en: {
+                lang_fa: 'FA', lang_ar: 'AR', lang_en: 'EN',
                 home: 'Home',
                 post_ad: 'Post Ad',
                 admin: 'Admin',
                 search: 'Search',
+                search_placeholder: 'Search ads...',
                 enter_title: 'Title',
                 enter_description: 'Description',
                 select_category: 'Main Category',
@@ -730,7 +851,7 @@
                 pending_ads: 'Pending',
                 price_settings: 'Prices',
                 feedback: 'Feedback',
-                statistics: 'Stats',
+                statistics: 'Statistics',
                 no_ads: 'No ads found',
                 approve: 'Approve',
                 reject: 'Reject',
@@ -741,15 +862,63 @@
                 phone: 'Phone',
                 ads_count: 'Ads count',
                 no_favorites: 'No ads added to favorites yet.',
+                toman: 'Toman',
+                dollar: 'Dollar',
+                dinar: 'Dinar',
+                whatsapp: 'WhatsApp',
+                select_option: 'Select',
+                no_subcategory: 'No subcategory',
+                price_placeholder: 'e.g. 500,000 Toman',
+                admin_token: 'Admin Token',
+                enter_token: 'Enter your token',
+                login: 'Login',
+                id: 'ID',
+                title: 'Title',
+                actions: 'Actions',
+                name: 'Name',
+                message: 'Message',
+                date: 'Date',
+                users: 'Users',
+                member_since: 'Member since',
+                price_special1: 'Special price 1 day',
+                price_special3: 'Special price 3 days',
+                price_vip1: 'VIP price 1 month',
+                price_vip3: 'VIP price 3 months',
+                price_vip6: 'VIP price 6 months',
+                total_ads: 'Total ads',
+                approved_ads: 'Approved',
+                pending_ads_count: 'Pending',
+                special_ads: 'Special',
+                total_views: 'Total views',
+                today_views: 'Today views',
+                feedback_count: 'Feedback count',
+                block: 'Block',
+                unblock: 'Unblock',
+                confirm_delete: 'Are you sure?',
+                image_upload_error: 'Image upload error',
+                max_images: 'Maximum 5 images',
+                ad_submitted: 'Your ad has been submitted and will be displayed after approval.',
+                error_connection: 'Connection error',
             }
         };
 
-        function t(key) { return translations[currentLang]?.[key] || key; }
+        function t(key) {
+            return translations[currentLang]?.[key] || key;
+        }
 
         function updateUILang() {
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                el.innerText = t(key);
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
+                    if (el.getAttribute('data-i18n-placeholder')) {
+                        el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+                    }
+                } else {
+                    el.innerText = t(key);
+                }
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
             });
             document.documentElement.lang = currentLang;
             document.documentElement.dir = (currentLang === 'fa' || currentLang === 'ar') ? 'rtl' : 'ltr';
@@ -761,8 +930,13 @@
             if (!(options.body instanceof FormData)) {
                 options.headers['Content-Type'] = 'application/json';
             }
-            const res = await fetch(url, options);
-            return await res.json();
+            try {
+                const res = await fetch(url, options);
+                return await res.json();
+            } catch (e) {
+                console.error(e);
+                return { success: false, error: t('error_connection') };
+            }
         }
 
         function showMessage(msg) { alert(msg); }
@@ -830,8 +1004,21 @@
                 if (data.success) {
                     allAds = data.ads;
                     renderAds(allAds);
+                } else {
+                    allAds = [];
+                    renderAds([]);
                 }
             } catch (e) { console.error(e); }
+        }
+
+        function getImageUrl(imageIds) {
+            if (!imageIds || imageIds.length === 0) return 'https://via.placeholder.com/300x200?text=جدار';
+            try {
+                const ids = Array.isArray(imageIds) ? imageIds : JSON.parse(imageIds);
+                return ids.length ? `${API_URL}/image/${ids[0]}` : 'https://via.placeholder.com/300x200?text=جدار';
+            } catch {
+                return 'https://via.placeholder.com/300x200?text=جدار';
+            }
         }
 
         function renderAds(ads) {
@@ -841,9 +1028,7 @@
                 return;
             }
             container.innerHTML = ads.map(ad => {
-                let images = [];
-                try { images = JSON.parse(ad.images || '[]'); } catch { images = []; }
-                const imgUrl = images.length ? `${API_URL}/image/${images[0]}` : 'https://via.placeholder.com/300x200?text=جدار';
+                const imgUrl = getImageUrl(ad.images);
                 const isFav = favorites.includes(ad.id);
                 return `
                     <div class="ad-card" data-id="${ad.id}">
@@ -883,9 +1068,7 @@
                 return;
             }
             container.innerHTML = favAds.map(ad => {
-                let images = [];
-                try { images = JSON.parse(ad.images || '[]'); } catch { images = []; }
-                const imgUrl = images.length ? `${API_URL}/image/${images[0]}` : 'https://via.placeholder.com/300x200?text=جدار';
+                const imgUrl = getImageUrl(ad.images);
                 return `
                     <div class="ad-card" data-id="${ad.id}">
                         <img src="${imgUrl}" class="ad-card-image" onerror="this.src='https://via.placeholder.com/300x200?text=جدار'">
@@ -910,17 +1093,17 @@
                     const ad = data.ad;
                     let images = [];
                     try { images = JSON.parse(ad.images || '[]'); } catch { images = []; }
-                    const imagesHtml = images.map(img => `<img src="${API_URL}/image/${img}" alt="">`).join('');
+                    const imagesHtml = images.map(img => `<img src="${API_URL}/image/${img}" onerror="this.src='https://via.placeholder.com/150?text=J-DAR'">`).join('');
                     const date = new Date(ad.created_at * 1000).toLocaleDateString('fa-IR');
                     document.getElementById('modal-detail').innerHTML = `
                         <h2>${ad.title}</h2>
                         <div class="modal-images">${imagesHtml || '<p>بدون تصویر</p>'}</div>
-                        <p><strong>قیمت:</strong> ${ad.price || 'توافقی'} ${ad.currency || ''}</p>
-                        <p><strong>توضیحات:</strong> ${ad.description}</p>
-                        <p><strong>شماره تماس:</strong> ${ad.phone}</p>
-                        ${ad.whatsapp ? `<p><strong>واتساپ:</strong> ${ad.whatsapp}</p>` : ''}
-                        <p><strong>تاریخ:</strong> ${date}</p>
-                        <p><strong>بازدید:</strong> ${ad.views || 0}</p>
+                        <p><strong>${t('enter_price')}:</strong> ${ad.price || 'توافقی'} ${ad.currency || ''}</p>
+                        <p><strong>${t('enter_description')}:</strong> ${ad.description}</p>
+                        <p><strong>${t('enter_phone')}:</strong> ${ad.phone}</p>
+                        ${ad.whatsapp ? `<p><strong>${t('whatsapp')}:</strong> ${ad.whatsapp}</p>` : ''}
+                        <p><strong>${t('date')}:</strong> ${date}</p>
+                        <p><strong>${t('total_views')}:</strong> ${ad.views || 0}</p>
                     `;
                     document.getElementById('ad-modal').classList.add('active');
                     fetchAPI(`/api/view/${id}`, { method: 'POST' });
@@ -945,19 +1128,19 @@
             try {
                 const res = await fetchAPI('/api/ads', { method:'POST', body: JSON.stringify(data) });
                 if (res.success) {
-                    showMessage('آگهی شما ثبت شد و پس از تأیید نمایش داده می‌شود.');
+                    showMessage(t('ad_submitted'));
                     document.getElementById('ad-form').reset();
                     uploadedFileIds = [];
                     document.getElementById('image-preview').innerHTML = '';
                     showPage('home');
-                } else showMessage('خطا: ' + res.error);
-            } catch { showMessage('خطا در ارتباط'); }
+                } else showMessage(t('error') + ': ' + res.error);
+            } catch { showMessage(t('error_connection')); }
         });
 
         // آپلود تصویر
         document.getElementById('image-input').addEventListener('change', async (e) => {
             const files = Array.from(e.target.files);
-            if (files.length + uploadedFileIds.length > 5) { alert('حداکثر ۵ تصویر مجاز است'); return; }
+            if (files.length + uploadedFileIds.length > 5) { alert(t('max_images')); return; }
             for (let file of files) {
                 const formData = new FormData(); formData.append('file', file);
                 try {
@@ -968,8 +1151,8 @@
                         const preview = document.getElementById('image-preview');
                         const img = document.createElement('img'); img.src = `${API_URL}/image/${data.fileId}`;
                         preview.appendChild(img);
-                    } else alert('خطا در آپلود: ' + data.error);
-                } catch { alert('خطا در آپلود'); }
+                    } else alert(t('image_upload_error') + ': ' + data.error);
+                } catch { alert(t('image_upload_error')); }
             }
         });
 
@@ -990,7 +1173,7 @@
             return fetchAPI(url, options);
         }
 
-        async function loadAdminData() { if (!adminToken) return; loadPending(); loadPrices(); loadFeedback(); loadStats(); }
+        async function loadAdminData() { if (!adminToken) return; loadPending(); loadPrices(); loadFeedback(); loadStats(); loadUsers(); }
         async function loadPending() {
             const data = await authFetch('/api/admin/pending');
             if (data.success) {
@@ -1022,7 +1205,7 @@
                 price_vip6: document.getElementById('price_vip6').value
             };
             await authFetch('/api/admin/prices', { method:'PUT', body: JSON.stringify(updates) });
-            showMessage('قیمت‌ها به‌روز شدند');
+            showMessage(t('save'));
         });
         async function loadFeedback() {
             const data = await authFetch('/api/admin/feedback');
@@ -1035,10 +1218,28 @@
             const data = await authFetch('/api/admin/stats');
             if (data.success) {
                 document.getElementById('stats-content').innerHTML = `
-                    <p>کل آگهی‌ها: ${data.totalAds}</p><p>تأیید شده: ${data.approvedAds}</p><p>در انتظار: ${data.pendingAds}</p>
-                    <p>ویژه: ${data.specialAds}</p><p>بازدید کل: ${data.totalViews}</p><p>بازدید امروز: ${data.todayViews}</p><p>بازخوردها: ${data.feedbackCount}</p>`;
+                    <p>${t('total_ads')}: ${data.totalAds}</p>
+                    <p>${t('approved_ads')}: ${data.approvedAds}</p>
+                    <p>${t('pending_ads_count')}: ${data.pendingAds}</p>
+                    <p>${t('special_ads')}: ${data.specialAds}</p>
+                    <p>${t('total_views')}: ${data.totalViews}</p>
+                    <p>${t('today_views')}: ${data.todayViews}</p>
+                    <p>${t('feedback_count')}: ${data.feedbackCount}</p>
+                `;
             }
         }
+        async function loadUsers() {
+            const data = await authFetch('/api/admin/users');
+            if (data.success) {
+                document.querySelector('#users-table tbody').innerHTML = data.users.map(u => `
+                    <tr><td>${u.id}</td><td>${u.username || '-'}</td><td>${u.phone || '-'}</td><td>${u.ads_count}</td>
+                    <td><button onclick="toggleUserBlock(${u.id})">${u.blocked ? t('unblock') : t('block')}</button></td></tr>`).join('');
+            }
+        }
+        window.toggleUserBlock = async (id) => {
+            await authFetch(`/api/admin/users/${id}/toggle`, { method:'POST' });
+            loadUsers();
+        };
 
         // تب‌های مدیریت
         document.querySelectorAll('.admin-tab').forEach(tab => {
@@ -1068,11 +1269,13 @@
 
         document.getElementById('admin-toggle').addEventListener('click', () => showPage('admin'));
 
-        // پروفایل (ساختگی)
+        // پروفایل
         function loadProfile() {
-            document.getElementById('profile-username').innerText = tgUser?.username || 'کاربر';
+            // اینجا می‌توان از API پروفایل استفاده کرد، فعلاً ساختگی
+            document.getElementById('profile-username').innerText = 'کاربر نمونه';
             document.getElementById('profile-phone').innerText = '۰۹۱۲۳۴۵۶۷۸۹';
             document.getElementById('profile-ads-count').innerText = allAds.length;
+            document.getElementById('profile-member-since').innerText = '۱۴۰۲/۰۱/۰۱';
         }
 
         // ==================== تغییر زبان ====================
@@ -1093,14 +1296,14 @@
         // پر کردن dropdown دسته‌ها
         function populateCategoryDropdowns() {
             const mainSelect = document.getElementById('main-category');
-            mainSelect.innerHTML = '<option value="">انتخاب کنید</option>' + 
+            mainSelect.innerHTML = '<option value="">' + t('select_option') + '</option>' + 
                 categories.filter(c => !c.parent_id).map(c => `<option value="${c.id}">${c.name_fa}</option>`).join('');
             mainSelect.onchange = function() {
                 const id = parseInt(this.value);
                 const subSelect = document.getElementById('sub-category');
-                if (!id) { subSelect.innerHTML = '<option value="">بدون زیرمجموعه</option>'; return; }
+                if (!id) { subSelect.innerHTML = '<option value="">' + t('no_subcategory') + '</option>'; return; }
                 const subs = categories.filter(c => c.parent_id === id);
-                subSelect.innerHTML = '<option value="">بدون زیرمجموعه</option>' + subs.map(c => `<option value="${c.id}">${c.name_fa}</option>`).join('');
+                subSelect.innerHTML = '<option value="">' + t('no_subcategory') + '</option>' + subs.map(c => `<option value="${c.id}">${c.name_fa}</option>`).join('');
             };
         }
 
@@ -1118,8 +1321,7 @@
         populateCategoryDropdowns();
 
         // اطلاعات ساختگی برای پروفایل
-        const tg = window.Telegram?.WebApp;
-        const tgUser = tg?.initDataUnsafe?.user;
+        loadProfile();
     </script>
 </body>
-                        </html>
+                                                                                                        </html>
