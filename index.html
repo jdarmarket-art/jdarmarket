@@ -7,6 +7,7 @@
     <!-- فونت و آیکون -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* استایل‌ها دقیقاً مانند قبل باقی می‌مانند */
         * {
             margin: 0;
             padding: 0;
@@ -20,7 +21,6 @@
             line-height: 1.6;
         }
 
-        /* منوی همبرگری و هدر */
         .header {
             background: rgba(20, 20, 35, 0.8);
             backdrop-filter: blur(10px);
@@ -83,7 +83,6 @@
             transition: 0.4s;
         }
 
-        /* منوی همبرگری برای موبایل */
         .mobile-menu {
             display: none;
             position: fixed;
@@ -114,14 +113,12 @@
             background: #2a2a3e;
         }
 
-        /* محتوای اصلی */
         .container {
             max-width: 1300px;
             margin: 2rem auto;
             padding: 0 2rem;
         }
 
-        /* بخش جستجو و دسته‌بندی */
         .search-section {
             background: rgba(255,255,255,0.03);
             border-radius: 3rem;
@@ -200,7 +197,6 @@
             flex-wrap: wrap;
         }
 
-        /* کارت آگهی‌ها */
         .ads-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -255,7 +251,6 @@
             font-size: 0.9rem;
         }
 
-        /* مودال جزئیات آگهی */
         .modal {
             display: none;
             position: fixed;
@@ -305,7 +300,6 @@
             border-radius: 1rem;
         }
 
-        /* فرم ثبت آگهی */
         .form-container {
             background: rgba(20,20,35,0.7);
             border-radius: 2rem;
@@ -367,7 +361,6 @@
             border: 1px solid #a78bfa;
         }
 
-        /* پنل مدیریت (مخفی) */
         .admin-panel {
             display: none;
             background: rgba(0,0,0,0.3);
@@ -412,12 +405,10 @@
             text-align: right;
         }
 
-        /* سه‌زبانه */
         [lang="fa"] { direction: rtl; }
         [lang="ar"] { direction: rtl; }
         [lang="en"] { direction: ltr; }
 
-        /* ریسپانسیو */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -433,7 +424,6 @@
             }
         }
 
-        /* انیمیشن */
         @keyframes fade {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -611,7 +601,7 @@
 
     <script>
         // ==================== تنظیمات ====================
-        const API_URL = 'https://jdar-platform.your-subdomain.workers.dev'; // آدرس Worker خود را اینجا قرار دهید
+        const API_URL = 'https://j-dar-market.j-dar-market.workers.dev'; // آدرس Worker واقعی
         let currentLang = localStorage.getItem('lang') || 'fa';
         let categories = [];
         let currentMainCat = null;
@@ -680,10 +670,7 @@
                 enter_price: 'Price',
                 select_currency: 'Currency',
                 enter_phone: 'Phone',
-                enter_photos: 'Photos (max enter_price: 'Price',
-                select_currency: 'Currency',
-                enter_phone: 'Phone',
-                enter_photos: 'Photos 5)',
+                enter_photos: 'Photos (max 5)',
                 save: 'Submit',
                 pending_ads: 'Pending',
                 price_settings: 'Prices',
@@ -692,20 +679,7 @@
                 no_ads: 'No ads found',
                 approve: 'Approve',
                 reject: 'Reject',
-                view: 'View',
-            }
-        };
-
-        // ==================== توابع (max 5)',
-                save: 'Submit',
-                pending_ads: 'Pending',
-                price_settings: 'Prices',
-                feedback: 'Feedback',
-                statistics: 'Stats',
-                no_ads: 'No ads found',
-                approve: 'Approve',
-                reject: 'Reject',
-                view: 'View',
+                view: 'View'
             }
         };
 
@@ -721,37 +695,9 @@
             });
             document.documentElement.lang = currentLang;
             document.documentElement.dir = (currentLang === 'fa' || currentLang === 'ar') ? 'rtl' : 'ltr';
- کمکی ====================
-        function t(key) {
-            return translations[currentLang]?.[key] || key;
         }
-
-        function updateUILang() {
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                el.innerText = t(key);
-            });
-            document.documentElement.lang = currentLang;
-            document.documentElement.dir = (currentLang === 'fa' || currentLang === 'ar') ? 'rtl' : 'ltr';
-        }
-
-               }
 
         async function fetchAPI(endpoint, options = {}) {
-            const url = `${API_URL}${endpoint}`;
-            options.headers = options.headers || {};
-            if (!(options.body instanceof FormData)) {
-                options.headers['Content-Type'] = 'application/json';
-            }
-            const res = await fetch(url, options);
-            return await res.json();
-        }
-
-        function showMessage(msg, type = 'success') {
-            alert(msg);
-        }
-
-        // ==================== بارگذاری دسته‌ب async function fetchAPI(endpoint, options = {}) {
             const url = `${API_URL}${endpoint}`;
             options.headers = options.headers || {};
             if (!(options.body instanceof FormData)) {
@@ -778,19 +724,6 @@
             }
         }
 
-        functionندی‌ها ====================
-        async function loadCategories() {
-            try {
-                const data = await fetchAPI('/api/categories');
-                if (data.success) {
-                    categories = data.categories;
-                    renderMainCategories();
-                }
-            } catch (e) {
-                console.error(e);
-            }
-        }
-
         function renderMainCategories() {
             const mains = categories.filter(c => !c.parent_id);
             let html = mains.map(c => 
@@ -801,17 +734,7 @@
                 btn.addEventListener('click', () => {
                     const id = parseInt(btn.dataset.id);
                     currentMainCat = currentMainCat === id ? null : id;
-                    current renderMainCategories() {
-            const mains = categories.filter(c => !c.parent_id);
-            let html = mains.map(c => 
-                `<span class="category-chip ${currentMainCat === c.id ? 'active' : ''}" data-id="${c.id}">${c.name_fa}</span>`
-            ).join('');
-            document.getElementById('main-categories').innerHTML = html;
-            document.querySelectorAll('#main-categories .category-chip').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const id = parseInt(btn.dataset.id);
-                    currentMainCat = currentMainCat === id ? null : id;
-                   SubCat = null;
+                    currentSubCat = null;
                     renderMainCategories();
                     renderSubCategories();
                     loadAds();
@@ -828,40 +751,7 @@
             const subs = categories.filter(c => c.parent_id === currentMainCat);
             let html = `<span class="category-chip ${currentSubCat === null ? 'active' : ''}" data-id="all">همه</span>`;
             html += subs.map(c => 
-                `<span class="category-chip ${currentSubCat === c.id ? 'active' : ''}" data-id="${c.id currentSubCat = null;
-                    renderMainCategories();
-                    renderSubCategories();
-                    loadAds();
-                });
-            });
-            renderSubCategories();
-        }
-
-        function renderSubCategories() {
-            if (!currentMainCat) {
-                document.getElementById('sub-categories').innerHTML = '';
-                return;
-            }
-            const subs = categories.filter(c => c.parent_id === currentMainCat);
-            let html = `<span class="category-chip ${currentSubCat === null ? 'active' : ''}" data-id="all">همه</span>`;
-            html += subs.map(c => 
-                `<span class="category-chip ${currentSubCat === c.id ? 'active' : ''}" data-id="${}">${c.name_fa}</span>`
-            ).join('');
-            document.getElementById('sub-categories').innerHTML = html;
-            document.querySelectorAll('#sub-categories .category-chip').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const id = btn.dataset.id === 'all' ? null : parseInt(btn.dataset.id);
-                    currentSubCat = id;
-                    renderSubCategories();
-                    loadAds();
-                });
-            });
-        }
-
-        // ==================== بارگذاری آگهی‌ها ====================
-        async function loadAds() {
-            let url = '/api/ads?';
-            if (currentMainCat) url += `category=${c.id}">${c.name_fa}</span>`
+                `<span class="category-chip ${currentSubCat === c.id ? 'active' : ''}" data-id="${c.id}">${c.name_fa}</span>`
             ).join('');
             document.getElementById('sub-categories').innerHTML = html;
             document.querySelectorAll('#sub-categories .category-chip').forEach(btn => {
@@ -880,22 +770,7 @@
             if (currentMainCat) url += `category=${currentMainCat}&`;
             if (currentSubCat) url += `subcategory=${currentSubCat}&`;
             const search = document.getElementById('search-input').value.trim();
-            if (search) url += `search=${encodeURIComponent(search)}&currentMainCat}&`;
-            if (currentSubCat) url += `subcategory=${currentSubCat}&`;
-            const search = document.getElementById('search-input').value.trim();
             if (search) url += `search=${encodeURIComponent(search)}&`;
-            try {
-                const data = await fetchAPI(url);
-                if (data.success) {
-                    allAds = data.ads;
-                    renderAds(allAds);
-                }
-            } catch (e) {
-                console.error(e);
-            }
-        }
-
-        function renderAds`;
             try {
                 const data = await fetchAPI(url);
                 if (data.success) {
@@ -910,9 +785,6 @@
         function renderAds(ads) {
             const container = document.getElementById('ads-list');
             if (!ads.length) {
-                container.innerHTML = `<p style="text-align:center; color:#aaa;">${t('no(ads) {
-            const container = document.getElementById('ads-list');
-            if (!ads.length) {
                 container.innerHTML = `<p style="text-align:center; color:#aaa;">${t('no_ads')}</p>`;
                 return;
             }
@@ -922,29 +794,7 @@
                 const imgUrl = images.length ? `${API_URL}/image/${images[0]}` : 'https://via.placeholder.com/300x200?text=J-DAR';
                 return `
                     <div class="ad-card" data-id="${ad.id}">
-                        <img src="${imgUrl}" class="ad-card-image" onerror="_ads')}</p>`;
-                return;
-            }
-            container.innerHTML = ads.map(ad => {
-                let images = [];
-                try { images = JSON.parse(ad.images || '[]'); } catch { images = []; }
-                const imgUrl = images.length ? `${API_URL}/image/${images[0]}` : 'https://via.placeholder.com/300x200?text=J-DAR';
-                return `
-                    <div class="ad-card" data-id="${ad.id}">
-                        <img src="${imgUrl}" class="ad-card-image" onerrorthis.src='https://via.placeholder.com/300x200?text=J-DAR'">
-                        <div class="ad-card-content">
-                            <div class="ad-card-title">${ad.title}</div>
-                            <div class="ad-card-price">💰 ${ad.price || 'توافقی'} ${ad.currency}</div>
-                            <div class="ad-card-meta">
-                                <span><i class="fas fa-phone"></i> ${ad.phone}</span>
-                                <span><i class="fas fa-eye"></i> ${ad.views || 0}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            document.querySelectorAll('.ad-card').forEach(card => {
-                card="this.src='https://via.placeholder.com/300x200?text=J-DAR'">
+                        <img src="${imgUrl}" class="ad-card-image" onerror="this.src='https://via.placeholder.com/300x200?text=J-DAR'">
                         <div class="ad-card-content">
                             <div class="ad-card-title">${ad.title}</div>
                             <div class="ad-card-price">💰 ${ad.price || 'توافقی'} ${ad.currency}</div>
@@ -966,20 +816,7 @@
             try {
                 const data = await fetchAPI(`/api/ads/${id}`);
                 if (data.success) {
-                    const ad = data.ad.addEventListener('click', () => showAdDetail(card.dataset.id));
-            });
-        }
-
-        // ==================== نمایش جزئیات آگهی ====================
-        async function showAdDetail(id) {
-            try {
-                const data = await fetchAPI(`/api/ads/${id}`);
-                if (data.success) {
                     const ad = data.ad;
-                    let images = [];
-                    try { images = JSON.parse(ad.images || '[]'); } catch { images = []; }
-                    const imagesHtml = images.map(img => `<img src="${API_URL}/image/${img}" alt="">`).join('');
-                    const date = new Date(ad.created_at * ;
                     let images = [];
                     try { images = JSON.parse(ad.images || '[]'); } catch { images = []; }
                     const imagesHtml = images.map(img => `<img src="${API_URL}/image/${img}" alt="">`).join('');
@@ -989,32 +826,7 @@
                         <p><strong>توضیحات:</strong> ${ad.description}</p>
                         <p><strong>قیمت:</strong> ${ad.price || 'توافقی'} ${ad.currency}</p>
                         <p><strong>شماره:</strong> ${ad.phone}</p>
-                        ${ad.whatsapp ? `<p><strong>واتساپ:</strong> ${ad.whatsapp}</p1000).toLocaleDateString('fa-IR');
-                    document.getElementById('modal-detail').innerHTML = `
-                        <h2>${ad.title}</h2>
-                        <p><strong>توضیحات:</strong> ${ad.description}</p>
-                        <p><strong>قیمت:</strong> ${ad.price || 'توافقی'} ${ad.currency}</p>
-                        <p><strong>شماره:</strong> ${ad.phone}</p>
-                        ${ad.whatsapp ? `<p><strong>واتساپ:</strong> ${ad.what>` : ''}
-                        <p><strong>تاریخ:</strong> ${date}</p>
-                        <p><strong>بازدید:</strong> ${ad.views || 0}</p>
-                        <div class="modal-images">${imagesHtml}</div>
-                    `;
-                    document.getElementById('ad-modal').classList.add('active');
-                    fetchAPI(`/api/view/${id}`, { method: 'POST' });
-                }
-            } catch (e) {
-                console.error(e);
-            }
-        }
-
-        // ==================== ثبت آگهی ====================
-        document.getElementById('ad-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const title = document.getElementById('title').value;
-            const description = document.getElementById('description').value;
-            const category_id = parseInt(document.getElementById('main-category').value);
-            const subcategory_id = document.getElementById('subsapp}</p>` : ''}
+                        ${ad.whatsapp ? `<p><strong>واتساپ:</strong> ${ad.whatsapp}</p>` : ''}
                         <p><strong>تاریخ:</strong> ${date}</p>
                         <p><strong>بازدید:</strong> ${ad.views || 0}</p>
                         <div class="modal-images">${imagesHtml}</div>
@@ -1043,35 +855,7 @@
             const data = { title, description, category_id, subcategory_id, price, currency, phone, whatsapp, images };
             try {
                 const res = await fetchAPI('/api/ads', {
-                    method-category').value ? parseInt(document.getElementById('sub-category').value) : undefined;
-            const price = document.getElementById('price').value;
-            const currency = document.getElementById('currency').value;
-            const phone = document.getElementById('phone').value;
-            const whatsapp = document.getElementById('whatsapp').value;
-            const images = uploadedFileIds;
-
-            const data = { title, description, category_id, subcategory_id, price, currency, phone, whatsapp, images };
-            try {
-                const res = await fetchAPI('/api/ads', {
                     method: 'POST',
-                    body: JSON.stringify(data)
-                });
-                if (res.success) {
-                    showMessage('آگهی شما ثبت شد و پس از تأیید نمایش داده می‌شود.', 'success');
-                    document.getElementById('ad-form').reset();
-                    uploadedFileIds = [];
-                    document.getElementById('image-preview').innerHTML = '';
-                    document.getElementById('home-link').click();
-                } else {
-                    showMessage('خطا: ' + res.error, 'error');
-                }
-            } catch (e) {
-                showMessage('خطا در ارتباط', 'error');
-            }
-        });
-
-        // آپلود تصویر
-        document.getElementById('image-input').addEventListener: 'POST',
                     body: JSON.stringify(data)
                 });
                 if (res.success) {
@@ -1104,39 +888,7 @@
                         body: formData
                     });
                     const data = await res.json();
-                    if (data.success('change', async (e) => {
-            const files = Array.from(e.target.files);
-            if (files.length + uploadedFileIds.length > 5) {
-                alert('حداکثر ۵ تصویر مجاز است');
-                return;
-            }
-            for (let file of files) {
-                const formData = new FormData();
-                formData.append('file', file);
-                try {
-                    const res = await fetch(`${API_URL}/api/upload`, {
-                        method: 'POST',
-                        body: formData
-                    });
-                    const data = await res.json();
                     if (data.success) {
-                        uploadedFileIds.push(data.fileId);
-                        const preview = document.getElementById('image-preview');
-                        const img = document.createElement('img');
-                        img.src = `${API_URL}/image/${data.fileId}`;
-                        preview.appendChild(img);
-                    } else {
-                        alert('خطا در آپلود: ' + data.error);
-                    }
-                } catch (e) {
-                    alert('خطا در آپلود');
-                }
-            }
-        });
-
-        // ==================== پنل مدیریت ====================
-        document.getElementById('admin-login').addEventListener('click', async () => {
-            const token =) {
                         uploadedFileIds.push(data.fileId);
                         const preview = document.getElementById('image-preview');
                         const img = document.createElement('img');
@@ -1172,25 +924,6 @@
         }
 
         async function authFetch(url, options = {}) {
-            options.headers document.getElementById('admin-token').value;
-            if (token) {
-                adminToken = token;
-                localStorage.setItem('adminToken', token);
-                document.getElementById('admin-login-section').style.display = 'none';
-                document.getElementById('admin-content').style.display = 'block';
-                loadAdminData();
-            }
-        });
-
-        async function loadAdminData() {
-            if (!adminToken) return;
-            loadPending();
-            loadPrices();
-            loadFeedback();
-            loadStats();
-        }
-
-        async function authFetch(url, options = {}) {
             options.headers = options.headers || {};
             options.headers['Authorization'] = `Bearer ${adminToken}`;
             return fetchAPI(url, options);
@@ -1206,32 +939,7 @@
                         <td>${ad.title}</td>
                         <td>${ad.phone}</td>
                         <td>
-                            <button onclick=" = options.headers || {};
-            options.headers['Authorization'] = `Bearer ${adminToken}`;
-            return fetchAPI(url, options);
-        }
-
-        async function loadPending() {
-            const data = await authFetch('/api/admin/pending');
-            if (data.success) {
-                const tbody = document.querySelector('#pending-table tbody');
-                tbody.innerHTML = data.ads.map(ad => `
-                    <tr>
-                        <td>${ad.id}</td>
-                        <td>${ad.title}</td>
-                        <td>${ad.phone}</td>
-                        <td>
                             <button onclick="approveAd(${ad.id})">✅ ${t('approve')}</button>
-                            <button onclick="rejectAd(${ad.id})">❌ ${t('reject')}</button>
-                            <button onclick="showAdDetail(${ad.id})">👁 ${t('view')}</button>
-                        </td>
-                    </tr>
-                `).join('');
-            }
-        }
-
-        window.approveAd = async (id) => {
-            await authFetch(`/api/admin/approve/${id}`, {approveAd(${ad.id})">✅ ${t('approve')}</button>
                             <button onclick="rejectAd(${ad.id})">❌ ${t('reject')}</button>
                             <button onclick="showAdDetail(${ad.id})">👁 ${t('view')}</button>
                         </td>
@@ -1258,23 +966,6 @@
                 document.getElementById('price_vip3').value = data.prices.price_vip3 || '';
                 document.getElementById('price_vip6').value = data.prices.price_vip6 || '';
             }
- method: 'POST' });
-            loadPending();
-        };
-        window.rejectAd = async (id) => {
-            await authFetch(`/api/admin/reject/${id}`, { method: 'DELETE' });
-            loadPending();
-        };
-
-        async function loadPrices() {
-            const data = await authFetch('/api/admin/prices');
-            if (data.success) {
-                document.getElementById('price_special1').value = data.prices.price_special1 || '';
-                document.getElementById('price_special3').value = data.prices.price_special3 || '';
-                document.getElementById('price_vip1').value = data.prices.price_vip1 || '';
-                document.getElementById('price_vip3').value = data.prices.price_vip3 || '';
-                document.getElementById('price_vip6').value = data.prices.price_vip6 || '';
-            }
         }
 
         document.getElementById('save-prices').addEventListener('click', async () => {
@@ -1282,30 +973,7 @@
                 price_special1: document.getElementById('price_special1').value,
                 price_special3: document.getElementById('price_special3').value,
                 price_vip1: document.getElementById('price_vip1').value,
-                price_vip3: document.getElementById('price_vip3        }
-
-        document.getElementById('save-prices').addEventListener('click', async () => {
-            const updates = {
-                price_special1: document.getElementById('price_special1').value,
-                price_special3: document.getElementById('price_special3').value,
-                price_vip1: document.getElementById('price_vip1').value,
-                price_vip3: document.getElementById('price_vip3').').value,
-                price_vip6: document.getElementById('price_vip6').value
-            };
-            await authFetch('/api/admin/prices', { method: 'PUT', body: JSON.stringify(updates) });
-            showMessage('قیمت‌ها به‌روز شدند');
-        });
-
-        async function loadFeedback() {
-            const data = await authFetch('/api/admin/feedback');
-            if (data.success) {
-                const tbody = document.querySelector('#feedback-table tbody');
-                tbody.innerHTML = data.feedbacks.map(f => `
-                    <tr>
-                        <td>${f.name || '-'}</td>
-                        <td>${f.phone || '-'}</td>
-                        <td>${f.message}</td>
-                        <td>${new Date(f.created_at*1000).toLocaleDateStringvalue,
+                price_vip3: document.getElementById('price_vip3').value,
                 price_vip6: document.getElementById('price_vip6').value
             };
             await authFetch('/api/admin/prices', { method: 'PUT', body: JSON.stringify(updates) });
@@ -1322,27 +990,6 @@
                         <td>${f.phone || '-'}</td>
                         <td>${f.message}</td>
                         <td>${new Date(f.created_at*1000).toLocaleDateString()}</td>
-                    </tr>
-                `).join('');
-            }
-        }
-
-        async function loadStats() {
-            const data = await authFetch('/api/admin/stats');
-            if (data.success) {
-                document.getElementById('stats-content').innerHTML = `
-                    <p>کل آگهی‌ها: ${data.totalAds}</p>
-                    <p>تأیید شده: ${data.approvedAds}</p>
-                    <p>در انتظار: ${data.pendingAds}</p>
-                    <p>ویژه: ${data.specialAds}</p>
-                    <p>بازدید کل: ${data.totalViews}</p>
-                    <p>بازدید امروز: ${data.todayViews}</p>
-                    <p>بازخوردها: ${data.feedbackCount}</p>
-                `;
-            }
-        }
-
-        // تب()}</td>
                     </tr>
                 `).join('');
             }
@@ -1382,41 +1029,7 @@
         });
         document.getElementById('submit-link').addEventListener('click', (e) => {
             e.preventDefault();
-            document.querySelectorAll('.page').‌های مدیریت
-        document.querySelectorAll('.admin-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                document.querySelectorAll('.admin-tab-content').forEach(c => c.style.display = 'none');
-                document.getElementById(`admin-${tab.dataset.tab}`).style.display = 'block';
-            });
-        });
-
-        // ==================== ناوبری ====================
-        document.getElementById('home-link').addEventListener('click', (e) => {
-            e.preventDefault();
             document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-            document.getElementById('home-page').style.display = 'block';
-            loadAds();
-        });
-        document.getElementById('submit-link').addEventListener('click', (e) => {
-            e.preventDefault();
-            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-            document.getElementById('submit-page').style.display = 'block';
-            // پر کردن dropdown دسته‌ها
-            const mainSelect = document.getElementById('main-category');
-            mainSelect.innerHTML = '<option value="">انتخاب کنید</option>' + 
-                categories.filter(c => !c.parent_id).map(c => `<option value="${c.id}">${c.name_fa}</option>`).join('');
-            mainSelect.addEventListener('change', function() {
-                const id = parseInt(this.value);
-                const subSelect = document.getElementById('sub-category');
-                if (!id) {
-                    subSelect.innerHTML = '<option value="">بدون زیرمجموعه</option>';
-                    return;
-                }
-                const subs = categories.filter(c => c.parent_id === id);
-                subSelect.innerHTML = '<option value="">بدون زیرمجموعه</option>' + 
-                    subs.map(c => `<option value="${c.id}">${forEach(p => p.style.display = 'none');
             document.getElementById('submit-page').style.display = 'block';
             // پر کردن dropdown دسته‌ها
             const mainSelect = document.getElementById('main-category');
@@ -1452,39 +1065,7 @@
         document.getElementById('search-btn').addEventListener('click', loadAds);
         document.getElementById('search-input').addEventListener('keyup', (e) => { if (e.key === 'Enter') loadAds(); });
 
-        // موبایل منc.name_fa}</option>`).join('');
-            });
-        });
-
-        document.getElementById('admin-toggle').addEventListener('click', (e) => {
-            e.preventDefault();
-            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-            document.getElementById('admin-panel').style.display = 'block';
-            if (adminToken) {
-                document.getElementById('admin-login-section').style.display = 'none';
-                document.getElementById('admin-content').style.display = 'block';
-                loadAdminData();
-            } else {
-                document.getElementById('admin-login-section').style.display = 'block';
-                document.getElementById('admin-content').style.display = 'none';
-            }
-        });
-
-        document.getElementById('search-btn').addEventListener('click', loadAds);
-        document.getElementById('search-input').addEventListener('keyup', (e) => { if (e.key === 'Enter') loadAds(); });
-
         // موبایل منو
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobile-menu');
-        hamburger.addEventListener('click', () => {
-            mobileMenu.classList.toggle('active');
-        });
-        document.getElementById('mobile-home').addEventListener('click', (e) => {
-            e.preventDefault();
-            mobileMenu.classList.remove('active');
-            document.getElementById('home-link').click();
-        });
-        document.getElementById('mobile-submitو
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobile-menu');
         hamburger.addEventListener('click', () => {
@@ -1513,51 +1094,11 @@
             loadAds();
         }
         document.getElementById('lang-fa').addEventListener('click', () => setLang('fa'));
-        document.getElementById('lang-ar').add').addEventListener('click', (e) => {
-            e.preventDefault();
-            mobileMenu.classList.remove('active');
-            document.getElementById('submit-link').click();
-        });
-        document.getElementById('mobile-admin').addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            document.getElementById('admin-toggle').click();
-        });
-
-        // تغییر زبان
-        function setLang(lang) {
-            currentLang = lang;
-            localStorage.setItem('lang', lang);
-            updateUILang();
-            loadAds();
-        }
-        document.getElementById('lang-fa').addEventListener('click', () => setLang('fa'));
         document.getElementById('lang-ar').addEventListener('click', () => setLang('ar'));
         document.getElementById('lang-en').addEventListener('click', () => setLang('en'));
         document.getElementById('mobile-lang-fa').addEventListener('click', () => { setLang('fa'); mobileMenu.classList.remove('active'); });
         document.getElementById('mobile-lang-ar').addEventListener('click', () => { setLang('ar'); mobileMenu.classList.remove('active'); });
-        document.getElementById('mobile-lang-en').addEventListener('click', () => { setLang('en'); mobileMenu.classList.remove('EventListener('click', () => setLang('ar'));
-        document.getElementById('lang-en').addEventListener('click', () => setLang('en'));
-        document.getElementById('mobile-lang-fa').addEventListener('click', () => { setLang('fa'); mobileMenu.classList.remove('active'); });
-        document.getElementById('mobile-lang-ar').addEventListener('click', () => { setLang('ar'); mobileMenu.classList.remove('active'); });
         document.getElementById('mobile-lang-en').addEventListener('click', () => { setLang('en'); mobileMenu.classList.remove('active'); });
-
-        // بستن مودال
-        document.getElementById('close-modal').addEventListener('click', () => {
-            document.getElementById('ad-modal').classList.remove('active');
-        });
-
-        // شروع
-        loadCategories();
-        loadAds();
-        updateUILang();
-        if (adminToken) {
-            document.getElementById('admin-login-section').style.display = 'none';
-            document.getElementById('admin-content').style.display = 'block';
-            loadAdminData();
-        }
-    </script>
-</body>
-</active'); });
 
         // بستن مودال
         document.getElementById('close-modal').addEventListener('click', () => {
