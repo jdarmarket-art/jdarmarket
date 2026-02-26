@@ -753,7 +753,10 @@
         let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
         const SUPER_ADMIN_TOKEN = 'jdar@Admin1357900';
 
-        // ترجمه‌ها (فقط فارسی برای نمونه، کامل کنید)
+        // تصویر placeholder محلی (Data URI) - یک SVG ساده خاکستری با متن "جدار"
+        const PLACEHOLDER_IMAGE = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\' viewBox=\'0 0 300 200\'%3E%3Crect width=\'300\' height=\'200\' fill=\'%23333\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Vazir, sans-serif\' font-size=\'20\' fill=\'%23aaa\'%3E%D8%AC%D8%AF%D8%A7%D8%B1%3C/text%3E%3C/svg%3E';
+
+        // ترجمه‌ها (فارسی کامل)
         const translations = {
             fa: {
                 lang_fa: 'FA', lang_ar: 'AR', lang_en: 'EN',
@@ -828,7 +831,7 @@
                 password_placeholder: 'رمز عبور',
                 save_changes: 'ذخیره تغییرات',
             },
-            // ترجمه عربی و انگلیسی را در صورت نیاز کامل کنید
+            // ترجمه عربی و انگلیسی را می‌توانید اضافه کنید
         };
 
         function t(key) { return translations[currentLang]?.[key] || key; }
@@ -942,7 +945,7 @@
         function getImageUrl(imageData) {
             if (!imageData) {
                 console.log('getImageUrl: imageData is empty');
-                return 'https://via.placeholder.com/300x200?text=جدار';
+                return PLACEHOLDER_IMAGE;
             }
             try {
                 // If it's a string, try to parse JSON; if it's already an array, use it.
@@ -963,7 +966,7 @@
                     return url;
                 }
             }
-            return 'https://via.placeholder.com/300x200?text=جدار';
+            return PLACEHOLDER_IMAGE;
         }
 
         function renderAds(ads) {
@@ -977,7 +980,7 @@
                 const isFav = favorites.includes(ad.id);
                 return `
                     <div class="ad-card" data-id="${ad.id}">
-                        <img src="${imgUrl}" class="ad-card-image" onerror="console.error('Image failed to load:', this.src); this.onerror=null; this.src='https://via.placeholder.com/300x200?text=جدار';">
+                        <img src="${imgUrl}" class="ad-card-image" onerror="console.error('Image failed to load:', this.src); this.onerror=null; this.src='${PLACEHOLDER_IMAGE}';">
                         <div class="ad-card-content">
                             <div class="ad-card-title">${ad.title}</div>
                             <div class="ad-card-price">💰 ${ad.price || 'توافقی'} ${ad.currency || ''}</div>
@@ -1016,7 +1019,7 @@
                 const imgUrl = getImageUrl(ad.images);
                 return `
                     <div class="ad-card" data-id="${ad.id}">
-                        <img src="${imgUrl}" class="ad-card-image" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=جدار';">
+                        <img src="${imgUrl}" class="ad-card-image" onerror="this.onerror=null; this.src='${PLACEHOLDER_IMAGE}';">
                         <div class="ad-card-content">
                             <div class="ad-card-title">${ad.title}</div>
                             <div class="ad-card-price">💰 ${ad.price || 'توافقی'}</div>
@@ -1038,7 +1041,7 @@
                     const ad = data.ad;
                     let images = [];
                     try { images = JSON.parse(ad.images || '[]'); } catch { images = []; }
-                    const imagesHtml = images.map(img => `<img src="${API_URL}/image/${img}" onerror="console.error('Image in modal failed:', this.src); this.onerror=null; this.src='https://via.placeholder.com/150?text=J-DAR';">`).join('');
+                    const imagesHtml = images.map(img => `<img src="${API_URL}/image/${img}" onerror="console.error('Image in modal failed:', this.src); this.onerror=null; this.src='${PLACEHOLDER_IMAGE}';">`).join('');
                     const date = new Date(ad.created_at * 1000).toLocaleDateString('fa-IR');
                     document.getElementById('modal-detail').innerHTML = `
                         <h2>${ad.title}</h2>
@@ -1385,6 +1388,10 @@
         if (adminToken) {
             loadProfile(); // دکمه مدیریت را به‌روز می‌کند
         }
+
+        // بررسی دسترسی به Worker
+        console.log('Checking worker connectivity...');
+        fetch(API_URL).then(r => console.log('Worker root response:', r.status)).catch(e => console.error('Worker is unreachable:', e));
     </script>
     <!-- دستورالعمل عیب‌یابی تصاویر:
          1. کنسول مرورگر را باز کنید (F12).
@@ -1396,4 +1403,4 @@
          7. اگر تصویر نمایش داده شد، مشکل از onerror یا CSS است.
     -->
 </body>
-    </html>
+                    </html>
