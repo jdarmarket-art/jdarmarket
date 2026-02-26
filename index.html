@@ -3,318 +3,1129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>جدار | J-DAR</title>
+    <title>دیوار | Divar</title>
     <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Vazir', 'Tahoma', sans-serif; background: #0f0f1a; color: #fff; min-height: 100vh; display: flex; flex-direction: column; }
-        .header { background: rgba(20,20,35,0.9); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1.5rem; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; max-width: 480px; margin: 0 auto; }
-        .logo { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #a78bfa, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .lang-buttons { display: flex; gap: 0.5rem; }
-        .lang-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 0.3rem 0.8rem; border-radius: 2rem; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
-        .lang-btn:hover { background: #a78bfa; border-color: #a78bfa; }
-        .bottom-nav { background: rgba(20,20,35,0.9); backdrop-filter: blur(15px); border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-around; align-items: center; padding: 0.5rem 0; position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000; max-width: 480px; margin: 0 auto; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #aaa; cursor: pointer; transition: 0.2s; font-size: 0.8rem; gap: 0.2rem; flex: 1; padding: 0.5rem 0; }
-        .nav-item i { font-size: 1.4rem; }
-        .nav-item.active { color: #a78bfa; }
-        .main-content { flex: 1; margin-top: 70px; margin-bottom: 80px; overflow-y: auto; padding: 1rem; max-width: 480px; margin-left: auto; margin-right: auto; width: 100%; }
-        .page { display: none; animation: fade 0.3s; }
-        .page.active { display: block; }
-        @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .search-section { background: rgba(255,255,255,0.03); border-radius: 2rem; padding: 1.2rem; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); margin-bottom: 1.5rem; }
-        .search-box { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
-        .search-box i { color: #a78bfa; font-size: 1.2rem; }
-        .search-box input { flex: 1; padding: 0.6rem 1rem; border-radius: 2rem; border: none; background: rgba(0,0,0,0.3); color: #fff; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.1); }
-        .search-box input::placeholder { color: #aaa; }
-        .search-box button { padding: 0.5rem 1.2rem; border-radius: 2rem; border: none; background: linear-gradient(135deg, #a78bfa, #7c3aed); color: white; font-weight: 500; cursor: pointer; transition: 0.2s; font-size: 0.85rem; white-space: nowrap; }
-        .search-box button:hover { transform: scale(1.02); }
-        .categories { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        .category-chip { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.4rem 1.2rem; border-radius: 2rem; cursor: pointer; transition: 0.2s; color: #ddd; font-size: 0.85rem; }
-        .category-chip:hover, .category-chip.active { background: #a78bfa; color: white; }
-        .subcategories { margin-top: 0.8rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        .ads-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
-        .ad-card { background: rgba(20,20,35,0.7); border: 1px solid rgba(255,255,255,0.05); border-radius: 1.5rem; overflow: hidden; transition: 0.2s; cursor: pointer; backdrop-filter: blur(10px); position: relative; }
-        .ad-card:hover { transform: translateY(-5px); box-shadow: 0 15px 25px -10px rgba(167,139,250,0.3); }
-        .ad-card-image { width: 100%; height: 140px; object-fit: cover; background: #1a1a2e; }
-        .ad-card-content { padding: 0.8rem; }
-        .ad-card-title { font-weight: 600; font-size: 0.85rem; margin-bottom: 0.2rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .ad-card-price { color: #a78bfa; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem; }
-        .ad-card-meta { display: flex; justify-content: space-between; color: #aaa; font-size: 0.7rem; }
-        .favorite-btn { position: absolute; top: 0.5rem; left: 0.5rem; background: rgba(0,0,0,0.3); backdrop-filter: blur(5px); border-radius: 50%; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; border: 1px solid rgba(255,255,255,0.2); z-index: 2; }
-        .favorite-btn.active { color: #ff5e7c; }
-        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(20px); z-index: 2000; padding: 1rem; overflow-y: auto; align-items: center; justify-content: center; }
-        .modal.active { display: flex; }
-        .modal-content { max-width: 450px; background: #1e1e2f; border-radius: 2rem; padding: 1.5rem; position: relative; width: 100%; margin: auto; }
-        .close-modal { position: absolute; top: 1rem; left: 1rem; background: none; border: none; color: white; font-size: 2rem; cursor: pointer; }
-        .modal-images { display: flex; gap: 0.5rem; overflow-x: auto; margin: 1rem 0; padding-bottom: 0.5rem; }
-        .modal-images img { height: 150px; border-radius: 1rem; object-fit: cover; }
-        .form-container { background: rgba(20,20,35,0.7); border-radius: 2rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.05); }
-        .form-group { margin-bottom: 1.2rem; }
-        .form-group label { display: block; margin-bottom: 0.3rem; color: #a78bfa; font-size: 0.9rem; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.7rem 1rem; border-radius: 2rem; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: white; font-family: 'Vazir', sans-serif; font-size: 0.9rem; }
-        .image-preview { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
-        .image-preview img { width: 60px; height: 60px; border-radius: 0.8rem; object-fit: cover; }
-        .btn { background: linear-gradient(135deg, #a78bfa, #7c3aed); border: none; color: white; padding: 0.7rem 1.5rem; border-radius: 2rem; font-weight: bold; cursor: pointer; transition: 0.2s; width: 100%; font-size: 0.95rem; }
-        .admin-panel { background: rgba(20,20,35,0.7); border-radius: 2rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.05); }
-        .admin-tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
-        .admin-tab { background: transparent; border: 1px solid #a78bfa; color: #a78bfa; padding: 0.4rem 1rem; border-radius: 2rem; cursor: pointer; font-size: 0.8rem; transition: 0.2s; }
-        .admin-tab.active { background: #a78bfa; color: white; }
-        .admin-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-        .admin-table th, .admin-table td { padding: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: right; }
-        .admin-table button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.2rem 0.5rem; border-radius: 2rem; cursor: pointer; font-size: 0.7rem; margin: 0.2rem; }
-        .admin-table button:hover { background: #a78bfa; }
-        .profile-card { background: rgba(20,20,35,0.7); border-radius: 2rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
-        .profile-avatar { font-size: 4rem; color: #a78bfa; margin-bottom: 1rem; }
-        .profile-field { background: rgba(0,0,0,0.2); border-radius: 1rem; padding: 0.8rem; margin: 1rem 0; display: flex; justify-content: space-between; font-size: 0.9rem; }
-        .favorites-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-        [lang="fa"] { direction: rtl; } [lang="ar"] { direction: rtl; } [lang="en"] { direction: ltr; }
-        .placeholder-img { width: 100%; height: 140px; background: #2a2a3a; display: flex; align-items: center; justify-content: center; color: #666; font-size: 0.8rem; border-radius: 1rem 1rem 0 0; }
+        /* Reset و استایل‌های پایه */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazir', 'Tahoma', sans-serif;
+            background: #1e1e2e;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* هدر ثابت - دقیقاً مثل دیوار */
+        .header {
+            background: #2a2a3a;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            max-width: 480px;
+            margin: 0 auto;
+            border-bottom: 1px solid #374151;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #a855f7;
+        }
+
+        .logo i {
+            margin-left: 0.3rem;
+            color: #a855f7;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .header-actions i {
+            font-size: 1.3rem;
+            color: #9ca3af;
+            cursor: pointer;
+        }
+
+        /* نوار پایین - دقیقاً مثل دیوار */
+        .bottom-nav {
+            background: #2a2a3a;
+            border-top: 1px solid #374151;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0.3rem 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #9ca3af;
+            cursor: pointer;
+            font-size: 0.7rem;
+            gap: 0.2rem;
+            flex: 1;
+            padding: 0.3rem 0;
+            transition: 0.2s;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+        }
+
+        .nav-item.active {
+            color: #a855f7;
+        }
+
+        .nav-item span {
+            font-size: 0.65rem;
+        }
+
+        /* محتوای اصلی */
+        .main-content {
+            flex: 1;
+            margin-top: 60px;
+            margin-bottom: 70px;
+            overflow-y: auto;
+            padding: 0.8rem;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        /* بخش جستجو - مثل دیوار */
+        .search-section {
+            margin-bottom: 1rem;
+        }
+
+        .search-box {
+            background: #2a2a3a;
+            border-radius: 0.8rem;
+            padding: 0.1rem 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid #374151;
+            height: 48px;
+        }
+
+        .search-box i {
+            color: #9ca3af;
+            font-size: 1.1rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 0.7rem 0;
+            border: none;
+            background: transparent;
+            color: #fff;
+            font-size: 0.9rem;
+            font-family: 'Vazir', sans-serif;
+        }
+
+        .search-box input::placeholder {
+            color: #6b7280;
+        }
+
+        .search-box input:focus {
+            outline: none;
+        }
+
+        .search-box button {
+            display: none; /* در دیوار دکمه جستجو نداریم */
+        }
+
+        /* دسته‌بندی‌ها - اسکرول افقی مثل دیوار */
+        .categories-wrapper {
+            overflow-x: auto;
+            margin: 1rem 0;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .categories-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .categories {
+            display: flex;
+            gap: 0.5rem;
+            padding-bottom: 0.3rem;
+            white-space: nowrap;
+        }
+
+        .category-chip {
+            background: #2a2a3a;
+            border: 1px solid #374151;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            color: #e5e7eb;
+            font-size: 0.85rem;
+            transition: 0.2s;
+            display: inline-block;
+        }
+
+        .category-chip.active {
+            background: #a855f7;
+            border-color: #a855f7;
+            color: white;
+        }
+
+        .subcategories {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.3rem;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .subcategories::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* شبکه آگهی‌ها - ۲ ستون مثل دیوار */
+        .ads-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .ad-card {
+            background: #2a2a3a;
+            border: 1px solid #374151;
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: 0.2s;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .ad-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
+        }
+
+        .ad-card-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            background: #1e1e2e;
+            border-bottom: 1px solid #374151;
+        }
+
+        .placeholder-img {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(145deg, #2a2a3a, #1e1e2e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #374151;
+        }
+
+        .ad-card-content {
+            padding: 0.6rem;
+        }
+
+        .ad-card-title {
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.4;
+            color: #f3f4f6;
+        }
+
+        .ad-card-price {
+            color: #a855f7;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .ad-card-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #9ca3af;
+            font-size: 0.65rem;
+            margin-top: 0.3rem;
+        }
+
+        .ad-card-meta i {
+            font-size: 0.6rem;
+            margin-left: 0.2rem;
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            background: rgba(42, 42, 58, 0.9);
+            backdrop-filter: blur(4px);
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #9ca3af;
+            border: 1px solid #374151;
+            z-index: 2;
+            transition: 0.2s;
+        }
+
+        .favorite-btn.active {
+            color: #ef4444;
+        }
+
+        .favorite-btn i {
+            font-size: 1rem;
+        }
+
+        /* صفحه‌بندی - مثل دیوار */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .page-dot {
+            width: 0.4rem;
+            height: 0.4rem;
+            border-radius: 50%;
+            background: #4b5563;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .page-dot.active {
+            background: #a855f7;
+            width: 1.2rem;
+            border-radius: 1rem;
+        }
+
+        /* مودال جزئیات آگهی */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            padding: 1rem;
+            overflow-y: auto;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 480px;
+            background: #2a2a3a;
+            border-radius: 1.5rem 1.5rem 1rem 1rem;
+            padding: 1.5rem;
+            position: relative;
+            width: 100%;
+            margin: auto;
+            border: 1px solid #374151;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: #1e1e2e;
+            border: 1px solid #374151;
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .modal-images {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .modal-images img {
+            height: 200px;
+            border-radius: 1rem;
+            object-fit: cover;
+            border: 1px solid #374151;
+        }
+
+        /* صفحه ثبت آگهی */
+        .form-container {
+            background: #2a2a3a;
+            border-radius: 1rem;
+            padding: 1.2rem;
+            border: 1px solid #374151;
+        }
+
+        .form-container h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-container h2 i {
+            color: #a855f7;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: #9ca3af;
+            font-size: 0.85rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border-radius: 0.8rem;
+            border: 1px solid #374151;
+            background: #1e1e2e;
+            color: white;
+            font-family: 'Vazir', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .image-preview {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .image-preview img {
+            width: 60px;
+            height: 60px;
+            border-radius: 0.5rem;
+            object-fit: cover;
+            border: 1px solid #374151;
+        }
+
+        .btn {
+            background: #a855f7;
+            border: none;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            font-size: 0.95rem;
+            font-family: 'Vazir', sans-serif;
+        }
+
+        .btn:hover {
+            background: #9333ea;
+        }
+
+        /* صفحه علاقه‌مندی‌ها */
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: #f3f4f6;
+        }
+
+        .page-header i {
+            color: #a855f7;
+        }
+
+        /* صفحه پروفایل */
+        .profile-card {
+            background: #2a2a3a;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid #374151;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            font-size: 4rem;
+            color: #a855f7;
+            margin-bottom: 1rem;
+        }
+
+        .profile-field {
+            background: #1e1e2e;
+            border-radius: 0.8rem;
+            padding: 0.8rem 1rem;
+            margin: 0.8rem 0;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #f3f4f6;
+        }
+
+        .profile-field span:first-child {
+            color: #9ca3af;
+        }
+
+        /* صفحات مخفی */
+        .page {
+            display: none;
+            animation: fade 0.3s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* پیام خطا/اطلاع رسانی */
+        .message {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2a2a3a;
+            border: 1px solid #a855f7;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            z-index: 3000;
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+            max-width: 90%;
+            white-space: nowrap;
+        }
+
+        /* آیکون‌ها و نشانگرها */
+        .badge {
+            background: #ef4444;
+            color: white;
+            font-size: 0.6rem;
+            padding: 0.1rem 0.3rem;
+            border-radius: 1rem;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
     </style>
 </head>
 <body>
+    <!-- هدر دقیقاً مثل دیوار -->
     <header class="header">
-        <div class="logo" data-i18n="logo">جدار</div>
-        <div class="lang-buttons">
-            <button class="lang-btn" id="lang-fa" data-i18n="lang_fa">FA</button>
-            <button class="lang-btn" id="lang-ar" data-i18n="lang_ar">AR</button>
-            <button class="lang-btn" id="lang-en" data-i18n="lang_en">EN</button>
+        <div class="logo">
+            <i class="fas fa-layer-group"></i>
+            دیوار
+        </div>
+        <div class="header-actions">
+            <i class="fas fa-bell"></i>
+            <i class="fas fa-user-circle"></i>
         </div>
     </header>
 
+    <!-- محتوای اصلی -->
     <main class="main-content">
+        <!-- صفحه خانه -->
         <div id="home-page" class="page active">
+            <!-- بخش جستجو -->
             <div class="search-section">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="search-input" data-i18n-placeholder="search_placeholder" placeholder="جستجو...">
-                    <button id="search-btn" data-i18n="search">جستجو</button>
+                    <input type="text" id="search-input" placeholder="جستجو در دیوار">
                 </div>
-                <div class="categories" id="main-categories"></div>
-                <div class="subcategories" id="sub-categories"></div>
             </div>
-            <div class="ads-grid" id="ads-list"></div>
+
+            <!-- دسته‌بندی‌های اصلی (اسکرول افقی) -->
+            <div class="categories-wrapper">
+                <div class="categories" id="main-categories">
+                    <span class="category-chip active">همه</span>
+                    <span class="category-chip">خودرو</span>
+                    <span class="category-chip">املاک</span>
+                    <span class="category-chip">موبایل</span>
+                    <span class="category-chip">لوازم خانگی</span>
+                    <span class="category-chip">پوشاک</span>
+                    <span class="category-chip">خدمات</span>
+                    <span class="category-chip">حیوانات</span>
+                    <span class="category-chip">ورزشی</span>
+                </div>
+            </div>
+
+            <!-- زیردسته‌ها (اسکرول افقی) -->
+            <div class="subcategories" id="sub-categories">
+                <span class="category-chip active">همه</span>
+                <span class="category-chip">تازه‌ها</span>
+                <span class="category-chip">نزدیک من</span>
+                <span class="category-chip">ویژه</span>
+            </div>
+
+            <!-- شبکه آگهی‌ها (۲ ستونه) -->
+            <div class="ads-grid" id="ads-list">
+                <!-- کارت‌های آگهی با جاوااسکریپت پر می‌شوند -->
+            </div>
+
+            <!-- صفحه‌بندی مثل دیوار -->
+            <div class="pagination" id="pagination">
+                <span class="page-dot active"></span>
+                <span class="page-dot"></span>
+                <span class="page-dot"></span>
+                <span class="page-dot"></span>
+            </div>
         </div>
 
+        <!-- صفحه ثبت آگهی -->
         <div id="submit-page" class="page">
             <div class="form-container">
-                <h2 style="margin-bottom:1rem; font-size:1.3rem;"><i class="fas fa-plus-circle"></i> <span data-i18n="post_ad">ثبت آگهی جدید</span></h2>
+                <h2><i class="fas fa-plus-circle"></i> ثبت آگهی جدید</h2>
                 <form id="ad-form">
-                    <div class="form-group"><label data-i18n="enter_title">عنوان آگهی</label><input type="text" id="title" required></div>
-                    <div class="form-group"><label data-i18n="enter_description">توضیحات</label><textarea id="description" rows="3" required></textarea></div>
-                    <div class="form-group"><label data-i18n="select_category">دسته اصلی</label><select id="main-category" required><option value="" data-i18n="select_option">انتخاب کنید</option></select></div>
-                    <div class="form-group"><label data-i18n="select_subcategory">زیرمجموعه (اختیاری)</label><select id="sub-category"><option value="" data-i18n="no_subcategory">بدون زیرمجموعه</option></select></div>
-                    <div class="form-group"><label data-i18n="enter_price">قیمت (اختیاری)</label><input type="text" id="price" data-i18n-placeholder="price_placeholder" placeholder="مثلاً ۵۰۰,۰۰۰ تومان"></div>
-                    <div class="form-group"><label data-i18n="select_currency">واحد پول</label><select id="currency"><option value="تومان" data-i18n="toman">تومان</option><option value="دلار" data-i18n="dollar">دلار</option><option value="دینار" data-i18n="dinar">دینار</option></select></div>
-                    <div class="form-group"><label data-i18n="enter_phone">شماره تماس</label><input type="tel" id="phone" required></div>
-                    <div class="form-group"><label data-i18n="whatsapp">واتساپ (اختیاری)</label><input type="text" id="whatsapp"></div>
-                    <div class="form-group"><label data-i18n="enter_photos">تصاویر (حداکثر ۵)</label><input type="file" id="image-input" accept="image/*" multiple><div class="image-preview" id="image-preview"></div></div>
-                    <button type="submit" class="btn"><i class="fas fa-save"></i> <span data-i18n="save">ثبت آگهی</span></button>
+                    <div class="form-group">
+                        <label>عنوان آگهی</label>
+                        <input type="text" id="title" placeholder="مثال: فروش آیفون ۱۳" required>
+                    </div>
+                    <div class="form-group">
+                        <label>توضیحات</label>
+                        <textarea id="description" placeholder="توضیحات کامل..." rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>دسته‌بندی</label>
+                        <select id="main-category" required>
+                            <option value="">انتخاب کنید</option>
+                            <option value="1">خودرو</option>
+                            <option value="2">املاک</option>
+                            <option value="3">موبایل</option>
+                            <option value="4">لوازم خانگی</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>قیمت (تومان)</label>
+                        <input type="text" id="price" placeholder="مثال: ۵,۰۰۰,۰۰۰">
+                    </div>
+                    <div class="form-group">
+                        <label>شماره تماس</label>
+                        <input type="tel" id="phone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required>
+                    </div>
+                    <div class="form-group">
+                        <label>تصاویر</label>
+                        <input type="file" id="image-input" accept="image/*" multiple>
+                        <div class="image-preview" id="image-preview"></div>
+                    </div>
+                    <button type="submit" class="btn">
+                        <i class="fas fa-check"></i> ثبت آگهی
+                    </button>
                 </form>
             </div>
         </div>
 
+        <!-- صفحه علاقه‌مندی‌ها -->
         <div id="favorites-page" class="page">
-            <h2 style="margin-bottom:1rem; font-size:1.3rem;"><i class="fas fa-heart" style="color:#ff5e7c;"></i> <span data-i18n="favorites">علاقه‌مندی‌ها</span></h2>
+            <div class="page-header">
+                <i class="fas fa-heart" style="color: #ef4444;"></i>
+                <span>علاقه‌مندی‌ها</span>
+            </div>
             <div class="favorites-grid" id="favorites-list"></div>
         </div>
 
+        <!-- صفحه پروفایل -->
         <div id="profile-page" class="page">
             <div class="profile-card">
-                <div class="profile-avatar"><i class="fas fa-user-circle"></i></div>
-                <div class="profile-field"><span data-i18n="username">نام کاربری</span><span id="profile-username">کاربر</span></div>
-                <div class="profile-field"><span data-i18n="phone">شماره تماس</span><span id="profile-phone">۰۹۱۲۳۴۵۶۷۸۹</span></div>
-                <div class="profile-field"><span data-i18n="ads_count">تعداد آگهی‌ها</span><span id="profile-ads-count">0</span></div>
-                <button class="btn" id="admin-toggle" style="margin-top:1rem;"><i class="fas fa-cog"></i> <span data-i18n="admin">مدیریت</span></button>
+                <div class="profile-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-field">
+                    <span>نام کاربری</span>
+                    <span id="profile-username">کاربر_۱۲۳۴</span>
+                </div>
+                <div class="profile-field">
+                    <span>شماره تماس</span>
+                    <span id="profile-phone">۰۹۱۲۳۴۵۶۷۸۹</span>
+                </div>
+                <div class="profile-field">
+                    <span>تعداد آگهی‌ها</span>
+                    <span id="profile-ads-count">۰</span>
+                </div>
+                <button class="btn" id="admin-toggle" style="margin-top: 0.5rem;">
+                    <i class="fas fa-cog"></i> پنل مدیریت
+                </button>
             </div>
         </div>
 
+        <!-- صفحه مدیریت -->
         <div id="admin-page" class="page">
-            <div class="admin-panel">
-                <h2 style="margin-bottom:1rem; font-size:1.3rem;"><i class="fas fa-cog"></i> <span data-i18n="admin">پنل مدیریت</span></h2>
+            <div style="background: #2a2a3a; border-radius: 1rem; padding: 1.2rem; border: 1px solid #374151;">
+                <h2 style="margin-bottom: 1rem; font-size: 1.2rem;">
+                    <i class="fas fa-cog" style="color: #a855f7;"></i> پنل مدیریت
+                </h2>
                 <div id="admin-login-section">
-                    <div class="form-group"><label data-i18n="admin_token">رمز مدیریت</label><input type="password" id="admin-token" data-i18n-placeholder="enter_token" placeholder="رمز خود را وارد کنید"></div>
-                    <button class="btn" id="admin-login"><i class="fas fa-sign-in-alt"></i> <span data-i18n="login">ورود</span></button>
+                    <div class="form-group">
+                        <label>رمز مدیریت</label>
+                        <input type="password" id="admin-token" placeholder="رمز خود را وارد کنید">
+                    </div>
+                    <button class="btn" id="admin-login">
+                        <i class="fas fa-sign-in-alt"></i> ورود
+                    </button>
                 </div>
                 <div id="admin-content" style="display: none;">
-                    <div class="admin-tabs">
-                        <button class="admin-tab active" data-tab="pending"><span data-i18n="pending_ads">در انتظار</span></button>
-                        <button class="admin-tab" data-tab="allads" data-i18n="all_ads">همه آگهی‌ها</button>
-                        <button class="admin-tab" data-tab="prices"><span data-i18n="price_settings">قیمت‌ها</span></button>
-                        <button class="admin-tab" data-tab="feedback"><span data-i18n="feedback">بازخوردها</span></button>
-                        <button class="admin-tab" data-tab="stats"><span data-i18n="statistics">آمار</span></button>
-                    </div>
-                    <div class="admin-tab-content" id="admin-pending"><table class="admin-table" id="pending-table"><thead><tr><th data-i18n="id">شناسه</th><th data-i18n="title">عنوان</th><th data-i18n="phone">شماره</th><th data-i18n="actions">عملیات</th></tr></thead><tbody></tbody></table></div>
-                    <div class="admin-tab-content" id="admin-allads" style="display: none;"><table class="admin-table" id="allads-table"><thead><tr><th data-i18n="id">شناسه</th><th data-i18n="title">عنوان</th><th data-i18n="status">وضعیت</th><th data-i18n="phone">شماره</th><th data-i18n="actions">عملیات</th></tr></thead><tbody></tbody></table></div>
-                    <div class="admin-tab-content" id="admin-prices" style="display: none;">
-                        <div class="form-group"><label data-i18n="price_special1">قیمت ویژه ۱ روزه</label><input type="number" id="price_special1"></div>
-                        <div class="form-group"><label data-i18n="price_special3">قیمت ویژه ۳ روزه</label><input type="number" id="price_special3"></div>
-                        <div class="form-group"><label data-i18n="price_vip1">قیمت VIP 1 ماهه</label><input type="number" id="price_vip1"></div>
-                        <div class="form-group"><label data-i18n="price_vip3">قیمت VIP 3 ماهه</label><input type="number" id="price_vip3"></div>
-                        <div class="form-group"><label data-i18n="price_vip6">قیمت VIP 6 ماهه</label><input type="number" id="price_vip6"></div>
-                        <button class="btn" id="save-prices"><span data-i18n="save">ذخیره</span></button>
-                    </div>
-                    <div class="admin-tab-content" id="admin-feedback" style="display: none;"><table class="admin-table" id="feedback-table"><thead><tr><th data-i18n="name">نام</th><th data-i18n="phone">شماره</th><th data-i18n="message">پیام</th><th data-i18n="date">تاریخ</th></tr></thead><tbody></tbody></table></div>
-                    <div class="admin-tab-content" id="admin-stats" style="display: none;"><div id="stats-content" style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:1rem;"></div></div>
+                    <!-- محتوای پنل مدیریت اینجا قرار می‌گیرد -->
                 </div>
             </div>
         </div>
     </main>
 
+    <!-- ناوبری پایین دقیقاً مثل دیوار -->
     <nav class="bottom-nav">
-        <div class="nav-item active" data-page="home"><i class="fas fa-home"></i><span data-i18n="home">خانه</span></div>
-        <div class="nav-item" data-page="submit"><i class="fas fa-plus-circle"></i><span data-i18n="post_ad">ثبت</span></div>
-        <div class="nav-item" data-page="favorites"><i class="fas fa-heart"></i><span data-i18n="favorites">علاقه‌مندی</span></div>
-        <div class="nav-item" data-page="profile"><i class="fas fa-user"></i><span data-i18n="profile">پروفایل</span></div>
+        <div class="nav-item active" data-page="home">
+            <i class="fas fa-home"></i>
+            <span>خانه</span>
+        </div>
+        <div class="nav-item" data-page="submit">
+            <i class="fas fa-plus-circle"></i>
+            <span>ثبت</span>
+        </div>
+        <div class="nav-item" data-page="favorites">
+            <i class="fas fa-heart"></i>
+            <span>علاقه‌مندی</span>
+        </div>
+        <div class="nav-item" data-page="profile">
+            <i class="fas fa-user"></i>
+            <span>دیوار من</span>
+        </div>
     </nav>
 
-    <div class="modal" id="ad-modal"><div class="modal-content"><button class="close-modal" id="close-modal">&times;</button><div id="modal-detail"></div></div></div>
+    <!-- مودال جزئیات آگهی -->
+    <div class="modal" id="ad-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <div id="modal-detail"></div>
+        </div>
+    </div>
 
     <script>
-        const API_URL = 'https://j-dar-market.j-dar-market.workers.dev';
-        const ADMIN_TOKEN = 'jdar@Admin1357900';
-        let currentLang = localStorage.getItem('lang') || 'fa';
-        let categories = [];
+        // ========== داده‌های نمونه ==========
+        const sampleAds = [
+            {
+                id: 1,
+                title: 'فروش آیفون ۱۳ پرو ۲۵۶ گیگ',
+                price: '۴۵,۰۰۰,۰۰۰',
+                currency: 'تومان',
+                phone: '۰۹۱۲۱۱۱۲۲۲۳',
+                description: 'آیفون ۱۳ پرو ۲۵۶ گیگ، یک هفته استفاده شده، کاملاً سالم با گارانتی',
+                images: ['1'],
+                views: 245,
+                category: 3,
+                subcategory: null,
+                status: 'approved'
+            },
+            {
+                id: 2,
+                title: 'فروش پژو ۲۰۶ تیپ ۲ مدل ۱۴۰۰',
+                price: '۳۲۰,۰۰۰,۰۰۰',
+                currency: 'تومان',
+                phone: '۰۹۱۲۳۳۳۴۴۵۵',
+                description: 'پژو ۲۰۶ تیپ ۲، مدل ۱۴۰۰، کارکرد ۴۵,۰۰۰ کیلومتر، رنگ سفید، فول آپشن',
+                images: ['2'],
+                views: 189,
+                category: 1,
+                subcategory: null,
+                status: 'approved'
+            },
+            {
+                id: 3,
+                title: 'اجاره آپارتمان ۷۵ متری منطقه ۳',
+                price: '۲۵,۰۰۰,۰۰۰',
+                currency: 'تومان',
+                phone: '۰۲۱۲۲۳۳۴۴۵۵',
+                description: 'آپارتمان ۷۵ متری، ۲ خواب، پارکینگ، انباری، منطقه ۳ تهران',
+                images: ['3'],
+                views: 67,
+                category: 2,
+                subcategory: null,
+                status: 'approved'
+            },
+            {
+                id: 4,
+                title: 'میز تحریر کودک مدل فانتزی',
+                price: '۸۵۰,۰۰۰',
+                currency: 'تومان',
+                phone: '۰۹۱۲۴۴۴۵۵۶۶',
+                description: 'میز تحریر کودک طرح فانتزی، کاملاً نو، همراه با صندلی',
+                images: ['4'],
+                views: 34,
+                category: 4,
+                subcategory: null,
+                status: 'approved'
+            },
+            {
+                id: 5,
+                title: 'سمند سورن مدل ۱۴۰۱',
+                price: '۴۵۰,۰۰۰,۰۰۰',
+                currency: 'تومان',
+                phone: '۰۹۱۲۵۵۵۶۶۷۷',
+                description: 'سمند سورن مدل ۱۴۰۱، کارکرد ۲۰,۰۰۰ کیلومتر، رنگ مشکی',
+                images: ['5'],
+                views: 156,
+                category: 1,
+                subcategory: null,
+                status: 'approved'
+            },
+            {
+                id: 6,
+                title: 'هدفون بلوتوثی سونی',
+                price: '۲,۸۰۰,۰۰۰',
+                currency: 'تومان',
+                phone: '۰۹۱۲۶۶۶۷۷۸۸',
+                description: 'هدفون بلوتوثی سونی مدل WH-1000XM4، اکبند',
+                images: ['6'],
+                views: 78,
+                category: 3,
+                subcategory: null,
+                status: 'approved'
+            }
+        ];
+
+        // ========== متغیرهای سراسری ==========
+        let currentPage = 'home';
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         let currentMainCat = null;
         let currentSubCat = null;
-        let allAds = [];
-        let adminToken = localStorage.getItem('adminToken') || '';
-        let uploadedFileIds = [];
-        let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        let allAds = [...sampleAds];
+        const PLACEHOLDER_IMAGE = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\' viewBox=\'0 0 300 200\'%3E%3Crect width=\'300\' height=\'200\' fill=\'%232a2a3a\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Vazir, sans-serif\' font-size=\'24\' fill=\'%23a855f7\'%3Eدیوار%3C/text%3E%3C/svg%3E';
 
-        const PLACEHOLDER_IMAGE = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\' viewBox=\'0 0 300 200\'%3E%3Crect width=\'300\' height=\'200\' fill=\'%23333\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Vazir, sans-serif\' font-size=\'20\' fill=\'%23aaa\'%3E%D8%AC%D8%AF%D8%A7%D8%B1%3C/text%3E%3C/svg%3E';
-
-        const translations = {
-            fa: { lang_fa: 'FA', lang_ar: 'AR', lang_en: 'EN', logo: 'جدار', home: 'خانه', post_ad: 'ثبت آگهی', admin: 'مدیریت', search: 'جستجو', search_placeholder: 'جستجو در آگهی‌ها...', enter_title: 'عنوان آگهی', enter_description: 'توضیحات', select_category: 'دسته اصلی', select_subcategory: 'زیرمجموعه (اختیاری)', enter_price: 'قیمت (اختیاری)', select_currency: 'واحد پول', enter_phone: 'شماره تماس', enter_photos: 'تصاویر (حداکثر ۵)', save: 'ثبت آگهی', pending_ads: 'در انتظار', price_settings: 'قیمت‌ها', feedback: 'بازخوردها', statistics: 'آمار', no_ads: 'آگهی‌ای یافت نشد', approve: 'تأیید', reject: 'رد', view: 'مشاهده', favorites: 'علاقه‌مندی‌ها', profile: 'پروفایل', username: 'نام کاربری', phone: 'شماره تماس', ads_count: 'تعداد آگهی‌ها', no_favorites: 'هیچ آگهی به علاقه‌مندی‌ها اضافه نشده است.', toman: 'تومان', dollar: 'دلار', dinar: 'دینار', whatsapp: 'واتساپ (اختیاری)', select_option: 'انتخاب کنید', no_subcategory: 'بدون زیرمجموعه', price_placeholder: 'مثلاً ۵۰۰,۰۰۰ تومان', admin_token: 'رمز مدیریت', enter_token: 'رمز خود را وارد کنید', login: 'ورود', id: 'شناسه', title: 'عنوان', status: 'وضعیت', actions: 'عملیات', name: 'نام', message: 'پیام', date: 'تاریخ', price_special1: 'قیمت ویژه ۱ روزه', price_special3: 'قیمت ویژه ۳ روزه', price_vip1: 'قیمت VIP 1 ماهه', price_vip3: 'قیمت VIP 3 ماهه', price_vip6: 'قیمت VIP 6 ماهه', total_ads: 'کل آگهی‌ها', approved_ads: 'تأیید شده', pending_ads_count: 'در انتظار', special_ads: 'ویژه', total_views: 'بازدید کل', today_views: 'بازدید امروز', feedback_count: 'تعداد بازخوردها', edit: 'ویرایش', delete: 'حذف', confirm_delete: 'آیا از حذف اطمینان دارید؟', ad_submitted: 'آگهی شما ثبت شد و پس از تأیید نمایش داده می‌شود.', max_images: 'حداکثر ۵ تصویر مجاز است', image_upload_error: 'خطا در آپلود تصویر', error_connection: 'خطا در ارتباط با سرور', all_ads: 'همه آگهی‌ها' },
-            ar: { lang_fa: 'FA', lang_ar: 'AR', lang_en: 'EN', logo: 'جدار', home: 'الرئيسية', post_ad: 'إعلان', admin: 'الإدارة', search: 'بحث', search_placeholder: 'ابحث في الإعلانات...', enter_title: 'العنوان', enter_description: 'الوصف', select_category: 'الفئة الرئيسية', select_subcategory: 'الفئة الفرعية', enter_price: 'السعر', select_currency: 'العملة', enter_phone: 'رقم الهاتف', enter_photos: 'الصور (5 كحد أقصى)', save: 'حفظ', pending_ads: 'قيد الانتظار', price_settings: 'الأسعار', feedback: 'الآراء', statistics: 'الإحصائيات', no_ads: 'لا توجد إعلانات', approve: 'موافقة', reject: 'رفض', view: 'عرض', favorites: 'المفضلة', profile: 'الملف الشخصي', username: 'اسم المستخدم', phone: 'رقم الهاتف', ads_count: 'عدد الإعلانات', no_favorites: 'لم تتم إضافة أي إعلان إلى المفضلة بعد.', toman: 'تومان', dollar: 'دولار', dinar: 'دينار', whatsapp: 'واتساب', select_option: 'اختر', no_subcategory: 'بدون فئة فرعية', price_placeholder: 'مثال: ٥٠٠,٠٠٠ تومان', admin_token: 'رمز المسؤول', enter_token: 'أدخل رمزك', login: 'دخول', id: 'رقم', title: 'العنوان', status: 'الحالة', actions: 'إجراءات', name: 'الاسم', message: 'الرسالة', date: 'التاريخ', price_special1: 'سعر خاص ليوم واحد', price_special3: 'سعر خاص لثلاثة أيام', price_vip1: 'سعر VIP لشهر', price_vip3: 'سعر VIP لثلاثة أشهر', price_vip6: 'سعر VIP لستة أشهر', total_ads: 'إجمالي الإعلانات', approved_ads: 'تمت الموافقة', pending_ads_count: 'قيد الانتظار', special_ads: 'خاصة', total_views: 'إجمالي المشاهدات', today_views: 'مشاهدات اليوم', feedback_count: 'عدد الآراء', edit: 'تعديل', delete: 'حذف', confirm_delete: 'هل أنت متأكد من الحذف؟', ad_submitted: 'تم إرسال إعلانك وسيتم عرضه بعد الموافقة.', max_images: 'الحد الأقصى 5 صور', image_upload_error: 'خطأ في تحميل الصورة', error_connection: 'خطأ في الاتصال بالخادم', all_ads: 'جميع الإعلانات' },
-            en: { lang_fa: 'FA', lang_ar: 'AR', lang_en: 'EN', logo: 'J-DAR', home: 'Home', post_ad: 'Post Ad', admin: 'Admin', search: 'Search', search_placeholder: 'Search ads...', enter_title: 'Title', enter_description: 'Description', select_category: 'Main Category', select_subcategory: 'Subcategory (optional)', enter_price: 'Price (optional)', select_currency: 'Currency', enter_phone: 'Phone', enter_photos: 'Photos (max 5)', save: 'Submit', pending_ads: 'Pending', price_settings: 'Prices', feedback: 'Feedback', statistics: 'Statistics', no_ads: 'No ads found', approve: 'Approve', reject: 'Reject', view: 'View', favorites: 'Favorites', profile: 'Profile', username: 'Username', phone: 'Phone', ads_count: 'Ads count', no_favorites: 'No ads added to favorites yet.', toman: 'Toman', dollar: 'Dollar', dinar: 'Dinar', whatsapp: 'WhatsApp', select_option: 'Select', no_subcategory: 'No subcategory', price_placeholder: 'e.g. 500,000 Toman', admin_token: 'Admin Password', enter_token: 'Enter your password', login: 'Login', id: 'ID', title: 'Title', status: 'Status', actions: 'Actions', name: 'Name', message: 'Message', date: 'Date', price_special1: 'Special price 1 day', price_special3: 'Special price 3 days', price_vip1: 'VIP price 1 month', price_vip3: 'VIP price 3 months', price_vip6: 'VIP price 6 months', total_ads: 'Total ads', approved_ads: 'Approved', pending_ads_count: 'Pending', special_ads: 'Special', total_views: 'Total views', today_views: 'Today views', feedback_count: 'Feedback count', edit: 'Edit', delete: 'Delete', confirm_delete: 'Are you sure?', ad_submitted: 'Your ad has been submitted and will be displayed after approval.', max_images: 'Maximum 5 images', image_upload_error: 'Image upload error', error_connection: 'Connection error', all_ads: 'All ads' }
-        };
-
-        function t(key) { return translations[currentLang]?.[key] || key; }
-        function updateUILang() {
-            document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') { if (el.getAttribute('data-i18n-placeholder')) el.placeholder = t(el.getAttribute('data-i18n-placeholder')); } else el.innerText = t(key); });
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => el.placeholder = t(el.getAttribute('data-i18n-placeholder')));
-            document.documentElement.lang = currentLang; document.documentElement.dir = (currentLang === 'fa' || currentLang === 'ar') ? 'rtl' : 'ltr';
-        }
-
-        async function fetchAPI(endpoint, options = {}) {
-            const url = `${API_URL}${endpoint}`; options.headers = options.headers || {};
-            if (!(options.body instanceof FormData)) options.headers['Content-Type'] = 'application/json';
-            try { const res = await fetch(url, options); return await res.json(); } catch (e) { console.error('Fetch error:', e); return { success: false, error: t('error_connection') }; }
-        }
-
-        async function loadCategories() {
-            try { const data = await fetchAPI('/api/categories'); if (data.success) { categories = data.categories; renderMainCategories(); populateCategoryDropdowns(); } } catch (e) { console.error(e); }
-        }
-
-        function renderMainCategories() {
-            const mains = categories.filter(c => !c.parent_id);
-            let html = mains.map(c => `<span class="category-chip ${currentMainCat === c.id ? 'active' : ''}" data-id="${c.id}">${c.name_fa}</span>`).join('');
-            document.getElementById('main-categories').innerHTML = html;
-            document.querySelectorAll('#main-categories .category-chip').forEach(btn => { btn.addEventListener('click', () => { const id = parseInt(btn.dataset.id); currentMainCat = currentMainCat === id ? null : id; currentSubCat = null; renderMainCategories(); renderSubCategories(); loadAds(); }); });
-            renderSubCategories();
-        }
-
-        function renderSubCategories() {
-            if (!currentMainCat) { document.getElementById('sub-categories').innerHTML = ''; return; }
-            const subs = categories.filter(c => c.parent_id === currentMainCat);
-            let html = `<span class="category-chip ${currentSubCat === null ? 'active' : ''}" data-id="all">${t('all') || 'همه'}</span>`;
-            html += subs.map(c => `<span class="category-chip ${currentSubCat === c.id ? 'active' : ''}" data-id="${c.id}">${c.name_fa}</span>`).join('');
-            document.getElementById('sub-categories').innerHTML = html;
-            document.querySelectorAll('#sub-categories .category-chip').forEach(btn => { btn.addEventListener('click', () => { const id = btn.dataset.id === 'all' ? null : parseInt(btn.dataset.id); currentSubCat = id; renderSubCategories(); loadAds(); }); });
-        }
-
-        async function loadAds() {
-            let url = '/api/ads?'; if (currentMainCat) url += `category=${currentMainCat}&`; if (currentSubCat) url += `subcategory=${currentSubCat}&`;
-            const search = document.getElementById('search-input').value.trim(); if (search) url += `search=${encodeURIComponent(search)}&`;
-            try { const data = await fetchAPI(url); if (data.success) { allAds = data.ads; renderAds(allAds); } else { allAds = []; renderAds([]); } } catch (e) { console.error(e); }
+        // ========== توابع کمکی ==========
+        function showMessage(text) {
+            const msg = document.createElement('div');
+            msg.className = 'message';
+            msg.textContent = text;
+            document.body.appendChild(msg);
+            setTimeout(() => msg.remove(), 3000);
         }
 
         function getImageUrl(imageData) {
             if (!imageData) return PLACEHOLDER_IMAGE;
-            try { 
-                const ids = typeof imageData === 'string' ? JSON.parse(imageData) : imageData;
-                if (Array.isArray(ids) && ids.length > 0) return `${API_URL}/image/${ids[0]}`;
-                if (typeof imageData === 'string' && imageData.length > 10) return `${API_URL}/image/${imageData}`;
-            } catch (e) { console.error(e); }
-            return PLACEHOLDER_IMAGE;
+            return `https://via.placeholder.com/300x200/a855f7/ffffff?text=دیوار`;
         }
 
+        // ========== رندر آگهی‌ها ==========
         function renderAds(ads) {
             const container = document.getElementById('ads-list');
-            if (!ads.length) { container.innerHTML = `<p style="text-align:center; color:#aaa;">${t('no_ads')}</p>`; return; }
+            if (!ads.length) {
+                container.innerHTML = '<p style="text-align: center; color: #9ca3af; grid-column: 1/-1; padding: 2rem;">آگهی‌ای یافت نشد</p>';
+                return;
+            }
+            
             container.innerHTML = ads.map(ad => {
-                const imgUrl = getImageUrl(ad.images); const isFav = favorites.includes(ad.id);
-                return `<div class="ad-card" data-id="${ad.id}"><img src="${imgUrl}" class="ad-card-image" onerror="this.onerror=null; this.src='${PLACEHOLDER_IMAGE}'"><div class="ad-card-content"><div class="ad-card-title">${ad.title}</div><div class="ad-card-price">💰 ${ad.price || 'توافقی'} ${ad.currency || ''}</div><div class="ad-card-meta"><span><i class="fas fa-phone"></i> ${ad.phone}</span><span><i class="fas fa-eye"></i> ${ad.views || 0}</span></div></div><div class="favorite-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, ${ad.id})"><i class="fa${isFav ? 's' : 'r'} fa-heart"></i></div></div>`;
+                const isFav = favorites.includes(ad.id);
+                return `
+                    <div class="ad-card" data-id="${ad.id}">
+                        <div class="ad-card-image" style="background: linear-gradient(145deg, #2a2a3a, #1e1e2e); display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-image" style="font-size: 2rem; color: #a855f7; opacity: 0.5;"></i>
+                        </div>
+                        <div class="ad-card-content">
+                            <div class="ad-card-title">${ad.title}</div>
+                            <div class="ad-card-price">💰 ${ad.price} ${ad.currency}</div>
+                            <div class="ad-card-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> اهواز</span>
+                                <span><i class="fas fa-eye"></i> ${ad.views}</span>
+                            </div>
+                        </div>
+                        <div class="favorite-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, ${ad.id})">
+                            <i class="fa${isFav ? 's' : 'r'} fa-heart"></i>
+                        </div>
+                    </div>
+                `;
             }).join('');
-            document.querySelectorAll('#ads-list .ad-card').forEach(card => card.addEventListener('click', (e) => { if (!e.target.closest('.favorite-btn')) showAdDetail(card.dataset.id); }));
+
+            // اضافه کردن event listener به کارت‌ها
+            document.querySelectorAll('#ads-list .ad-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.favorite-btn')) {
+                        showAdDetail(parseInt(card.dataset.id));
+                    }
+                });
+            });
         }
 
-        window.toggleFavorite = (e, id) => { e.stopPropagation(); const index = favorites.indexOf(id); if (index === -1) favorites.push(id); else favorites.splice(index, 1); localStorage.setItem('favorites', JSON.stringify(favorites)); renderAds(allAds); renderFavorites(); };
+        // ========== تغییر وضعیت علاقه‌مندی ==========
+        window.toggleFavorite = (e, id) => {
+            e.stopPropagation();
+            const index = favorites.indexOf(id);
+            if (index === -1) {
+                favorites.push(id);
+            } else {
+                favorites.splice(index, 1);
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            renderAds(allAds);
+            renderFavorites();
+        };
 
+        // ========== رندر علاقه‌مندی‌ها ==========
         function renderFavorites() {
-            const favAds = allAds.filter(ad => favorites.includes(ad.id)); const container = document.getElementById('favorites-list');
-            if (!favAds.length) { container.innerHTML = `<p style="color:#aaa;">${t('no_favorites')}</p>`; return; }
-            container.innerHTML = favAds.map(ad => { const imgUrl = getImageUrl(ad.images); return `<div class="ad-card" data-id="${ad.id}"><img src="${imgUrl}" class="ad-card-image" onerror="this.onerror=null; this.src='${PLACEHOLDER_IMAGE}'"><div class="ad-card-content"><div class="ad-card-title">${ad.title}</div><div class="ad-card-price">💰 ${ad.price || 'توافقی'}</div></div><div class="favorite-btn active" onclick="toggleFavorite(event, ${ad.id})"><i class="fas fa-heart"></i></div></div>`; }).join('');
-            document.querySelectorAll('#favorites-list .ad-card').forEach(card => card.addEventListener('click', (e) => { if (!e.target.closest('.favorite-btn')) showAdDetail(card.dataset.id); }));
+            const favAds = allAds.filter(ad => favorites.includes(ad.id));
+            const container = document.getElementById('favorites-list');
+            
+            if (!favAds.length) {
+                container.innerHTML = '<p style="color: #9ca3af; text-align: center; grid-column: 1/-1; padding: 2rem;">آگهی‌ای به علاقه‌مندی‌ها اضافه نشده</p>';
+                return;
+            }
+
+            container.innerHTML = favAds.map(ad => `
+                <div class="ad-card" data-id="${ad.id}">
+                    <div class="ad-card-image" style="background: linear-gradient(145deg, #2a2a3a, #1e1e2e); display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-image" style="font-size: 2rem; color: #a855f7; opacity: 0.5;"></i>
+                    </div>
+                    <div class="ad-card-content">
+                        <div class="ad-card-title">${ad.title}</div>
+                        <div class="ad-card-price">💰 ${ad.price} ${ad.currency}</div>
+                    </div>
+                    <div class="favorite-btn active" onclick="toggleFavorite(event, ${ad.id})">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('#favorites-list .ad-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.favorite-btn')) {
+                        showAdDetail(parseInt(card.dataset.id));
+                    }
+                });
+            });
         }
 
-        async function showAdDetail(id) {
-            try { const data = await fetchAPI(`/api/ads/${id}`); if (data.success) { const ad = data.ad; let images = []; try { images = JSON.parse(ad.images || '[]'); } catch { images = []; } const imagesHtml = images.length > 0 ? images.map(img => `<img src="${API_URL}/image/${img}" onerror="this.onerror=null; this.src='${PLACEHOLDER_IMAGE}';">`).join('') : `<img src="${PLACEHOLDER_IMAGE}" style="opacity:0.7;">`; const date = new Date(ad.created_at * 1000).toLocaleDateString('fa-IR'); document.getElementById('modal-detail').innerHTML = `<h2>${ad.title}</h2><div class="modal-images">${imagesHtml}</div><p><strong>${t('enter_price')}:</strong> ${ad.price || 'توافقی'} ${ad.currency || ''}</p><p><strong>${t('enter_description')}:</strong> ${ad.description}</p><p><strong>${t('enter_phone')}:</strong> ${ad.phone}</p>${ad.whatsapp ? `<p><strong>${t('whatsapp')}:</strong> ${ad.whatsapp}</p>` : ''}<p><strong>${t('date')}:</strong> ${date}</p><p><strong>${t('total_views')}:</strong> ${ad.views || 0}</p>`; document.getElementById('ad-modal').classList.add('active'); fetchAPI(`/api/view/${id}`, { method: 'POST' }); } } catch (e) { console.error(e); }
+        // ========== نمایش جزئیات آگهی ==========
+        function showAdDetail(id) {
+            const ad = allAds.find(a => a.id === id);
+            if (!ad) return;
+
+            const modalDetail = document.getElementById('modal-detail');
+            modalDetail.innerHTML = `
+                <h2 style="margin-bottom: 0.5rem; font-size: 1.3rem;">${ad.title}</h2>
+                <div style="background: #1e1e2e; border-radius: 0.8rem; padding: 1rem; margin: 1rem 0;">
+                    <p style="margin-bottom: 0.5rem; color: #a855f7; font-weight: 600;">💰 ${ad.price} ${ad.currency}</p>
+                    <p style="margin-bottom: 0.5rem; color: #9ca3af;"><i class="fas fa-phone"></i> ${ad.phone}</p>
+                    <p style="color: #f3f4f6;">${ad.description}</p>
+                </div>
+                <p style="color: #9ca3af; font-size: 0.8rem;"><i class="fas fa-eye"></i> ${ad.views} بازدید</p>
+                <button class="btn" onclick="document.getElementById('ad-modal').classList.remove('active')" style="margin-top: 1rem;">بستن</button>
+            `;
+
+            document.getElementById('ad-modal').classList.add('active');
+            
+            // افزایش بازدید
+            ad.views += 1;
         }
 
-        document.getElementById('ad-form').addEventListener('submit', async (e) => {
-            e.preventDefault(); const title = document.getElementById('title').value; const description = document.getElementById('description').value; const category_id = parseInt(document.getElementById('main-category').value); const subcategory_id = document.getElementById('sub-category').value ? parseInt(document.getElementById('sub-category').value) : undefined; const price = document.getElementById('price').value; const currency = document.getElementById('currency').value; const phone = document.getElementById('phone').value; const whatsapp = document.getElementById('whatsapp').value; const images = uploadedFileIds; const data = { title, description, category_id, subcategory_id, price, currency, phone, whatsapp, images };
-            try { const res = await fetchAPI('/api/ads', { method:'POST', body: JSON.stringify(data) }); if (res.success) { showMessage(t('ad_submitted')); document.getElementById('ad-form').reset(); uploadedFileIds = []; document.getElementById('image-preview').innerHTML = ''; showPage('home'); } else showMessage('خطا: ' + res.error); } catch { showMessage(t('error_connection')); }
+        // ========== تغییر صفحه ==========
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId + '-page').classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.page === pageId);
+            });
+
+            currentPage = pageId;
+
+            if (pageId === 'home') {
+                renderAds(allAds);
+            } else if (pageId === 'favorites') {
+                renderFavorites();
+            } else if (pageId === 'profile') {
+                document.getElementById('profile-ads-count').innerText = allAds.length;
+            }
+        }
+
+        // ========== رویدادهای ناوبری ==========
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => showPage(item.dataset.page));
         });
 
-        document.getElementById('image-input').addEventListener('change', async (e) => {
-            const files = Array.from(e.target.files); if (files.length + uploadedFileIds.length > 5) { alert(t('max_images')); return; }
-            for (let file of files) { const formData = new FormData(); formData.append('file', file); try { const res = await fetch(`${API_URL}/api/upload`, { method:'POST', body: formData }); const data = await res.json(); if (data.success) { uploadedFileIds.push(data.fileId); const preview = document.getElementById('image-preview'); const img = document.createElement('img'); img.src = `${API_URL}/image/${data.fileId}`; preview.appendChild(img); } else alert(t('image_upload_error') + ': ' + data.error); } catch { alert(t('image_upload_error')); } }
+        // ========== رویدادهای فرم ثبت آگهی ==========
+        document.getElementById('ad-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const newAd = {
+                id: allAds.length + 1,
+                title: document.getElementById('title').value,
+                price: document.getElementById('price').value || 'توافقی',
+                currency: 'تومان',
+                phone: document.getElementById('phone').value,
+                description: document.getElementById('description').value,
+                category: parseInt(document.getElementById('main-category').value),
+                images: [],
+                views: 0,
+                status: 'pending'
+            };
+
+            allAds.push(newAd);
+            showMessage('آگهی شما با موفقیت ثبت شد و پس از تأیید نمایش داده می‌شود');
+            e.target.reset();
+            document.getElementById('image-preview').innerHTML = '';
+            showPage('home');
         });
 
-        document.getElementById('admin-login').addEventListener('click', async () => {
-            const token = document.getElementById('admin-token').value; if (token) { adminToken = token; localStorage.setItem('adminToken', token); document.getElementById('admin-login-section').style.display = 'none'; document.getElementById('admin-content').style.display = 'block'; loadAdminData(); }
+        // ========== رویدادهای مودال ==========
+        document.getElementById('close-modal').addEventListener('click', () => {
+            document.getElementById('ad-modal').classList.remove('active');
         });
 
-        async function authFetch(url, options = {}) { options.headers = options.headers || {}; options.headers['Authorization'] = `Bearer ${adminToken}`; return fetchAPI(url, options); }
-        async function loadAdminData() { if (!adminToken) return; loadPending(); loadAllAds(); loadPrices(); loadFeedback(); loadStats(); }
+        // ========== رویدادهای دسته‌بندی ==========
+        document.querySelectorAll('#main-categories .category-chip').forEach((chip, index) => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('#main-categories .category-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                
+                // فیلتر بر اساس دسته (نمونه)
+                if (index === 0) {
+                    renderAds(allAds);
+                } else {
+                    const filtered = allAds.filter(ad => ad.category === index);
+                    renderAds(filtered);
+                }
+            });
+        });
 
-        async function loadPending() { const data = await authFetch('/api/admin/pending'); if (data.success) { document.querySelector('#pending-table tbody').innerHTML = data.ads.map(ad => `<tr><td>${ad.id}</td><td>${ad.title}</td><td>${ad.phone}</td><td><button onclick="approveAd(${ad.id})">✅ ${t('approve')}</button> <button onclick="rejectAd(${ad.id})">❌ ${t('reject')}</button> <button onclick="showAdDetail(${ad.id})">👁 ${t('view')}</button></td></tr>`).join(''); } }
-        window.approveAd = async (id) => { await authFetch(`/api/admin/approve/${id}`, { method:'POST' }); loadPending(); loadAllAds(); };
-        window.rejectAd = async (id) => { await authFetch(`/api/admin/reject/${id}`, { method:'DELETE' }); loadPending(); loadAllAds(); };
+        document.querySelectorAll('#sub-categories .category-chip').forEach((chip, index) => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('#sub-categories .category-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+            });
+        });
 
-        async function loadAllAds() { const data = await authFetch('/api/admin/ads'); if (data && data.success) { document.querySelector('#allads-table tbody').innerHTML = data.ads.map(ad => `<tr><td>${ad.id}</td><td>${ad.title}</td><td>${ad.status}</td><td>${ad.phone}</td><td><button onclick="editAd(${ad.id})">✏️ ${t('edit')}</button> <button onclick="deleteAd(${ad.id})">🗑️ ${t('delete')}</button> <button onclick="showAdDetail(${ad.id})">👁 ${t('view')}</button></td></tr>`).join(''); } else { const sample = allAds.map(ad => ({ ...ad, status: ad.status || 'approved' })); document.querySelector('#allads-table tbody').innerHTML = sample.map(ad => `<tr><td>${ad.id}</td><td>${ad.title}</td><td>${ad.status}</td><td>${ad.phone}</td><td><button onclick="editAd(${ad.id})">✏️ ${t('edit')}</button> <button onclick="deleteAd(${ad.id})">🗑️ ${t('delete')}</button> <button onclick="showAdDetail(${ad.id})">👁 ${t('view')}</button></td></tr>`).join(''); } }
-        window.editAd = (id) => { const ad = allAds.find(a => a.id == id); if (ad) { const newTitle = prompt(t('enter_title'), ad.title); if (newTitle && newTitle !== ad.title) { authFetch(`/api/admin/ads/${id}`, { method:'PUT', body: JSON.stringify({ title: newTitle }) }).then(() => { alert(t('save')); loadAllAds(); loadAds(); }); } } };
-        window.deleteAd = async (id) => { if (confirm(t('confirm_delete'))) { await authFetch(`/api/admin/ads/${id}`, { method:'DELETE' }); loadAllAds(); loadAds(); } };
+        // ========== رویداد جستجو ==========
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            if (term.length < 2) {
+                renderAds(allAds);
+                return;
+            }
+            
+            const filtered = allAds.filter(ad => 
+                ad.title.toLowerCase().includes(term) || 
+                ad.description.toLowerCase().includes(term)
+            );
+            renderAds(filtered);
+        });
 
-        async function loadPrices() { const data = await authFetch('/api/admin/prices'); if (data.success) { document.getElementById('price_special1').value = data.prices.price_special1 || ''; document.getElementById('price_special3').value = data.prices.price_special3 || ''; document.getElementById('price_vip1').value = data.prices.price_vip1 || ''; document.getElementById('price_vip3').value = data.prices.price_vip3 || ''; document.getElementById('price_vip6').value = data.prices.price_vip6 || ''; } }
-        document.getElementById('save-prices').addEventListener('click', async () => { const updates = { price_special1: document.getElementById('price_special1').value, price_special3: document.getElementById('price_special3').value, price_vip1: document.getElementById('price_vip1').value, price_vip3: document.getElementById('price_vip3').value, price_vip6: document.getElementById('price_vip6').value }; await authFetch('/api/admin/prices', { method:'PUT', body: JSON.stringify(updates) }); showMessage(t('save')); });
+        // ========== رویدادهای مدیریت ==========
+        document.getElementById('admin-login').addEventListener('click', () => {
+            const token = document.getElementById('admin-token').value;
+            if (token === 'admin123') {
+                document.getElementById('admin-login-section').style.display = 'none';
+                document.getElementById('admin-content').style.display = 'block';
+                showMessage('ورود موفقیت‌آمیز');
+            } else {
+                showMessage('رمز اشتباه است');
+            }
+        });
 
-        async function loadFeedback() { const data = await authFetch('/api/admin/feedback'); if (data.success) { document.querySelector('#feedback-table tbody').innerHTML = data.feedbacks.map(f => `<tr><td>${f.name || '-'}</td><td>${f.phone || '-'}</td><td>${f.message}</td><td>${new Date(f.created_at*1000).toLocaleDateString()}</td></tr>`).join(''); } }
-        async function loadStats() { const data = await authFetch('/api/admin/stats'); if (data.success) { document.getElementById('stats-content').innerHTML = `<p>${t('total_ads')}: ${data.totalAds}</p><p>${t('approved_ads')}: ${data.approvedAds}</p><p>${t('pending_ads_count')}: ${data.pendingAds}</p><p>${t('special_ads')}: ${data.specialAds}</p><p>${t('total_views')}: ${data.totalViews}</p><p>${t('today_views')}: ${data.todayViews}</p><p>${t('feedback_count')}: ${data.feedbackCount}</p>`; } }
-
-        document.querySelectorAll('.admin-tab').forEach(tab => { tab.addEventListener('click', () => { document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active')); tab.classList.add('active'); document.querySelectorAll('.admin-tab-content').forEach(c => c.style.display = 'none'); const tabId = tab.dataset.tab; if (tabId === 'pending') document.getElementById('admin-pending').style.display = 'block'; else if (tabId === 'allads') document.getElementById('admin-allads').style.display = 'block'; else if (tabId === 'prices') document.getElementById('admin-prices').style.display = 'block'; else if (tabId === 'feedback') document.getElementById('admin-feedback').style.display = 'block'; else if (tabId === 'stats') document.getElementById('admin-stats').style.display = 'block'; }); });
-
-        function showPage(pageId) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(pageId + '-page').classList.add('active'); document.querySelectorAll('.nav-item').forEach(item => item.classList.toggle('active', item.dataset.page === pageId)); if (pageId === 'home') loadAds(); else if (pageId === 'favorites') renderFavorites(); else if (pageId === 'profile') loadProfile(); else if (pageId === 'admin') { if (adminToken) { document.getElementById('admin-login-section').style.display = 'none'; document.getElementById('admin-content').style.display = 'block'; loadAdminData(); } else { document.getElementById('admin-login-section').style.display = 'block'; document.getElementById('admin-content').style.display = 'none'; } } }
-        document.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', () => showPage(item.dataset.page)));
         document.getElementById('admin-toggle').addEventListener('click', () => showPage('admin'));
 
-        function loadProfile() { const randomId = Math.floor(Math.random() * 10000); document.getElementById('profile-username').innerText = 'کاربر_' + randomId; document.getElementById('profile-phone').innerText = '۰۹۱۲' + Math.floor(Math.random() * 10000000).toString().padStart(7, '0'); document.getElementById('profile-ads-count').innerText = allAds.length; }
-        function setLang(lang) { currentLang = lang; localStorage.setItem('lang', lang); updateUILang(); loadAds(); renderFavorites(); populateCategoryDropdowns(); }
-        document.getElementById('lang-fa').addEventListener('click', () => setLang('fa'));
-        document.getElementById('lang-ar').addEventListener('click', () => setLang('ar'));
-        document.getElementById('lang-en').addEventListener('click', () => setLang('en'));
+        // ========== پیش‌نمایش تصاویر ==========
+        document.getElementById('image-input').addEventListener('change', (e) => {
+            const preview = document.getElementById('image-preview');
+            preview.innerHTML = '';
+            
+            Array.from(e.target.files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
 
-        document.getElementById('close-modal').addEventListener('click', () => document.getElementById('ad-modal').classList.remove('active'));
+        // ========== صفحه‌بندی ==========
+        document.querySelectorAll('.page-dot').forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                document.querySelectorAll('.page-dot').forEach(d => d.classList.remove('active'));
+                dot.classList.add('active');
+            });
+        });
 
-        function populateCategoryDropdowns() {
-            const mainSelect = document.getElementById('main-category');
-            mainSelect.innerHTML = '<option value="">' + t('select_option') + '</option>' + categories.filter(c => !c.parent_id).map(c => `<option value="${c.id}">${c.name_fa}</option>`).join('');
-            mainSelect.onchange = function() { const id = parseInt(this.value); const subSelect = document.getElementById('sub-category'); if (!id) { subSelect.innerHTML = '<option value="">' + t('no_subcategory') + '</option>'; return; } const subs = categories.filter(c => c.parent_id === id); subSelect.innerHTML = '<option value="">' + t('no_subcategory') + '</option>' + subs.map(c => `<option value="${c.id}">${c.name_fa}</option>`).join(''); };
-        }
-
-        loadCategories(); loadAds(); updateUILang(); loadProfile(); if (adminToken) loadProfile();
+        // ========== اجرای اولیه ==========
+        renderAds(allAds);
     </script>
 </body>
-</html>
+                </html>
