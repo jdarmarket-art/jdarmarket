@@ -626,12 +626,12 @@
                     <span data-i18n="ads_count">تعداد آگهی‌ها</span>
                     <span id="profile-ads-count">0</span>
                 </div>
-                <!-- دکمه مدیریت فقط برای کاربر خاص (با چک کردن localStorage) -->
+                <!-- دکمه مدیریت فقط برای کاربر خاص -->
                 <button class="btn" id="admin-toggle" style="margin-top:1rem; display:none;"><i class="fas fa-cog"></i> <span data-i18n="admin">مدیریت</span></button>
             </div>
         </div>
 
-        <!-- صفحه پنل مدیریت (فقط با دسترسی ویژه) -->
+        <!-- صفحه پنل مدیریت -->
         <div id="admin-page" class="page">
             <div class="admin-panel">
                 <h2 style="margin-bottom:1rem;"><i class="fas fa-cog"></i> <span data-i18n="admin">پنل مدیریت حرفه‌ای</span></h2>
@@ -751,12 +751,9 @@
         let adminToken = localStorage.getItem('adminToken') || '';
         let uploadedFileIds = [];
         let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-        // توکن مخصوص مدیر اصلی (شما)
         const SUPER_ADMIN_TOKEN = 'jdar@Admin1357900';
-        // کاربر ویژه (برای نمایش دکمه مدیریت)
-        const isSuperAdmin = adminToken === SUPER_ADMIN_TOKEN;
 
-        // ترجمه‌ها (کامل)
+        // ترجمه‌ها (فقط فارسی برای نمونه، کامل کنید)
         const translations = {
             fa: {
                 lang_fa: 'FA', lang_ar: 'AR', lang_en: 'EN',
@@ -805,7 +802,7 @@
                 message: 'پیام',
                 date: 'تاریخ',
                 price_special1: 'قیمت ویژه ۱ روزه',
-                price_special3: 'قیت ویژه ۳ روزه',
+                price_special3: 'قیمت ویژه ۳ روزه',
                 price_vip1: 'قیمت VIP 1 ماهه',
                 price_vip3: 'قیمت VIP 3 ماهه',
                 price_vip6: 'قیمت VIP 6 ماهه',
@@ -831,8 +828,7 @@
                 password_placeholder: 'رمز عبور',
                 save_changes: 'ذخیره تغییرات',
             },
-            ar: { /* مشابه قبلی اما برای اختصار حذف شده */ },
-            en: { /* مشابه قبلی */ }
+            // ترجمه عربی و انگلیسی را در صورت نیاز کامل کنید
         };
 
         function t(key) { return translations[currentLang]?.[key] || key; }
@@ -943,15 +939,29 @@
             } catch (e) { console.error(e); }
         }
 
-        function getImageUrl(imageIds) {
-            if (!imageIds) return 'https://via.placeholder.com/300x200?text=جدار';
+        function getImageUrl(imageData) {
+            if (!imageData) {
+                console.log('getImageUrl: imageData is empty');
+                return 'https://via.placeholder.com/300x200?text=جدار';
+            }
             try {
-                const ids = Array.isArray(imageIds) ? imageIds : JSON.parse(imageIds);
-                if (ids && ids.length > 0) {
-                    return `${API_URL}/image/${ids[0]}`;
+                // If it's a string, try to parse JSON; if it's already an array, use it.
+                const ids = typeof imageData === 'string' ? JSON.parse(imageData) : imageData;
+                if (Array.isArray(ids) && ids.length > 0) {
+                    const url = `${API_URL}/image/${ids[0]}`;
+                    console.log('Constructed image URL:', url);
+                    return url;
+                } else {
+                    console.log('No valid image IDs found in', imageData);
                 }
             } catch (e) {
-                console.warn('Error parsing imageIds:', e);
+                console.error('Error parsing image IDs:', e, 'raw value:', imageData);
+                // Maybe it's a plain string (single fileId) - try that
+                if (typeof imageData === 'string' && imageData.length > 10) {
+                    const url = `${API_URL}/image/${imageData}`;
+                    console.log('Assuming single fileId, URL:', url);
+                    return url;
+                }
             }
             return 'https://via.placeholder.com/300x200?text=جدار';
         }
@@ -963,11 +973,11 @@
                 return;
             }
             container.innerHTML = ads.map(ad => {
-                const imgUrl = getImageUrl(ad.images || ad.image_ids);
+                const imgUrl = getImageUrl(ad.images); // Worker uses column 'images'
                 const isFav = favorites.includes(ad.id);
                 return `
                     <div class="ad-card" data-id="${ad.id}">
-                        <img src="${imgUrl}" class="ad-card-image" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=جدار';">
+                        <img src="${imgUrl}" class="ad-card-image" onerror="console.error('Image failed to load:', this.src); this.onerror=null; this.src='https://via.placeholder.com/300x200?text=جدار';">
                         <div class="ad-card-content">
                             <div class="ad-card-title">${ad.title}</div>
                             <div class="ad-card-price">💰 ${ad.price || 'توافقی'} ${ad.currency || ''}</div>
@@ -1003,7 +1013,7 @@
                 return;
             }
             container.innerHTML = favAds.map(ad => {
-                const imgUrl = getImageUrl(ad.images || ad.image_ids);
+                const imgUrl = getImageUrl(ad.images);
                 return `
                     <div class="ad-card" data-id="${ad.id}">
                         <img src="${imgUrl}" class="ad-card-image" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=جدار';">
@@ -1028,7 +1038,7 @@
                     const ad = data.ad;
                     let images = [];
                     try { images = JSON.parse(ad.images || '[]'); } catch { images = []; }
-                    const imagesHtml = images.map(img => `<img src="${API_URL}/image/${img}" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=J-DAR';">`).join('');
+                    const imagesHtml = images.map(img => `<img src="${API_URL}/image/${img}" onerror="console.error('Image in modal failed:', this.src); this.onerror=null; this.src='https://via.placeholder.com/150?text=J-DAR';">`).join('');
                     const date = new Date(ad.created_at * 1000).toLocaleDateString('fa-IR');
                     document.getElementById('modal-detail').innerHTML = `
                         <h2>${ad.title}</h2>
@@ -1098,9 +1108,8 @@
                 adminToken = token; localStorage.setItem('adminToken', token);
                 document.getElementById('admin-login-section').style.display = 'none';
                 document.getElementById('admin-content').style.display = 'block';
-                // بررسی سوپرادمین
                 if (adminToken === SUPER_ADMIN_TOKEN) {
-                    // نمایش بخش‌های خاص
+                    // show all tabs
                 }
                 loadAdminData();
             }
@@ -1137,14 +1146,14 @@
         window.rejectAd = async (id) => { await authFetch(`/api/admin/reject/${id}`, { method:'DELETE' }); loadPending(); loadAllAds(); };
 
         async function loadAllAds() {
-            // این API باید در Worker ایجاد شود: GET /api/admin/ads (همه آگهی‌ها)
-            // فعلاً از دیتای نمونه استفاده می‌کنیم
-            const data = await authFetch('/api/admin/ads'); // در Worker نیست، پس نمونه می‌سازیم
+            // این API باید در Worker ایجاد شود: GET /api/admin/ads
+            // فعلاً از نمونه استفاده می‌کنیم
+            const data = await authFetch('/api/admin/ads'); // ممکن است خطا دهد
             if (data && data.success) {
                 // استفاده از داده واقعی
             } else {
                 // نمونه
-                const sample = [
+                const sample = allAds.length ? allAds : [
                     { id:1, title:'آگهی 1', status:'approved', phone:'0912' },
                     { id:2, title:'آگهی 2', status:'pending', phone:'0913' },
                 ];
@@ -1185,7 +1194,6 @@
                 phone: document.getElementById('edit-phone').value,
                 whatsapp: document.getElementById('edit-whatsapp').value
             };
-            // ارسال به API ویرایش
             const res = await authFetch(`/api/admin/ads/${id}`, { method:'PUT', body: JSON.stringify(updated) });
             if (res.success) { alert('ویرایش شد'); loadAllAds(); document.getElementById('edit-ad-modal').style.display = 'none'; }
         });
@@ -1335,11 +1343,7 @@
             document.getElementById('profile-phone').innerText = '۰۹۱۲۳۴۵۶۷۸۹';
             document.getElementById('profile-ads-count').innerText = allAds.length;
             // نمایش دکمه مدیریت فقط برای سوپرادمین
-            if (adminToken === SUPER_ADMIN_TOKEN) {
-                document.getElementById('admin-toggle').style.display = 'block';
-            } else {
-                document.getElementById('admin-toggle').style.display = 'none';
-            }
+            document.getElementById('admin-toggle').style.display = (adminToken === SUPER_ADMIN_TOKEN) ? 'block' : 'none';
         }
 
         // ==================== تغییر زبان ====================
@@ -1378,13 +1382,18 @@
         updateUILang();
         loadProfile();
 
-        // اگر توکن ادمین ذخیره شده بود
         if (adminToken) {
-            // اگر توکن معتبر است، می‌توان در پروفایل دکمه مدیریت را نشان داد
-            loadProfile();
+            loadProfile(); // دکمه مدیریت را به‌روز می‌کند
         }
-
-        // هر زمان پروفایل لود شد، دکمه مدیریت بر اساس توکن نمایش داده می‌شود
     </script>
+    <!-- دستورالعمل عیب‌یابی تصاویر:
+         1. کنسول مرورگر را باز کنید (F12).
+         2. به تب Network بروید و درخواست‌های تصویر را ببینید.
+         3. روی یکی از آدرس‌های تصویر کلیک کنید و status را بررسی کنید.
+         4. اگر 404 یا 500 است، مشکل از Worker است (ربات به فایل دسترسی ندارد).
+         5. اگر 200 است ولی تصویر نمایش داده نمی‌شود، ممکن است CORS مشکل داشته باشد.
+         6. آدرس تصویر را مستقیماً در مرورگر باز کنید: https://j-dar-market.j-dar-market.workers.dev/image/{fileId}
+         7. اگر تصویر نمایش داده شد، مشکل از onerror یا CSS است.
+    -->
 </body>
     </html>
