@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>دیوار | Divar</title>
+    <title>جدار | J-DAR</title>
     <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Reset و استایل‌های پایه */
+        /* استایل‌های دقیقاً مثل دیوار - از کد قبلی */
         * {
             margin: 0;
             padding: 0;
@@ -23,7 +23,6 @@
             flex-direction: column;
         }
 
-        /* هدر ثابت - دقیقاً مثل دیوار */
         .header {
             background: #2a2a3a;
             padding: 0.8rem 1rem;
@@ -62,7 +61,6 @@
             cursor: pointer;
         }
 
-        /* نوار پایین - دقیقاً مثل دیوار */
         .bottom-nav {
             background: #2a2a3a;
             border-top: 1px solid #374151;
@@ -104,7 +102,6 @@
             font-size: 0.65rem;
         }
 
-        /* محتوای اصلی */
         .main-content {
             flex: 1;
             margin-top: 60px;
@@ -117,7 +114,6 @@
             width: 100%;
         }
 
-        /* بخش جستجو - مثل دیوار */
         .search-section {
             margin-bottom: 1rem;
         }
@@ -156,11 +152,6 @@
             outline: none;
         }
 
-        .search-box button {
-            display: none; /* در دیوار دکمه جستجو نداریم */
-        }
-
-        /* دسته‌بندی‌ها - اسکرول افقی مثل دیوار */
         .categories-wrapper {
             overflow-x: auto;
             margin: 1rem 0;
@@ -211,7 +202,6 @@
             display: none;
         }
 
-        /* شبکه آگهی‌ها - ۲ ستون مثل دیوار */
         .ads-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -240,18 +230,6 @@
             height: 120px;
             object-fit: cover;
             background: #1e1e2e;
-            border-bottom: 1px solid #374151;
-        }
-
-        .placeholder-img {
-            width: 100%;
-            height: 120px;
-            background: linear-gradient(145deg, #2a2a3a, #1e1e2e);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6b7280;
-            font-size: 0.8rem;
             border-bottom: 1px solid #374151;
         }
 
@@ -314,34 +292,114 @@
             color: #ef4444;
         }
 
-        .favorite-btn i {
-            font-size: 1rem;
+        .page {
+            display: none;
+            animation: fade 0.3s;
         }
 
-        /* صفحه‌بندی - مثل دیوار */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin: 1.5rem 0;
+        .page.active {
+            display: block;
         }
 
-        .page-dot {
-            width: 0.4rem;
-            height: 0.4rem;
-            border-radius: 50%;
-            background: #4b5563;
+        @keyframes fade {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-container {
+            background: #2a2a3a;
+            border-radius: 1rem;
+            padding: 1.2rem;
+            border: 1px solid #374151;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: #9ca3af;
+            font-size: 0.85rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border-radius: 0.8rem;
+            border: 1px solid #374151;
+            background: #1e1e2e;
+            color: white;
+            font-family: 'Vazir', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            background: #a855f7;
+            border: none;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.8rem;
+            font-weight: 500;
             cursor: pointer;
             transition: 0.2s;
+            width: 100%;
+            font-size: 0.95rem;
+            font-family: 'Vazir', sans-serif;
         }
 
-        .page-dot.active {
-            background: #a855f7;
-            width: 1.2rem;
-            border-radius: 1rem;
+        .btn:hover {
+            background: #9333ea;
         }
 
-        /* مودال جزئیات آگهی */
+        .btn-danger {
+            background: #ef4444;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-success {
+            background: #10b981;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+            width: auto;
+        }
+
+        .message {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2a2a3a;
+            border: 1px solid #a855f7;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            z-index: 3000;
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+            max-width: 90%;
+            white-space: nowrap;
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -405,56 +463,6 @@
             border: 1px solid #374151;
         }
 
-        /* صفحه ثبت آگهی */
-        .form-container {
-            background: #2a2a3a;
-            border-radius: 1rem;
-            padding: 1.2rem;
-            border: 1px solid #374151;
-        }
-
-        .form-container h2 {
-            font-size: 1.2rem;
-            margin-bottom: 1.2rem;
-            color: #f3f4f6;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .form-container h2 i {
-            color: #a855f7;
-        }
-
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.4rem;
-            color: #9ca3af;
-            font-size: 0.85rem;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.7rem 1rem;
-            border-radius: 0.8rem;
-            border: 1px solid #374151;
-            background: #1e1e2e;
-            color: white;
-            font-family: 'Vazir', sans-serif;
-            font-size: 0.9rem;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
         .image-preview {
             display: flex;
             gap: 0.5rem;
@@ -470,45 +478,94 @@
             border: 1px solid #374151;
         }
 
-        .btn {
-            background: #a855f7;
-            border: none;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 0.8rem;
-            font-weight: 500;
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .page-dot {
+            width: 0.4rem;
+            height: 0.4rem;
+            border-radius: 50%;
+            background: #4b5563;
             cursor: pointer;
             transition: 0.2s;
-            width: 100%;
-            font-size: 0.95rem;
-            font-family: 'Vazir', sans-serif;
         }
 
-        .btn:hover {
-            background: #9333ea;
+        .page-dot.active {
+            background: #a855f7;
+            width: 1.2rem;
+            border-radius: 1rem;
         }
 
-        /* صفحه علاقه‌مندی‌ها */
-        .favorites-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.8rem;
+        .admin-panel {
+            background: #2a2a3a;
+            border-radius: 1rem;
+            padding: 1.2rem;
+            border: 1px solid #374151;
         }
 
-        .page-header {
+        .admin-tabs {
             display: flex;
-            align-items: center;
             gap: 0.5rem;
             margin-bottom: 1rem;
-            font-size: 1.1rem;
-            color: #f3f4f6;
+            flex-wrap: wrap;
         }
 
-        .page-header i {
+        .admin-tab {
+            background: transparent;
+            border: 1px solid #a855f7;
             color: #a855f7;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: 0.2s;
         }
 
-        /* صفحه پروفایل */
+        .admin-tab.active {
+            background: #a855f7;
+            color: white;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 0.5rem;
+            border-bottom: 1px solid #374151;
+            text-align: right;
+        }
+
+        .admin-table button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #374151;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 0.7rem;
+            margin: 0.2rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #9ca3af;
+        }
+
+        .loading i {
+            font-size: 2rem;
+            color: #a855f7;
+            margin-bottom: 1rem;
+        }
+
         .profile-card {
             background: #2a2a3a;
             border-radius: 1rem;
@@ -531,53 +588,14 @@
             display: flex;
             justify-content: space-between;
             font-size: 0.9rem;
-            color: #f3f4f6;
         }
 
-        .profile-field span:first-child {
-            color: #9ca3af;
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
         }
 
-        /* صفحات مخفی */
-        .page {
-            display: none;
-            animation: fade 0.3s;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fade {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* پیام خطا/اطلاع رسانی */
-        .message {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #2a2a3a;
-            border: 1px solid #a855f7;
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 2rem;
-            font-size: 0.85rem;
-            z-index: 3000;
-            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
-            max-width: 90%;
-            white-space: nowrap;
-        }
-
-        /* آیکون‌ها و نشانگرها */
         .badge {
             background: #ef4444;
             color: white;
@@ -588,74 +606,83 @@
             top: 0;
             right: 0;
         }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card {
+            background: #1e1e2e;
+            border-radius: 0.8rem;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-card i {
+            font-size: 1.5rem;
+            color: #a855f7;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.7rem;
+            color: #9ca3af;
+        }
     </style>
 </head>
 <body>
-    <!-- هدر دقیقاً مثل دیوار -->
     <header class="header">
         <div class="logo">
             <i class="fas fa-layer-group"></i>
-            دیوار
+            جدار
         </div>
         <div class="header-actions">
-            <i class="fas fa-bell"></i>
-            <i class="fas fa-user-circle"></i>
+            <i class="fas fa-bell" onclick="showMessage('اعلان جدیدی ندارید')"></i>
+            <i class="fas fa-user-circle" onclick="showPage('profile')"></i>
         </div>
     </header>
 
-    <!-- محتوای اصلی -->
     <main class="main-content">
         <!-- صفحه خانه -->
         <div id="home-page" class="page active">
-            <!-- بخش جستجو -->
             <div class="search-section">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="search-input" placeholder="جستجو در دیوار">
+                    <input type="text" id="search-input" placeholder="جستجو در جدار">
                 </div>
             </div>
 
-            <!-- دسته‌بندی‌های اصلی (اسکرول افقی) -->
             <div class="categories-wrapper">
-                <div class="categories" id="main-categories">
-                    <span class="category-chip active">همه</span>
-                    <span class="category-chip">خودرو</span>
-                    <span class="category-chip">املاک</span>
-                    <span class="category-chip">موبایل</span>
-                    <span class="category-chip">لوازم خانگی</span>
-                    <span class="category-chip">پوشاک</span>
-                    <span class="category-chip">خدمات</span>
-                    <span class="category-chip">حیوانات</span>
-                    <span class="category-chip">ورزشی</span>
+                <div class="categories" id="main-categories"></div>
+            </div>
+
+            <div class="subcategories" id="sub-categories"></div>
+
+            <div class="ads-grid" id="ads-list">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <div>در حال بارگذاری آگهی‌ها...</div>
                 </div>
             </div>
 
-            <!-- زیردسته‌ها (اسکرول افقی) -->
-            <div class="subcategories" id="sub-categories">
-                <span class="category-chip active">همه</span>
-                <span class="category-chip">تازه‌ها</span>
-                <span class="category-chip">نزدیک من</span>
-                <span class="category-chip">ویژه</span>
-            </div>
-
-            <!-- شبکه آگهی‌ها (۲ ستونه) -->
-            <div class="ads-grid" id="ads-list">
-                <!-- کارت‌های آگهی با جاوااسکریپت پر می‌شوند -->
-            </div>
-
-            <!-- صفحه‌بندی مثل دیوار -->
-            <div class="pagination" id="pagination">
-                <span class="page-dot active"></span>
-                <span class="page-dot"></span>
-                <span class="page-dot"></span>
-                <span class="page-dot"></span>
-            </div>
+            <div class="pagination" id="pagination"></div>
         </div>
 
         <!-- صفحه ثبت آگهی -->
         <div id="submit-page" class="page">
             <div class="form-container">
-                <h2><i class="fas fa-plus-circle"></i> ثبت آگهی جدید</h2>
+                <h2 style="margin-bottom: 1rem; font-size: 1.2rem;">
+                    <i class="fas fa-plus-circle" style="color: #a855f7;"></i>
+                    ثبت آگهی جدید
+                </h2>
                 <form id="ad-form">
                     <div class="form-group">
                         <label>عنوان آگهی</label>
@@ -669,10 +696,12 @@
                         <label>دسته‌بندی</label>
                         <select id="main-category" required>
                             <option value="">انتخاب کنید</option>
-                            <option value="1">خودرو</option>
-                            <option value="2">املاک</option>
-                            <option value="3">موبایل</option>
-                            <option value="4">لوازم خانگی</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>زیرمجموعه (اختیاری)</label>
+                        <select id="sub-category">
+                            <option value="">بدون زیرمجموعه</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -684,7 +713,11 @@
                         <input type="tel" id="phone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required>
                     </div>
                     <div class="form-group">
-                        <label>تصاویر</label>
+                        <label>واتساپ (اختیاری)</label>
+                        <input type="text" id="whatsapp" placeholder="۰۹۱۲۳۴۵۶۷۸۹">
+                    </div>
+                    <div class="form-group">
+                        <label>تصاویر (حداکثر ۵)</label>
                         <input type="file" id="image-input" accept="image/*" multiple>
                         <div class="image-preview" id="image-preview"></div>
                     </div>
@@ -697,11 +730,16 @@
 
         <!-- صفحه علاقه‌مندی‌ها -->
         <div id="favorites-page" class="page">
-            <div class="page-header">
+            <h2 style="margin-bottom: 1rem; font-size: 1.2rem;">
                 <i class="fas fa-heart" style="color: #ef4444;"></i>
-                <span>علاقه‌مندی‌ها</span>
+                علاقه‌مندی‌ها
+            </h2>
+            <div class="favorites-grid" id="favorites-list">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <div>در حال بارگذاری...</div>
+                </div>
             </div>
-            <div class="favorites-grid" id="favorites-list"></div>
         </div>
 
         <!-- صفحه پروفایل -->
@@ -712,11 +750,11 @@
                 </div>
                 <div class="profile-field">
                     <span>نام کاربری</span>
-                    <span id="profile-username">کاربر_۱۲۳۴</span>
+                    <span id="profile-username">کاربر</span>
                 </div>
                 <div class="profile-field">
                     <span>شماره تماس</span>
-                    <span id="profile-phone">۰۹۱۲۳۴۵۶۷۸۹</span>
+                    <span id="profile-phone">-</span>
                 </div>
                 <div class="profile-field">
                     <span>تعداد آگهی‌ها</span>
@@ -730,10 +768,12 @@
 
         <!-- صفحه مدیریت -->
         <div id="admin-page" class="page">
-            <div style="background: #2a2a3a; border-radius: 1rem; padding: 1.2rem; border: 1px solid #374151;">
+            <div class="admin-panel">
                 <h2 style="margin-bottom: 1rem; font-size: 1.2rem;">
-                    <i class="fas fa-cog" style="color: #a855f7;"></i> پنل مدیریت
+                    <i class="fas fa-cog" style="color: #a855f7;"></i>
+                    پنل مدیریت
                 </h2>
+                
                 <div id="admin-login-section">
                     <div class="form-group">
                         <label>رمز مدیریت</label>
@@ -743,14 +783,124 @@
                         <i class="fas fa-sign-in-alt"></i> ورود
                     </button>
                 </div>
+
                 <div id="admin-content" style="display: none;">
-                    <!-- محتوای پنل مدیریت اینجا قرار می‌گیرد -->
+                    <div class="admin-tabs">
+                        <button class="admin-tab active" data-tab="pending">در انتظار</button>
+                        <button class="admin-tab" data-tab="allads">همه آگهی‌ها</button>
+                        <button class="admin-tab" data-tab="prices">قیمت‌ها</button>
+                        <button class="admin-tab" data-tab="feedback">بازخوردها</button>
+                        <button class="admin-tab" data-tab="stats">آمار</button>
+                    </div>
+
+                    <div class="admin-tab-content" id="admin-pending">
+                        <table class="admin-table" id="pending-table">
+                            <thead>
+                                <tr>
+                                    <th>شناسه</th>
+                                    <th>عنوان</th>
+                                    <th>شماره</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <div class="admin-tab-content" id="admin-allads" style="display: none;">
+                        <table class="admin-table" id="allads-table">
+                            <thead>
+                                <tr>
+                                    <th>شناسه</th>
+                                    <th>عنوان</th>
+                                    <th>وضعیت</th>
+                                    <th>شماره</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <div class="admin-tab-content" id="admin-prices" style="display: none;">
+                        <div class="form-group">
+                            <label>قیمت ویژه ۱ روزه</label>
+                            <input type="number" id="price_special1">
+                        </div>
+                        <div class="form-group">
+                            <label>قیمت ویژه ۳ روزه</label>
+                            <input type="number" id="price_special3">
+                        </div>
+                        <div class="form-group">
+                            <label>قیمت VIP 1 ماهه</label>
+                            <input type="number" id="price_vip1">
+                        </div>
+                        <div class="form-group">
+                            <label>قیمت VIP 3 ماهه</label>
+                            <input type="number" id="price_vip3">
+                        </div>
+                        <div class="form-group">
+                            <label>قیمت VIP 6 ماهه</label>
+                            <input type="number" id="price_vip6">
+                        </div>
+                        <button class="btn" id="save-prices">
+                            <i class="fas fa-save"></i> ذخیره
+                        </button>
+                    </div>
+
+                    <div class="admin-tab-content" id="admin-feedback" style="display: none;">
+                        <table class="admin-table" id="feedback-table">
+                            <thead>
+                                <tr>
+                                    <th>نام</th>
+                                    <th>شماره</th>
+                                    <th>پیام</th>
+                                    <th>تاریخ</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <div class="admin-tab-content" id="admin-stats" style="display: none;">
+                        <div class="stats-grid" id="stats-grid">
+                            <div class="stat-card">
+                                <i class="fas fa-chart-line"></i>
+                                <div class="stat-value" id="stat-total-ads">۰</div>
+                                <div class="stat-label">کل آگهی‌ها</div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-check-circle"></i>
+                                <div class="stat-value" id="stat-approved-ads">۰</div>
+                                <div class="stat-label">تأیید شده</div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-clock"></i>
+                                <div class="stat-value" id="stat-pending-ads">۰</div>
+                                <div class="stat-label">در انتظار</div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-star"></i>
+                                <div class="stat-value" id="stat-special-ads">۰</div>
+                                <div class="stat-label">ویژه</div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-eye"></i>
+                                <div class="stat-value" id="stat-total-views">۰</div>
+                                <div class="stat-label">کل بازدید</div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-calendar-day"></i>
+                                <div class="stat-value" id="stat-today-views">۰</div>
+                                <div class="stat-label">بازدید امروز</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- ناوبری پایین دقیقاً مثل دیوار -->
     <nav class="bottom-nav">
         <div class="nav-item active" data-page="home">
             <i class="fas fa-home"></i>
@@ -766,11 +916,10 @@
         </div>
         <div class="nav-item" data-page="profile">
             <i class="fas fa-user"></i>
-            <span>دیوار من</span>
+            <span>پروفایل</span>
         </div>
     </nav>
 
-    <!-- مودال جزئیات آگهی -->
     <div class="modal" id="ad-modal">
         <div class="modal-content">
             <button class="close-modal" id="close-modal">&times;</button>
@@ -779,95 +928,19 @@
     </div>
 
     <script>
-        // ========== داده‌های نمونه ==========
-        const sampleAds = [
-            {
-                id: 1,
-                title: 'فروش آیفون ۱۳ پرو ۲۵۶ گیگ',
-                price: '۴۵,۰۰۰,۰۰۰',
-                currency: 'تومان',
-                phone: '۰۹۱۲۱۱۱۲۲۲۳',
-                description: 'آیفون ۱۳ پرو ۲۵۶ گیگ، یک هفته استفاده شده، کاملاً سالم با گارانتی',
-                images: ['1'],
-                views: 245,
-                category: 3,
-                subcategory: null,
-                status: 'approved'
-            },
-            {
-                id: 2,
-                title: 'فروش پژو ۲۰۶ تیپ ۲ مدل ۱۴۰۰',
-                price: '۳۲۰,۰۰۰,۰۰۰',
-                currency: 'تومان',
-                phone: '۰۹۱۲۳۳۳۴۴۵۵',
-                description: 'پژو ۲۰۶ تیپ ۲، مدل ۱۴۰۰، کارکرد ۴۵,۰۰۰ کیلومتر، رنگ سفید، فول آپشن',
-                images: ['2'],
-                views: 189,
-                category: 1,
-                subcategory: null,
-                status: 'approved'
-            },
-            {
-                id: 3,
-                title: 'اجاره آپارتمان ۷۵ متری منطقه ۳',
-                price: '۲۵,۰۰۰,۰۰۰',
-                currency: 'تومان',
-                phone: '۰۲۱۲۲۳۳۴۴۵۵',
-                description: 'آپارتمان ۷۵ متری، ۲ خواب، پارکینگ، انباری، منطقه ۳ تهران',
-                images: ['3'],
-                views: 67,
-                category: 2,
-                subcategory: null,
-                status: 'approved'
-            },
-            {
-                id: 4,
-                title: 'میز تحریر کودک مدل فانتزی',
-                price: '۸۵۰,۰۰۰',
-                currency: 'تومان',
-                phone: '۰۹۱۲۴۴۴۵۵۶۶',
-                description: 'میز تحریر کودک طرح فانتزی، کاملاً نو، همراه با صندلی',
-                images: ['4'],
-                views: 34,
-                category: 4,
-                subcategory: null,
-                status: 'approved'
-            },
-            {
-                id: 5,
-                title: 'سمند سورن مدل ۱۴۰۱',
-                price: '۴۵۰,۰۰۰,۰۰۰',
-                currency: 'تومان',
-                phone: '۰۹۱۲۵۵۵۶۶۷۷',
-                description: 'سمند سورن مدل ۱۴۰۱، کارکرد ۲۰,۰۰۰ کیلومتر، رنگ مشکی',
-                images: ['5'],
-                views: 156,
-                category: 1,
-                subcategory: null,
-                status: 'approved'
-            },
-            {
-                id: 6,
-                title: 'هدفون بلوتوثی سونی',
-                price: '۲,۸۰۰,۰۰۰',
-                currency: 'تومان',
-                phone: '۰۹۱۲۶۶۶۷۷۸۸',
-                description: 'هدفون بلوتوثی سونی مدل WH-1000XM4، اکبند',
-                images: ['6'],
-                views: 78,
-                category: 3,
-                subcategory: null,
-                status: 'approved'
-            }
-        ];
+        // ========== تنظیمات Worker ==========
+        const API_URL = 'https://j-dar-market.j-dar-market.workers.dev'; // آدرس Worker شما
+        const ADMIN_TOKEN = 'jdar@Admin1357900'; // توکن ادمین از فایل Worker
 
         // ========== متغیرهای سراسری ==========
         let currentPage = 'home';
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        let categories = [];
         let currentMainCat = null;
         let currentSubCat = null;
-        let allAds = [...sampleAds];
-        const PLACEHOLDER_IMAGE = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\' viewBox=\'0 0 300 200\'%3E%3Crect width=\'300\' height=\'200\' fill=\'%232a2a3a\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Vazir, sans-serif\' font-size=\'24\' fill=\'%23a855f7\'%3Eدیوار%3C/text%3E%3C/svg%3E';
+        let allAds = [];
+        let adminToken = localStorage.getItem('adminToken') || '';
+        let uploadedFileIds = [];
 
         // ========== توابع کمکی ==========
         function showMessage(text) {
@@ -878,14 +951,144 @@
             setTimeout(() => msg.remove(), 3000);
         }
 
-        function getImageUrl(imageData) {
-            if (!imageData) return PLACEHOLDER_IMAGE;
-            return `https://via.placeholder.com/300x200/a855f7/ffffff?text=دیوار`;
+        function showLoading(container, message = 'در حال بارگذاری...') {
+            container.innerHTML = `<div class="loading"><i class="fas fa-spinner fa-spin"></i><div>${message}</div></div>`;
         }
 
-        // ========== رندر آگهی‌ها ==========
+        // ========== توابع API ==========
+        async function fetchAPI(endpoint, options = {}) {
+            const url = `${API_URL}${endpoint}`;
+            options.headers = options.headers || {};
+            
+            if (!(options.body instanceof FormData)) {
+                options.headers['Content-Type'] = 'application/json';
+            }
+
+            // اضافه کردن توکن ادمین اگر موجود باشد
+            if (adminToken && endpoint.startsWith('/api/admin/')) {
+                options.headers['Authorization'] = `Bearer ${adminToken}`;
+            }
+
+            try {
+                const res = await fetch(url, options);
+                return await res.json();
+            } catch (e) {
+                console.error('Fetch error:', e);
+                return { success: false, error: 'خطا در ارتباط با سرور' };
+            }
+        }
+
+        // ========== بارگذاری دسته‌بندی‌ها ==========
+        async function loadCategories() {
+            try {
+                const data = await fetchAPI('/api/categories');
+                if (data.success) {
+                    categories = data.categories;
+                    renderMainCategories();
+                    populateCategoryDropdowns();
+                }
+            } catch (e) {
+                console.error('Error loading categories:', e);
+            }
+        }
+
+        function renderMainCategories() {
+            const mains = categories.filter(c => !c.parent_id);
+            let html = '<span class="category-chip active" data-id="all">همه</span>';
+            html += mains.map(c => 
+                `<span class="category-chip" data-id="${c.id}">${c.name_fa}</span>`
+            ).join('');
+            
+            document.getElementById('main-categories').innerHTML = html;
+            
+            document.querySelectorAll('#main-categories .category-chip').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#main-categories .category-chip').forEach(c => c.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const id = btn.dataset.id;
+                    currentMainCat = id === 'all' ? null : parseInt(id);
+                    currentSubCat = null;
+                    renderSubCategories();
+                    loadAds();
+                });
+            });
+            
+            renderSubCategories();
+        }
+
+        function renderSubCategories() {
+            if (!currentMainCat) {
+                document.getElementById('sub-categories').innerHTML = '';
+                return;
+            }
+            
+            const subs = categories.filter(c => c.parent_id === currentMainCat);
+            let html = '<span class="category-chip active" data-id="all">همه</span>';
+            html += subs.map(c => 
+                `<span class="category-chip" data-id="${c.id}">${c.name_fa}</span>`
+            ).join('');
+            
+            document.getElementById('sub-categories').innerHTML = html;
+            
+            document.querySelectorAll('#sub-categories .category-chip').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#sub-categories .category-chip').forEach(c => c.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const id = btn.dataset.id;
+                    currentSubCat = id === 'all' ? null : parseInt(id);
+                    loadAds();
+                });
+            });
+        }
+
+        // ========== بارگذاری آگهی‌ها ==========
+        async function loadAds() {
+            const container = document.getElementById('ads-list');
+            showLoading(container, 'در حال بارگذاری آگهی‌ها...');
+            
+            let url = '/api/ads?';
+            if (currentMainCat) url += `category=${currentMainCat}&`;
+            if (currentSubCat) url += `subcategory=${currentSubCat}&`;
+            
+            const search = document.getElementById('search-input').value.trim();
+            if (search) url += `search=${encodeURIComponent(search)}&`;
+            
+            try {
+                const data = await fetchAPI(url);
+                if (data.success) {
+                    allAds = data.ads;
+                    renderAds(allAds);
+                } else {
+                    container.innerHTML = '<p style="text-align: center; color: #9ca3af; padding: 2rem;">خطا در بارگذاری آگهی‌ها</p>';
+                }
+            } catch (e) {
+                container.innerHTML = '<p style="text-align: center; color: #9ca3af; padding: 2rem;">خطا در ارتباط با سرور</p>';
+            }
+        }
+
+        function getImageUrl(imageData) {
+            if (!imageData) return 'https://via.placeholder.com/300x200/2a2a3a/a855f7?text=جدار';
+            
+            try {
+                const ids = typeof imageData === 'string' ? JSON.parse(imageData) : imageData;
+                if (Array.isArray(ids) && ids.length > 0) {
+                    return `${API_URL}/image/${ids[0]}`;
+                }
+                if (typeof imageData === 'string' && imageData.length > 10) {
+                    return `${API_URL}/image/${imageData}`;
+                }
+            } catch (e) {
+                console.error('Error parsing image data:', e);
+            }
+            
+            return 'https://via.placeholder.com/300x200/2a2a3a/a855f7?text=جدار';
+        }
+
         function renderAds(ads) {
             const container = document.getElementById('ads-list');
+            
             if (!ads.length) {
                 container.innerHTML = '<p style="text-align: center; color: #9ca3af; grid-column: 1/-1; padding: 2rem;">آگهی‌ای یافت نشد</p>';
                 return;
@@ -893,17 +1096,17 @@
             
             container.innerHTML = ads.map(ad => {
                 const isFav = favorites.includes(ad.id);
+                const imgUrl = getImageUrl(ad.images);
+                
                 return `
                     <div class="ad-card" data-id="${ad.id}">
-                        <div class="ad-card-image" style="background: linear-gradient(145deg, #2a2a3a, #1e1e2e); display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-image" style="font-size: 2rem; color: #a855f7; opacity: 0.5;"></i>
-                        </div>
+                        <img src="${imgUrl}" class="ad-card-image" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200/2a2a3a/a855f7?text=جدار'">
                         <div class="ad-card-content">
                             <div class="ad-card-title">${ad.title}</div>
-                            <div class="ad-card-price">💰 ${ad.price} ${ad.currency}</div>
+                            <div class="ad-card-price">💰 ${ad.price || 'توافقی'} ${ad.currency || ''}</div>
                             <div class="ad-card-meta">
                                 <span><i class="fas fa-map-marker-alt"></i> اهواز</span>
-                                <span><i class="fas fa-eye"></i> ${ad.views}</span>
+                                <span><i class="fas fa-eye"></i> ${ad.views || 0}</span>
                             </div>
                         </div>
                         <div class="favorite-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, ${ad.id})">
@@ -912,8 +1115,7 @@
                     </div>
                 `;
             }).join('');
-
-            // اضافه کردن event listener به کارت‌ها
+            
             document.querySelectorAll('#ads-list .ad-card').forEach(card => {
                 card.addEventListener('click', (e) => {
                     if (!e.target.closest('.favorite-btn')) {
@@ -923,45 +1125,56 @@
             });
         }
 
-        // ========== تغییر وضعیت علاقه‌مندی ==========
+        // ========== علاقه‌مندی‌ها ==========
         window.toggleFavorite = (e, id) => {
             e.stopPropagation();
             const index = favorites.indexOf(id);
             if (index === -1) {
                 favorites.push(id);
+                showMessage('به علاقه‌مندی‌ها اضافه شد');
             } else {
                 favorites.splice(index, 1);
+                showMessage('از علاقه‌مندی‌ها حذف شد');
             }
             localStorage.setItem('favorites', JSON.stringify(favorites));
             renderAds(allAds);
             renderFavorites();
         };
 
-        // ========== رندر علاقه‌مندی‌ها ==========
-        function renderFavorites() {
-            const favAds = allAds.filter(ad => favorites.includes(ad.id));
+        async function renderFavorites() {
             const container = document.getElementById('favorites-list');
             
-            if (!favAds.length) {
-                container.innerHTML = '<p style="color: #9ca3af; text-align: center; grid-column: 1/-1; padding: 2rem;">آگهی‌ای به علاقه‌مندی‌ها اضافه نشده</p>';
+            if (!favorites.length) {
+                container.innerHTML = '<p style="text-align: center; color: #9ca3af; padding: 2rem;">آگهی‌ای به علاقه‌مندی‌ها اضافه نشده</p>';
                 return;
             }
-
-            container.innerHTML = favAds.map(ad => `
-                <div class="ad-card" data-id="${ad.id}">
-                    <div class="ad-card-image" style="background: linear-gradient(145deg, #2a2a3a, #1e1e2e); display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-image" style="font-size: 2rem; color: #a855f7; opacity: 0.5;"></i>
+            
+            showLoading(container, 'در حال بارگذاری...');
+            
+            const favAds = allAds.filter(ad => favorites.includes(ad.id));
+            
+            if (!favAds.length) {
+                container.innerHTML = '<p style="text-align: center; color: #9ca3af; padding: 2rem;">آگهی‌های مورد علاقه یافت نشدند</p>';
+                return;
+            }
+            
+            container.innerHTML = favAds.map(ad => {
+                const imgUrl = getImageUrl(ad.images);
+                
+                return `
+                    <div class="ad-card" data-id="${ad.id}">
+                        <img src="${imgUrl}" class="ad-card-image" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200/2a2a3a/a855f7?text=جدار'">
+                        <div class="ad-card-content">
+                            <div class="ad-card-title">${ad.title}</div>
+                            <div class="ad-card-price">💰 ${ad.price || 'توافقی'}</div>
+                        </div>
+                        <div class="favorite-btn active" onclick="toggleFavorite(event, ${ad.id})">
+                            <i class="fas fa-heart"></i>
+                        </div>
                     </div>
-                    <div class="ad-card-content">
-                        <div class="ad-card-title">${ad.title}</div>
-                        <div class="ad-card-price">💰 ${ad.price} ${ad.currency}</div>
-                    </div>
-                    <div class="favorite-btn active" onclick="toggleFavorite(event, ${ad.id})">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                </div>
-            `).join('');
-
+                `;
+            }).join('');
+            
             document.querySelectorAll('#favorites-list .ad-card').forEach(card => {
                 card.addEventListener('click', (e) => {
                     if (!e.target.closest('.favorite-btn')) {
@@ -972,26 +1185,286 @@
         }
 
         // ========== نمایش جزئیات آگهی ==========
-        function showAdDetail(id) {
-            const ad = allAds.find(a => a.id === id);
-            if (!ad) return;
+        async function showAdDetail(id) {
+            try {
+                const data = await fetchAPI(`/api/ads/${id}`);
+                if (data.success) {
+                    const ad = data.ad;
+                    
+                    let imagesHtml = '';
+                    try {
+                        const images = JSON.parse(ad.images || '[]');
+                        if (images.length > 0) {
+                            imagesHtml = images.map(img => 
+                                `<img src="${API_URL}/image/${img}" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200/2a2a3a/a855f7?text=جدار';">`
+                            ).join('');
+                        } else {
+                            imagesHtml = `<img src="https://via.placeholder.com/300x200/2a2a3a/a855f7?text=جدار">`;
+                        }
+                    } catch {
+                        imagesHtml = `<img src="https://via.placeholder.com/300x200/2a2a3a/a855f7?text=جدار">`;
+                    }
+                    
+                    const date = new Date(ad.created_at * 1000).toLocaleDateString('fa-IR');
+                    
+                    document.getElementById('modal-detail').innerHTML = `
+                        <h2 style="margin-bottom: 0.5rem; font-size: 1.3rem;">${ad.title}</h2>
+                        <div class="modal-images">${imagesHtml}</div>
+                        <div style="background: #1e1e2e; border-radius: 0.8rem; padding: 1rem; margin: 1rem 0;">
+                            <p style="margin-bottom: 0.5rem; color: #a855f7; font-weight: 600;">💰 ${ad.price || 'توافقی'} ${ad.currency || ''}</p>
+                            <p style="margin-bottom: 0.5rem;"><i class="fas fa-phone"></i> ${ad.phone}</p>
+                            ${ad.whatsapp ? `<p style="margin-bottom: 0.5rem;"><i class="fab fa-whatsapp"></i> ${ad.whatsapp}</p>` : ''}
+                            <p style="color: #f3f4f6;">${ad.description}</p>
+                        </div>
+                        <p style="color: #9ca3af; font-size: 0.8rem;"><i class="fas fa-calendar"></i> ${date}</p>
+                        <p style="color: #9ca3af; font-size: 0.8rem;"><i class="fas fa-eye"></i> ${ad.views} بازدید</p>
+                    `;
+                    
+                    document.getElementById('ad-modal').classList.add('active');
+                    
+                    // ثبت بازدید
+                    await fetchAPI(`/api/view/${id}`, { method: 'POST' });
+                }
+            } catch (e) {
+                console.error('Error showing ad detail:', e);
+                showMessage('خطا در نمایش آگهی');
+            }
+        }
 
-            const modalDetail = document.getElementById('modal-detail');
-            modalDetail.innerHTML = `
-                <h2 style="margin-bottom: 0.5rem; font-size: 1.3rem;">${ad.title}</h2>
-                <div style="background: #1e1e2e; border-radius: 0.8rem; padding: 1rem; margin: 1rem 0;">
-                    <p style="margin-bottom: 0.5rem; color: #a855f7; font-weight: 600;">💰 ${ad.price} ${ad.currency}</p>
-                    <p style="margin-bottom: 0.5rem; color: #9ca3af;"><i class="fas fa-phone"></i> ${ad.phone}</p>
-                    <p style="color: #f3f4f6;">${ad.description}</p>
-                </div>
-                <p style="color: #9ca3af; font-size: 0.8rem;"><i class="fas fa-eye"></i> ${ad.views} بازدید</p>
-                <button class="btn" onclick="document.getElementById('ad-modal').classList.remove('active')" style="margin-top: 1rem;">بستن</button>
-            `;
-
-            document.getElementById('ad-modal').classList.add('active');
+        // ========== ثبت آگهی جدید ==========
+        document.getElementById('ad-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
             
-            // افزایش بازدید
-            ad.views += 1;
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const category_id = parseInt(document.getElementById('main-category').value);
+            const subcategory_id = document.getElementById('sub-category').value ? parseInt(document.getElementById('sub-category').value) : undefined;
+            const price = document.getElementById('price').value;
+            const phone = document.getElementById('phone').value;
+            const whatsapp = document.getElementById('whatsapp').value;
+            
+            const adData = {
+                title,
+                description,
+                category_id,
+                subcategory_id,
+                price: price || null,
+                currency: 'تومان',
+                phone,
+                whatsapp: whatsapp || null,
+                images: uploadedFileIds
+            };
+            
+            try {
+                const res = await fetchAPI('/api/ads', {
+                    method: 'POST',
+                    body: JSON.stringify(adData)
+                });
+                
+                if (res.success) {
+                    showMessage('آگهی شما ثبت شد و پس از تأیید نمایش داده می‌شود');
+                    document.getElementById('ad-form').reset();
+                    uploadedFileIds = [];
+                    document.getElementById('image-preview').innerHTML = '';
+                    showPage('home');
+                } else {
+                    showMessage('خطا: ' + (res.error || 'مشکل در ثبت آگهی'));
+                }
+            } catch (e) {
+                showMessage('خطا در ارتباط با سرور');
+            }
+        });
+
+        // ========== آپلود تصویر ==========
+        document.getElementById('image-input').addEventListener('change', async (e) => {
+            const files = Array.from(e.target.files);
+            
+            if (files.length + uploadedFileIds.length > 5) {
+                showMessage('حداکثر ۵ تصویر مجاز است');
+                return;
+            }
+            
+            for (let file of files) {
+                const formData = new FormData();
+                formData.append('file', file);
+                
+                try {
+                    const res = await fetch(`${API_URL}/api/upload`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const data = await res.json();
+                    
+                    if (data.success) {
+                        uploadedFileIds.push(data.fileId);
+                        
+                        const preview = document.getElementById('image-preview');
+                        const img = document.createElement('img');
+                        img.src = `${API_URL}/image/${data.fileId}`;
+                        preview.appendChild(img);
+                    } else {
+                        showMessage('خطا در آپلود تصویر: ' + (data.error || ''));
+                    }
+                } catch (e) {
+                    showMessage('خطا در آپلود تصویر');
+                }
+            }
+        });
+
+        // ========== پنل مدیریت ==========
+        document.getElementById('admin-login').addEventListener('click', async () => {
+            const token = document.getElementById('admin-token').value;
+            
+            if (token === ADMIN_TOKEN) {
+                adminToken = token;
+                localStorage.setItem('adminToken', token);
+                document.getElementById('admin-login-section').style.display = 'none';
+                document.getElementById('admin-content').style.display = 'block';
+                showMessage('ورود موفقیت‌آمیز');
+                loadAdminData();
+            } else {
+                showMessage('رمز اشتباه است');
+            }
+        });
+
+        async function loadAdminData() {
+            if (!adminToken) return;
+            loadPendingAds();
+            loadAllAds();
+            loadPrices();
+            loadFeedback();
+            loadStats();
+        }
+
+        async function loadPendingAds() {
+            const data = await fetchAPI('/api/admin/pending');
+            if (data.success) {
+                const tbody = document.querySelector('#pending-table tbody');
+                tbody.innerHTML = data.ads.map(ad => `
+                    <tr>
+                        <td>${ad.id}</td>
+                        <td>${ad.title}</td>
+                        <td>${ad.phone}</td>
+                        <td>
+                            <button onclick="approveAd(${ad.id})" style="background: #10b981;">✅ تأیید</button>
+                            <button onclick="rejectAd(${ad.id})" style="background: #ef4444;">❌ رد</button>
+                            <button onclick="showAdDetail(${ad.id})">👁 مشاهده</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        window.approveAd = async (id) => {
+            const res = await fetchAPI(`/api/admin/approve/${id}`, { method: 'POST' });
+            if (res.success) {
+                showMessage('آگهی تأیید شد');
+                loadPendingAds();
+                loadAllAds();
+            }
+        };
+
+        window.rejectAd = async (id) => {
+            if (confirm('آیا از حذف این آگهی اطمینان دارید؟')) {
+                const res = await fetchAPI(`/api/admin/reject/${id}`, { method: 'DELETE' });
+                if (res.success) {
+                    showMessage('آگهی حذف شد');
+                    loadPendingAds();
+                    loadAllAds();
+                }
+            }
+        };
+
+        async function loadAllAds() {
+            // این API در Worker شما وجود ندارد، از داده‌های محلی استفاده می‌کنیم
+            const pendingRes = await fetchAPI('/api/admin/pending');
+            const pendingAds = pendingRes.success ? pendingRes.ads : [];
+            
+            const approvedAds = allAds.filter(ad => ad.status === 'approved');
+            const allAdsList = [...approvedAds, ...pendingAds];
+            
+            const tbody = document.querySelector('#allads-table tbody');
+            tbody.innerHTML = allAdsList.map(ad => `
+                <tr>
+                    <td>${ad.id}</td>
+                    <td>${ad.title}</td>
+                    <td>${ad.status || 'approved'}</td>
+                    <td>${ad.phone}</td>
+                    <td>
+                        <button onclick="showAdDetail(${ad.id})">👁 مشاهده</button>
+                        <button onclick="deleteAd(${ad.id})" style="background: #ef4444;">🗑️ حذف</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        window.deleteAd = async (id) => {
+            if (confirm('آیا از حذف این آگهی اطمینان دارید؟')) {
+                const res = await fetchAPI(`/api/admin/reject/${id}`, { method: 'DELETE' });
+                if (res.success) {
+                    showMessage('آگهی حذف شد');
+                    loadAllAds();
+                    loadAds();
+                }
+            }
+        };
+
+        async function loadPrices() {
+            const data = await fetchAPI('/api/admin/prices');
+            if (data.success && data.prices) {
+                document.getElementById('price_special1').value = data.prices.price_special1 || '';
+                document.getElementById('price_special3').value = data.prices.price_special3 || '';
+                document.getElementById('price_vip1').value = data.prices.price_vip1 || '';
+                document.getElementById('price_vip3').value = data.prices.price_vip3 || '';
+                document.getElementById('price_vip6').value = data.prices.price_vip6 || '';
+            }
+        }
+
+        document.getElementById('save-prices').addEventListener('click', async () => {
+            const updates = {
+                price_special1: document.getElementById('price_special1').value,
+                price_special3: document.getElementById('price_special3').value,
+                price_vip1: document.getElementById('price_vip1').value,
+                price_vip3: document.getElementById('price_vip3').value,
+                price_vip6: document.getElementById('price_vip6').value
+            };
+            
+            const res = await fetchAPI('/api/admin/prices', {
+                method: 'PUT',
+                body: JSON.stringify(updates)
+            });
+            
+            if (res.success) {
+                showMessage('قیمت‌ها با موفقیت ذخیره شدند');
+            }
+        });
+
+        async function loadFeedback() {
+            const data = await fetchAPI('/api/admin/feedback');
+            if (data.success) {
+                const tbody = document.querySelector('#feedback-table tbody');
+                tbody.innerHTML = data.feedbacks.map(f => `
+                    <tr>
+                        <td>${f.name || '-'}</td>
+                        <td>${f.phone || '-'}</td>
+                        <td>${f.message}</td>
+                        <td>${new Date(f.created_at * 1000).toLocaleDateString('fa-IR')}</td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        async function loadStats() {
+            const data = await fetchAPI('/api/admin/stats');
+            if (data.success) {
+                document.getElementById('stat-total-ads').textContent = data.totalAds || 0;
+                document.getElementById('stat-approved-ads').textContent = data.approvedAds || 0;
+                document.getElementById('stat-pending-ads').textContent = data.pendingAds || 0;
+                document.getElementById('stat-special-ads').textContent = data.specialAds || 0;
+                document.getElementById('stat-total-views').textContent = data.totalViews || 0;
+                document.getElementById('stat-today-views').textContent = data.todayViews || 0;
+            }
         }
 
         // ========== تغییر صفحه ==========
@@ -1006,11 +1479,22 @@
             currentPage = pageId;
 
             if (pageId === 'home') {
-                renderAds(allAds);
+                loadAds();
             } else if (pageId === 'favorites') {
                 renderFavorites();
             } else if (pageId === 'profile') {
                 document.getElementById('profile-ads-count').innerText = allAds.length;
+                document.getElementById('profile-phone').innerText = '۰۹۱۲۳۴۵۶۷۸۹';
+                document.getElementById('profile-username').innerText = 'کاربر_' + Math.floor(Math.random() * 10000);
+            } else if (pageId === 'admin') {
+                if (adminToken) {
+                    document.getElementById('admin-login-section').style.display = 'none';
+                    document.getElementById('admin-content').style.display = 'block';
+                    loadAdminData();
+                } else {
+                    document.getElementById('admin-login-section').style.display = 'block';
+                    document.getElementById('admin-content').style.display = 'none';
+                }
             }
         }
 
@@ -1019,113 +1503,75 @@
             item.addEventListener('click', () => showPage(item.dataset.page));
         });
 
-        // ========== رویدادهای فرم ثبت آگهی ==========
-        document.getElementById('ad-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const newAd = {
-                id: allAds.length + 1,
-                title: document.getElementById('title').value,
-                price: document.getElementById('price').value || 'توافقی',
-                currency: 'تومان',
-                phone: document.getElementById('phone').value,
-                description: document.getElementById('description').value,
-                category: parseInt(document.getElementById('main-category').value),
-                images: [],
-                views: 0,
-                status: 'pending'
-            };
-
-            allAds.push(newAd);
-            showMessage('آگهی شما با موفقیت ثبت شد و پس از تأیید نمایش داده می‌شود');
-            e.target.reset();
-            document.getElementById('image-preview').innerHTML = '';
-            showPage('home');
-        });
+        document.getElementById('admin-toggle').addEventListener('click', () => showPage('admin'));
 
         // ========== رویدادهای مودال ==========
         document.getElementById('close-modal').addEventListener('click', () => {
             document.getElementById('ad-modal').classList.remove('active');
         });
 
-        // ========== رویدادهای دسته‌بندی ==========
-        document.querySelectorAll('#main-categories .category-chip').forEach((chip, index) => {
-            chip.addEventListener('click', () => {
-                document.querySelectorAll('#main-categories .category-chip').forEach(c => c.classList.remove('active'));
-                chip.classList.add('active');
+        // ========== رویدادهای دسته‌بندی و جستجو ==========
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            if (e.target.value.length > 2 || e.target.value.length === 0) {
+                loadAds();
+            }
+        });
+
+        // ========== پر کردن dropdown دسته‌بندی‌ها ==========
+        function populateCategoryDropdowns() {
+            const mainSelect = document.getElementById('main-category');
+            const mains = categories.filter(c => !c.parent_id);
+            
+            mainSelect.innerHTML = '<option value="">انتخاب کنید</option>' + 
+                mains.map(c => `<option value="${c.id}">${c.name_fa}</option>`).join('');
+            
+            mainSelect.onchange = function() {
+                const id = parseInt(this.value);
+                const subSelect = document.getElementById('sub-category');
                 
-                // فیلتر بر اساس دسته (نمونه)
-                if (index === 0) {
-                    renderAds(allAds);
-                } else {
-                    const filtered = allAds.filter(ad => ad.category === index);
-                    renderAds(filtered);
+                if (!id) {
+                    subSelect.innerHTML = '<option value="">بدون زیرمجموعه</option>';
+                    return;
+                }
+                
+                const subs = categories.filter(c => c.parent_id === id);
+                subSelect.innerHTML = '<option value="">بدون زیرمجموعه</option>' + 
+                    subs.map(c => `<option value="${c.id}">${c.name_fa}</option>`).join('');
+            };
+        }
+
+        // ========== تب‌های مدیریت ==========
+        document.querySelectorAll('.admin-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                document.querySelectorAll('.admin-tab-content').forEach(c => c.style.display = 'none');
+                
+                const tabId = tab.dataset.tab;
+                if (tabId === 'pending') {
+                    document.getElementById('admin-pending').style.display = 'block';
+                } else if (tabId === 'allads') {
+                    document.getElementById('admin-allads').style.display = 'block';
+                } else if (tabId === 'prices') {
+                    document.getElementById('admin-prices').style.display = 'block';
+                } else if (tabId === 'feedback') {
+                    document.getElementById('admin-feedback').style.display = 'block';
+                } else if (tabId === 'stats') {
+                    document.getElementById('admin-stats').style.display = 'block';
                 }
             });
         });
 
-        document.querySelectorAll('#sub-categories .category-chip').forEach((chip, index) => {
-            chip.addEventListener('click', () => {
-                document.querySelectorAll('#sub-categories .category-chip').forEach(c => c.classList.remove('active'));
-                chip.classList.add('active');
-            });
-        });
-
-        // ========== رویداد جستجو ==========
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            if (term.length < 2) {
-                renderAds(allAds);
-                return;
-            }
-            
-            const filtered = allAds.filter(ad => 
-                ad.title.toLowerCase().includes(term) || 
-                ad.description.toLowerCase().includes(term)
-            );
-            renderAds(filtered);
-        });
-
-        // ========== رویدادهای مدیریت ==========
-        document.getElementById('admin-login').addEventListener('click', () => {
-            const token = document.getElementById('admin-token').value;
-            if (token === 'admin123') {
-                document.getElementById('admin-login-section').style.display = 'none';
-                document.getElementById('admin-content').style.display = 'block';
-                showMessage('ورود موفقیت‌آمیز');
-            } else {
-                showMessage('رمز اشتباه است');
-            }
-        });
-
-        document.getElementById('admin-toggle').addEventListener('click', () => showPage('admin'));
-
-        // ========== پیش‌نمایش تصاویر ==========
-        document.getElementById('image-input').addEventListener('change', (e) => {
-            const preview = document.getElementById('image-preview');
-            preview.innerHTML = '';
-            
-            Array.from(e.target.files).forEach(file => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    preview.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            });
-        });
-
-        // ========== صفحه‌بندی ==========
-        document.querySelectorAll('.page-dot').forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                document.querySelectorAll('.page-dot').forEach(d => d.classList.remove('active'));
-                dot.classList.add('active');
-            });
-        });
-
         // ========== اجرای اولیه ==========
-        renderAds(allAds);
+        loadCategories();
+        loadAds();
+        
+        // اگر توکن ادمین ذخیره شده باشد
+        if (adminToken) {
+            document.getElementById('admin-login-section').style.display = 'none';
+            document.getElementById('admin-content').style.display = 'block';
+        }
     </script>
 </body>
-                </html>
+                            </html>
